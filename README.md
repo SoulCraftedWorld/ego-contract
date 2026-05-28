@@ -37,6 +37,14 @@ scripts/gen_python.sh
 ```bash
 ./scripts/gen_python.sh
 ```
+## Ключевая схема контракта
+### 5000 Control TCP:
+- protobuf request/response
+- hello / status / set_config / start_session / stop_session
+
+### 5001 Data TCP:
+- EgoFrameHeader + payload
+- payload = protobuf или production binary payload
 
 ## Принцип
 
