@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package ego.v1;
+
+// Common enums and small reusable messages for EGO acquisition protocol.
+
+// Frame type is duplicated in the fixed binary EgoFrameHeader.
+// The payload schema is selected by frame_type.
+enum FrameType {
+  FRAME_TYPE_UNSPECIFIED = 0;
+
+  FRAME_SESSION_METADATA = 1;
+  FRAME_DEVICE_CONFIG    = 2;
+  FRAME_AUDIO_CONFIG     = 3;
+  FRAME_IMU_CONFIG       = 4;
+  FRAME_CAN_CONFIG       = 5;
+  FRAME_GPS_CONFIG       = 6;
+  FRAME_VEHICLE_CONFIG   = 7;
+
+  FRAME_AUDIO_BLOCK       = 100;
+  FRAME_IMU_WINDOW        = 101;
+  FRAME_CAN_DECODED_VALUE = 102;
+  FRAME_CAN_RAW_FRAME     = 103;
+  FRAME_TRAJECTORY_POINT  = 104;
+  FRAME_GPS_FIX           = 105;
+
+  FRAME_TIME_STATUS       = 200;
+  FRAME_SYSTEM_STATUS     = 201;
+  FRAME_IMU_CALIB_EVENT   = 202;
+  FRAME_MARKER_EVENT      = 203;
+
+  FRAME_SESSION_END       = 900;
+}
+
+enum DeviceRole {
+  DEVICE_ROLE_UNSPECIFIED = 0;
+  DEVICE_ROLE_EGO         = 1;
+  DEVICE_ROLE_SOURCE      = 2;
+}
+
+enum SampleFormat {
+  SAMPLE_FORMAT_UNSPECIFIED = 0;
+  SAMPLE_FORMAT_INT16       = 1;
+  SAMPLE_FORMAT_INT24_IN_I32= 2;
+  SAMPLE_FORMAT_INT32       = 3;
+  SAMPLE_FORMAT_FLOAT32     = 4;
+}
+
+enum AudioLayout {
+  AUDIO_LAYOUT_UNSPECIFIED = 0;
+  AUDIO_LAYOUT_INTERLEAVED = 1;
+  AUDIO_LAYOUT_PLANAR      = 2;
+}
+
+enum ByteOrder {
+  BYTE_ORDER_UNSPECIFIED = 0;
+  BYTE_ORDER_LITTLE_ENDIAN = 1;
+  BYTE_ORDER_BIG_ENDIAN = 2;
+}
+
+enum CanSignalRole {
+  CAN_SIGNAL_ROLE_UNSPECIFIED = 0;
+  CAN_SIGNAL_ROLE_ANY         = 1;
+  CAN_SIGNAL_ROLE_BASE_SPEED  = 2;
+  CAN_SIGNAL_ROLE_GEAR_MODE   = 3;
+  CAN_SIGNAL_ROLE_STEER_ANGLE = 4;
+}
+
+enum GpsFixType {
+  GPS_FIX_TYPE_UNSPECIFIED = 0;
+  GPS_FIX_NONE             = 1;
+  GPS_FIX_2D               = 2;
+  GPS_FIX_3D               = 3;
+  GPS_FIX_DGNSS            = 4;
+  GPS_FIX_RTK_FLOAT        = 5;
+  GPS_FIX_RTK_FIXED        = 6;
+}
+
+enum TimeSource {
+  TIME_SOURCE_UNSPECIFIED = 0;
+  TIME_SOURCE_INTERNAL    = 1;
+  TIME_SOURCE_GPS         = 2;
+  TIME_SOURCE_PTP         = 3;
+  TIME_SOURCE_EXTERNAL    = 4;
+}
+
+message Uuid128 {
+  fixed64 hi = 1;
+  fixed64 lo = 2;
+}
+
+message TimeRangeNs {
+  fixed64 t0_ns = 1;
+  fixed64 t1_ns = 2;
+}
+
+message Vec3f {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Pose3f {
+  float x_m = 1;
+  float y_m = 2;
+  float z_m = 3;
+  float roll_rad = 4;
+  float pitch_rad = 5;
+  float yaw_rad = 6;
+}
+
+message KeyValue {
+  string key = 1;
+  string value = 2;
+}

@@ -1,0 +1,21 @@
+{
+  "session_id": {
+    "hi": "0x0123456789abcdef",
+    "lo": "0xfedcba9876543210"
+  },
+  "device_role": "DEVICE_ROLE_EGO",
+  "device_id": "adsp_sc589_ego_01",
+  "vehicle_id": "test_vehicle_01",
+  "project_name": "siren_dataset",
+  "scenario_id": "scenario_001",
+  "started_at_utc": "2026-05-28T12:00:00Z",
+  "protocol_version": 1,
+  "time_unit": "ns",
+  "time_base": "adsp_monotonic_counter",
+  "software": {
+    "firmware_version": "0.1.0",
+    "build_id": "dev",
+    "git_commit": "unknown",
+    "base_project": "sam-audio-starter"
+  }
+}

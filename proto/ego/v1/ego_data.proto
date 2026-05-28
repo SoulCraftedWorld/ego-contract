@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package ego.v1;
+
+import "ego/v1/ego_common.proto";
+
+message AudioBlock {
+  fixed64 audio_block_id = 1;
+  TimeRangeNs time = 2;
+  uint32 sample_rate_hz = 3;
+  uint32 channels_count = 4;
+  uint32 bytes_per_sample = 5;
+  uint32 frames_count = 6;
+  AudioLayout layout = 7;
+
+  // For prototype/simple transport only. For high-rate production mode
+  // audio payload may be sent as raw PCM after a fixed binary block header.
+  bytes pcm_data = 8;
+}
+
+message ImuWindow {
+  fixed64 window_id = 1;
+  TimeRangeNs time = 2;
+  uint32 sample_count = 3;
+  uint32 flags = 4;
+
+  float accel_mean_x_mps2 = 5;
+  float accel_mean_y_mps2 = 6;
+  float accel_mean_z_mps2 = 7;
+
+  float gyro_mean_x_rad_s = 8;
+  float gyro_mean_y_rad_s = 9;
+  float gyro_mean_z_rad_s = 10;
+
+  float delta_velocity_x_mps = 11;
+  float delta_velocity_y_mps = 12;
+  float delta_velocity_z_mps = 13;
+
+  float delta_angle_x_rad = 14;
+  float delta_angle_y_rad = 15;
+  float delta_angle_z_rad = 16;
+}
+
+message CanDecodedValue {
+  fixed64 t_ns = 1;
+  uint32 value_id = 2;
+  uint32 can_id = 3;
+  float value = 4;
+  uint32 raw_value = 5;
+  uint32 flags = 6;
+  uint32 dlc = 7;
+}
+
+message CanRawFrame {
+  fixed64 t_ns = 1;
+  uint32 can_id = 2;
+  uint32 dlc = 3;
+  bool is_extended = 4;
+  uint32 bus_id = 5;
+  uint32 flags = 6;
+  bytes data = 7; // expected length <= 8 for CAN 2.0
+}
+
+message TrajectoryPoint {
+  fixed64 t_ns = 1;
+  float x_m = 2;
+  float y_m = 3;
+  float z_m = 4;
+  float vx_mps = 5;
+  float vy_mps = 6;
+  float vz_mps = 7;
+  float yaw_rad = 8;
+  float pitch_rad = 9;
+  float roll_rad = 10;
+  float yaw_rate_rad_s = 11;
+  float path_s_m = 12;
+  float vehicle_speed_mps = 13;
+  uint32 flags = 14;
+}
+
+message GpsFix {
+  fixed64 t_ns = 1;
+  double lat_deg = 2;
+  double lon_deg = 3;
+  double alt_m = 4;
+  float speed_mps = 5;
+  float heading_rad = 6;
+  float h_acc_m = 7;
+  float v_acc_m = 8;
+  GpsFixType fix_type = 9;
+  uint32 satellites = 10;
+  uint32 flags = 11;
+}
+
+message TimeStatus {
+  fixed64 t_ns = 1;
+  fixed64 monotonic_ns = 2;
+  sint64 utc_offset_ns = 3;
+  TimeSource time_source = 4;
+  uint32 sync_status = 5;
+  float estimated_drift_ppm = 6;
+  float sync_error_us = 7;
+}
+
+message SystemStatus {
+  fixed64 t_ns = 1;
+  uint32 audio_status = 2;
+  uint32 can_status = 3;
+  uint32 imu_status = 4;
+  uint32 gps_status = 5;
+  uint32 network_status = 6;
+  uint32 audio_overruns = 7;
+  uint32 imu_fifo_overruns = 8;
+  uint32 can_rx_errors = 9;
+  uint32 dropped_frames = 10;
+  float cpu_load_arm = 11;
+  float cpu_load_sharc0 = 12;
+  float cpu_load_sharc1 = 13;
+}
+
+message ImuCalibrationEvent {
+  fixed64 t_ns = 1;
+  float gyro_bias_x_rad_s = 2;
+  float gyro_bias_y_rad_s = 3;
+  float gyro_bias_z_rad_s = 4;
+  float accel_ref_x_mps2 = 5;
+  float accel_ref_y_mps2 = 6;
+  float accel_ref_z_mps2 = 7;
+  float collect_time_s = 8;
+  uint32 sample_count = 9;
+  uint32 quality_flags = 10;
+}
+
+message MarkerEvent {
+  fixed64 t_ns = 1;
+  string marker_type = 2;
+  string text = 3;
+  uint32 flags = 4;
+}
+
+message SessionEnd {
+  fixed64 t_ns = 1;
+  uint64 total_frames = 2;
+  uint32 status = 3;
+  string reason = 4;
+}
+
+message DataPayload {
+  oneof payload {
+    AudioBlock audio_block = 1;
+    ImuWindow imu_window = 2;
+    CanDecodedValue can_decoded_value = 3;
+    CanRawFrame can_raw_frame = 4;
+    TrajectoryPoint trajectory_point = 5;
+    GpsFix gps_fix = 6;
+    TimeStatus time_status = 7;
+    SystemStatus system_status = 8;
+    ImuCalibrationEvent imu_calib_event = 9;
+    MarkerEvent marker_event = 10;
+    SessionEnd session_end = 11;
+  }
+}

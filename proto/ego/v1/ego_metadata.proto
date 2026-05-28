@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package ego.v1;
+
+import "ego/v1/ego_common.proto";
+
+message SoftwareInfo {
+  string firmware_version = 1;
+  string build_id = 2;
+  string git_commit = 3;
+  string base_project = 4; // e.g. sam-audio-starter
+}
+
+message SessionMetadata {
+  Uuid128 session_id = 1;
+  DeviceRole device_role = 2;
+  string device_id = 3;
+  string vehicle_id = 4;
+  string project_name = 5;
+  string scenario_id = 6;
+  string started_at_utc = 7;
+  uint32 protocol_version = 8;
+  string time_unit = 9; // ns
+  string time_base = 10; // ADSP monotonic counter, GPS-disciplined, etc.
+  SoftwareInfo software = 11;
+  repeated KeyValue tags = 12;
+}
+
+message AudioChannelConfig {
+  uint32 channel_index = 1;
+  string name = 2;
+  string sensor_id = 3;
+  Pose3f mount_pose = 4;
+  uint32 a2b_node = 5;
+  uint32 a2b_slot = 6;
+}
+
+message AudioConfig {
+  bool enabled = 1;
+  uint32 sample_rate_hz = 2;
+  SampleFormat sample_format = 3;
+  uint32 valid_bits = 4;
+  AudioLayout layout = 5;
+  uint32 block_frames = 6;
+  uint32 channels_count = 7;
+  repeated AudioChannelConfig channels = 8;
+}
+
+message ImuConfig {
+  bool enabled = 1;
+  string sensor = 2; // LSM6DS3
+  string interface_name = 3; // SPI
+  string read_mode = 4; // FIFO_DMA
+  uint32 raw_odr_hz = 5;
+  uint32 window_us = 6;
+  float accel_range_g = 7;
+  float gyro_range_dps = 8;
+  Pose3f mount_pose = 9;
+  string axis_mapping = 10; // e.g. +X,+Y,+Z, or project-specific notation
+}
+
+message CanSignalConfig {
+  string name = 1;
+  uint32 value_id = 2;
+  uint32 can_id = 3;
+  bool is_extended = 4;
+  uint32 start_bit = 5;
+  uint32 bit_length = 6;
+  ByteOrder byte_order = 7;
+  bool is_unsigned = 8;
+  float scale = 9;
+  float offset = 10;
+  string unit = 11;
+  CanSignalRole role = 12;
+}
+
+message CanConfig {
+  bool enabled = 1;
+  string bus_name = 2;
+  uint32 bitrate = 3;
+  repeated CanSignalConfig signals = 4;
+}
+
+message GpsConfig {
+  bool enabled = 1;
+  string source = 2; // usb, lan
+  string protocol = 3; // nmea, ubx, custom
+  uint32 expected_rate_hz = 4;
+  bool rtk_supported = 5;
+}
+
+message VehicleConfig {
+  float wheelbase_m = 1;
+  float track_front_m = 2;
+  float track_rear_m = 3;
+  Pose3f imu_mount_pose = 4;
+  repeated KeyValue parameters = 5;
+}
+
+message DeviceConfig {
+  AudioConfig audio = 1;
+  ImuConfig imu = 2;
+  CanConfig can = 3;
+  GpsConfig gps = 4;
+  VehicleConfig vehicle = 5;
+}

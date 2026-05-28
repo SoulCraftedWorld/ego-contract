@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package ego.v1;
+
+import "ego/v1/ego_common.proto";
+import "ego/v1/ego_metadata.proto";
+
+message HelloRequest {
+  string client_name = 1;
+  uint32 protocol_version = 2;
+}
+
+message HelloResponse {
+  string device_id = 1;
+  uint32 protocol_version = 2;
+  string firmware_version = 3;
+  bool data_stream_available = 4;
+}
+
+message GetStatusRequest {}
+
+message RuntimeStatus {
+  fixed64 t_ns = 1;
+  bool session_active = 2;
+  bool data_stream_active = 3;
+  uint64 tx_frames = 4;
+  uint64 tx_bytes = 5;
+  uint32 audio_status = 6;
+  uint32 can_status = 7;
+  uint32 imu_status = 8;
+  uint32 gps_status = 9;
+}
+
+message SetConfigRequest {
+  SessionMetadata session = 1;
+  DeviceConfig device_config = 2;
+}
+
+message StartSessionRequest {
+  Uuid128 session_id = 1;
+  bool start_data_stream = 2;
+}
+
+message StopSessionRequest {
+  string reason = 1;
+}
+
+message StartStreamRequest {}
+message StopStreamRequest {}
+
+message ControlRequest {
+  uint64 request_id = 1;
+  oneof request {
+    HelloRequest hello = 2;
+    GetStatusRequest get_status = 3;
+    SetConfigRequest set_config = 4;
+    StartSessionRequest start_session = 5;
+    StopSessionRequest stop_session = 6;
+    StartStreamRequest start_stream = 7;
+    StopStreamRequest stop_stream = 8;
+  }
+}
+
+message ControlResponse {
+  uint64 request_id = 1;
+  bool ok = 2;
+  uint32 error_code = 3;
+  string error_message = 4;
+
+  oneof response {
+    HelloResponse hello = 10;
+    RuntimeStatus status = 11;
+  }
+}
