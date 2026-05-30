@@ -109,9 +109,9 @@ inline constexpr SystemStatus::Impl_::Impl_(
         imu_fifo_overruns_{0u},
         can_rx_errors_{0u},
         dropped_frames_{0u},
+        cpu_load_sharc1_{0},
         cpu_load_arm_{0},
-        cpu_load_sharc0_{0},
-        cpu_load_sharc1_{0} {}
+        cpu_load_sharc0_{0} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR SystemStatus::SystemStatus(::_pbi::ConstantInitialized)
@@ -133,67 +133,38 @@ struct SystemStatusDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SystemStatusDefaultTypeInternal _SystemStatus_default_instance_;
 
-inline constexpr SessionEnd::Impl_::Impl_(
+inline constexpr SessionEnded::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
+        session_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
         reason_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         t_ns_{::uint64_t{0u}},
         total_frames_{::uint64_t{0u}},
-        status_{0u} {}
+        total_bytes_{::uint64_t{0u}} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR SessionEnd::SessionEnd(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR SessionEnded::SessionEnded(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(SessionEnd_class_data_.base()),
+    : ::google::protobuf::Message(SessionEnded_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct SessionEndDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR SessionEndDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~SessionEndDefaultTypeInternal() {}
+struct SessionEndedDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SessionEndedDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SessionEndedDefaultTypeInternal() {}
   union {
-    SessionEnd _instance;
+    SessionEnded _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SessionEndDefaultTypeInternal _SessionEnd_default_instance_;
-
-inline constexpr MarkerEvent::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        marker_type_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        text_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        t_ns_{::uint64_t{0u}},
-        flags_{0u} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR MarkerEvent::MarkerEvent(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(MarkerEvent_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct MarkerEventDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR MarkerEventDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~MarkerEventDefaultTypeInternal() {}
-  union {
-    MarkerEvent _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MarkerEventDefaultTypeInternal _MarkerEvent_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SessionEndedDefaultTypeInternal _SessionEnded_default_instance_;
 
 inline constexpr ImuCalibrationEvent::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -242,6 +213,7 @@ inline constexpr GpsFix::Impl_::Impl_(
         v_acc_m_{0},
         fix_type_{static_cast< ::ego::v1::GpsFixType >(0)},
         satellites_{0u},
+        rtk_status_{0u},
         flags_{0u} {}
 
 template <typename>
@@ -328,6 +300,38 @@ struct CanDecodedValueDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CanDecodedValueDefaultTypeInternal _CanDecodedValue_default_instance_;
 
+inline constexpr MarkerEvent::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        tags_{},
+        marker_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        description_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        t_ns_{::uint64_t{0u}} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR MarkerEvent::MarkerEvent(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(MarkerEvent_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct MarkerEventDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MarkerEventDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MarkerEventDefaultTypeInternal() {}
+  union {
+    MarkerEvent _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MarkerEventDefaultTypeInternal _MarkerEvent_default_instance_;
+
 inline constexpr ImuWindow::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -402,6 +406,59 @@ struct AudioBlockDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AudioBlockDefaultTypeInternal _AudioBlock_default_instance_;
 
+inline constexpr SessionStarted::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        session_{nullptr},
+        config_inventory_{nullptr},
+        t_ns_{::uint64_t{0u}} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR SessionStarted::SessionStarted(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(SessionStarted_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct SessionStartedDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SessionStartedDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SessionStartedDefaultTypeInternal() {}
+  union {
+    SessionStarted _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SessionStartedDefaultTypeInternal _SessionStarted_default_instance_;
+
+inline constexpr ConfigSnapshotFrame::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        snapshot_{nullptr},
+        t_ns_{::uint64_t{0u}} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR ConfigSnapshotFrame::ConfigSnapshotFrame(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(ConfigSnapshotFrame_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct ConfigSnapshotFrameDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ConfigSnapshotFrameDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ConfigSnapshotFrameDefaultTypeInternal() {}
+  union {
+    ConfigSnapshotFrame _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ConfigSnapshotFrameDefaultTypeInternal _ConfigSnapshotFrame_default_instance_;
+
 inline constexpr DataPayload::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : payload_{},
@@ -436,6 +493,22 @@ static constexpr const ::_pb::ServiceDescriptor* PROTOBUF_NONNULL* PROTOBUF_NULL
 const ::uint32_t
     TableStruct_ego_2fv1_2fego_5fdata_2eproto::offsets[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
         protodesc_cold) = {
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionStarted, _impl_._has_bits_),
+        6, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionStarted, _impl_.t_ns_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionStarted, _impl_.session_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionStarted, _impl_.config_inventory_),
+        2,
+        0,
+        1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ConfigSnapshotFrame, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ConfigSnapshotFrame, _impl_.t_ns_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ConfigSnapshotFrame, _impl_.snapshot_),
+        1,
+        0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::AudioBlock, _impl_._has_bits_),
         11, // hasbit index offset
@@ -557,7 +630,7 @@ const ::uint32_t
         13,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_._has_bits_),
-        14, // hasbit index offset
+        15, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.t_ns_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.lat_deg_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.lon_deg_),
@@ -568,6 +641,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.v_acc_m_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.fix_type_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.satellites_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.rtk_status_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_.flags_),
         0,
         1,
@@ -580,6 +654,7 @@ const ::uint32_t
         8,
         9,
         10,
+        11,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::TimeStatus, _impl_._has_bits_),
         10, // hasbit index offset
@@ -623,9 +698,9 @@ const ::uint32_t
         7,
         8,
         9,
-        10,
         11,
         12,
+        10,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::ImuCalibrationEvent, _impl_._has_bits_),
         13, // hasbit index offset
@@ -653,26 +728,30 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_._has_bits_),
         7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.t_ns_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.marker_type_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.text_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.flags_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.marker_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.description_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::MarkerEvent, _impl_.tags_),
+        3,
+        1,
         2,
         0,
-        1,
-        3,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnd, _impl_._has_bits_),
-        7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnd, _impl_.t_ns_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnd, _impl_.total_frames_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnd, _impl_.status_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnd, _impl_.reason_),
-        1,
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_._has_bits_),
+        8, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_.t_ns_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_.session_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_.reason_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_.total_frames_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionEnded, _impl_.total_bytes_),
         2,
-        3,
         0,
+        1,
+        3,
+        4,
         0x004, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_._oneof_case_[0]),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_.payload_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_.payload_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_.payload_),
@@ -689,20 +768,24 @@ const ::uint32_t
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-        {0, sizeof(::ego::v1::AudioBlock)},
-        {19, sizeof(::ego::v1::ImuWindow)},
-        {54, sizeof(::ego::v1::CanDecodedValue)},
-        {71, sizeof(::ego::v1::CanRawFrame)},
-        {88, sizeof(::ego::v1::TrajectoryPoint)},
-        {119, sizeof(::ego::v1::GpsFix)},
-        {144, sizeof(::ego::v1::TimeStatus)},
-        {161, sizeof(::ego::v1::SystemStatus)},
-        {190, sizeof(::ego::v1::ImuCalibrationEvent)},
-        {213, sizeof(::ego::v1::MarkerEvent)},
-        {224, sizeof(::ego::v1::SessionEnd)},
-        {235, sizeof(::ego::v1::DataPayload)},
+        {0, sizeof(::ego::v1::SessionStarted)},
+        {9, sizeof(::ego::v1::ConfigSnapshotFrame)},
+        {16, sizeof(::ego::v1::AudioBlock)},
+        {35, sizeof(::ego::v1::ImuWindow)},
+        {70, sizeof(::ego::v1::CanDecodedValue)},
+        {87, sizeof(::ego::v1::CanRawFrame)},
+        {104, sizeof(::ego::v1::TrajectoryPoint)},
+        {135, sizeof(::ego::v1::GpsFix)},
+        {162, sizeof(::ego::v1::TimeStatus)},
+        {179, sizeof(::ego::v1::SystemStatus)},
+        {208, sizeof(::ego::v1::ImuCalibrationEvent)},
+        {231, sizeof(::ego::v1::MarkerEvent)},
+        {242, sizeof(::ego::v1::SessionEnded)},
+        {255, sizeof(::ego::v1::DataPayload)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
+    &::ego::v1::_SessionStarted_default_instance_._instance,
+    &::ego::v1::_ConfigSnapshotFrame_default_instance_._instance,
     &::ego::v1::_AudioBlock_default_instance_._instance,
     &::ego::v1::_ImuWindow_default_instance_._instance,
     &::ego::v1::_CanDecodedValue_default_instance_._instance,
@@ -713,100 +796,114 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::ego::v1::_SystemStatus_default_instance_._instance,
     &::ego::v1::_ImuCalibrationEvent_default_instance_._instance,
     &::ego::v1::_MarkerEvent_default_instance_._instance,
-    &::ego::v1::_SessionEnd_default_instance_._instance,
+    &::ego::v1::_SessionEnded_default_instance_._instance,
     &::ego::v1::_DataPayload_default_instance_._instance,
 };
 const char descriptor_table_protodef_ego_2fv1_2fego_5fdata_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
     "\n\025ego/v1/ego_data.proto\022\006ego.v1\032\027ego/v1/"
-    "ego_common.proto\"\336\001\n\nAudioBlock\022\026\n\016audio"
-    "_block_id\030\001 \001(\006\022!\n\004time\030\002 \001(\0132\023.ego.v1.T"
-    "imeRangeNs\022\026\n\016sample_rate_hz\030\003 \001(\r\022\026\n\016ch"
-    "annels_count\030\004 \001(\r\022\030\n\020bytes_per_sample\030\005"
-    " \001(\r\022\024\n\014frames_count\030\006 \001(\r\022#\n\006layout\030\007 \001"
-    "(\0162\023.ego.v1.AudioLayout\022\020\n\010pcm_data\030\010 \001("
-    "\014\"\263\003\n\tImuWindow\022\021\n\twindow_id\030\001 \001(\006\022!\n\004ti"
-    "me\030\002 \001(\0132\023.ego.v1.TimeRangeNs\022\024\n\014sample_"
-    "count\030\003 \001(\r\022\r\n\005flags\030\004 \001(\r\022\031\n\021accel_mean"
-    "_x_mps2\030\005 \001(\002\022\031\n\021accel_mean_y_mps2\030\006 \001(\002"
-    "\022\031\n\021accel_mean_z_mps2\030\007 \001(\002\022\031\n\021gyro_mean"
-    "_x_rad_s\030\010 \001(\002\022\031\n\021gyro_mean_y_rad_s\030\t \001("
-    "\002\022\031\n\021gyro_mean_z_rad_s\030\n \001(\002\022\034\n\024delta_ve"
-    "locity_x_mps\030\013 \001(\002\022\034\n\024delta_velocity_y_m"
-    "ps\030\014 \001(\002\022\034\n\024delta_velocity_z_mps\030\r \001(\002\022\031"
-    "\n\021delta_angle_x_rad\030\016 \001(\002\022\031\n\021delta_angle"
-    "_y_rad\030\017 \001(\002\022\031\n\021delta_angle_z_rad\030\020 \001(\002\""
-    "\177\n\017CanDecodedValue\022\014\n\004t_ns\030\001 \001(\006\022\020\n\010valu"
-    "e_id\030\002 \001(\r\022\016\n\006can_id\030\003 \001(\r\022\r\n\005value\030\004 \001("
-    "\002\022\021\n\traw_value\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\013\n\003d"
-    "lc\030\007 \001(\r\"z\n\013CanRawFrame\022\014\n\004t_ns\030\001 \001(\006\022\016\n"
-    "\006can_id\030\002 \001(\r\022\013\n\003dlc\030\003 \001(\r\022\023\n\013is_extende"
-    "d\030\004 \001(\010\022\016\n\006bus_id\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\014"
-    "\n\004data\030\007 \001(\014\"\200\002\n\017TrajectoryPoint\022\014\n\004t_ns"
-    "\030\001 \001(\006\022\013\n\003x_m\030\002 \001(\002\022\013\n\003y_m\030\003 \001(\002\022\013\n\003z_m\030"
-    "\004 \001(\002\022\016\n\006vx_mps\030\005 \001(\002\022\016\n\006vy_mps\030\006 \001(\002\022\016\n"
-    "\006vz_mps\030\007 \001(\002\022\017\n\007yaw_rad\030\010 \001(\002\022\021\n\tpitch_"
-    "rad\030\t \001(\002\022\020\n\010roll_rad\030\n \001(\002\022\026\n\016yaw_rate_"
-    "rad_s\030\013 \001(\002\022\020\n\010path_s_m\030\014 \001(\002\022\031\n\021vehicle"
-    "_speed_mps\030\r \001(\002\022\r\n\005flags\030\016 \001(\r\"\332\001\n\006GpsF"
-    "ix\022\014\n\004t_ns\030\001 \001(\006\022\017\n\007lat_deg\030\002 \001(\001\022\017\n\007lon"
-    "_deg\030\003 \001(\001\022\r\n\005alt_m\030\004 \001(\001\022\021\n\tspeed_mps\030\005"
-    " \001(\002\022\023\n\013heading_rad\030\006 \001(\002\022\017\n\007h_acc_m\030\007 \001"
-    "(\002\022\017\n\007v_acc_m\030\010 \001(\002\022$\n\010fix_type\030\t \001(\0162\022."
-    "ego.v1.GpsFixType\022\022\n\nsatellites\030\n \001(\r\022\r\n"
-    "\005flags\030\013 \001(\r\"\271\001\n\nTimeStatus\022\014\n\004t_ns\030\001 \001("
-    "\006\022\024\n\014monotonic_ns\030\002 \001(\006\022\025\n\rutc_offset_ns"
-    "\030\003 \001(\022\022\'\n\013time_source\030\004 \001(\0162\022.ego.v1.Tim"
-    "eSource\022\023\n\013sync_status\030\005 \001(\r\022\033\n\023estimate"
-    "d_drift_ppm\030\006 \001(\002\022\025\n\rsync_error_us\030\007 \001(\002"
-    "\"\260\002\n\014SystemStatus\022\014\n\004t_ns\030\001 \001(\006\022\024\n\014audio"
-    "_status\030\002 \001(\r\022\022\n\ncan_status\030\003 \001(\r\022\022\n\nimu"
-    "_status\030\004 \001(\r\022\022\n\ngps_status\030\005 \001(\r\022\026\n\016net"
-    "work_status\030\006 \001(\r\022\026\n\016audio_overruns\030\007 \001("
-    "\r\022\031\n\021imu_fifo_overruns\030\010 \001(\r\022\025\n\rcan_rx_e"
-    "rrors\030\t \001(\r\022\026\n\016dropped_frames\030\n \001(\r\022\024\n\014c"
-    "pu_load_arm\030\013 \001(\002\022\027\n\017cpu_load_sharc0\030\014 \001"
-    "(\002\022\027\n\017cpu_load_sharc1\030\r \001(\002\"\207\002\n\023ImuCalib"
-    "rationEvent\022\014\n\004t_ns\030\001 \001(\006\022\031\n\021gyro_bias_x"
-    "_rad_s\030\002 \001(\002\022\031\n\021gyro_bias_y_rad_s\030\003 \001(\002\022"
-    "\031\n\021gyro_bias_z_rad_s\030\004 \001(\002\022\030\n\020accel_ref_"
-    "x_mps2\030\005 \001(\002\022\030\n\020accel_ref_y_mps2\030\006 \001(\002\022\030"
-    "\n\020accel_ref_z_mps2\030\007 \001(\002\022\026\n\016collect_time"
-    "_s\030\010 \001(\002\022\024\n\014sample_count\030\t \001(\r\022\025\n\rqualit"
-    "y_flags\030\n \001(\r\"M\n\013MarkerEvent\022\014\n\004t_ns\030\001 \001"
-    "(\006\022\023\n\013marker_type\030\002 \001(\t\022\014\n\004text\030\003 \001(\t\022\r\n"
-    "\005flags\030\004 \001(\r\"P\n\nSessionEnd\022\014\n\004t_ns\030\001 \001(\006"
-    "\022\024\n\014total_frames\030\002 \001(\004\022\016\n\006status\030\003 \001(\r\022\016"
-    "\n\006reason\030\004 \001(\t\"\222\004\n\013DataPayload\022)\n\013audio_"
-    "block\030\001 \001(\0132\022.ego.v1.AudioBlockH\000\022\'\n\nimu"
-    "_window\030\002 \001(\0132\021.ego.v1.ImuWindowH\000\0224\n\021ca"
-    "n_decoded_value\030\003 \001(\0132\027.ego.v1.CanDecode"
-    "dValueH\000\022,\n\rcan_raw_frame\030\004 \001(\0132\023.ego.v1"
-    ".CanRawFrameH\000\0223\n\020trajectory_point\030\005 \001(\013"
-    "2\027.ego.v1.TrajectoryPointH\000\022!\n\007gps_fix\030\006"
-    " \001(\0132\016.ego.v1.GpsFixH\000\022)\n\013time_status\030\007 "
-    "\001(\0132\022.ego.v1.TimeStatusH\000\022-\n\rsystem_stat"
-    "us\030\010 \001(\0132\024.ego.v1.SystemStatusH\000\0226\n\017imu_"
-    "calib_event\030\t \001(\0132\033.ego.v1.ImuCalibratio"
-    "nEventH\000\022+\n\014marker_event\030\n \001(\0132\023.ego.v1."
-    "MarkerEventH\000\022)\n\013session_end\030\013 \001(\0132\022.ego"
-    ".v1.SessionEndH\000B\t\n\007payloadb\006proto3"
+    "ego_common.proto\032\027ego/v1/ego_config.prot"
+    "o\032\030ego/v1/ego_control.proto\"{\n\016SessionSt"
+    "arted\022\014\n\004t_ns\030\001 \001(\006\022(\n\007session\030\002 \001(\0132\027.e"
+    "go.v1.SessionMetadata\0221\n\020config_inventor"
+    "y\030\003 \001(\0132\027.ego.v1.ConfigInventory\"S\n\023Conf"
+    "igSnapshotFrame\022\014\n\004t_ns\030\001 \001(\006\022.\n\010snapsho"
+    "t\030\002 \001(\0132\034.ego.v1.DeviceConfigSnapshot\"\336\001"
+    "\n\nAudioBlock\022\026\n\016audio_block_id\030\001 \001(\006\022!\n\004"
+    "time\030\002 \001(\0132\023.ego.v1.TimeRangeNs\022\026\n\016sampl"
+    "e_rate_hz\030\003 \001(\r\022\026\n\016channels_count\030\004 \001(\r\022"
+    "\030\n\020bytes_per_sample\030\005 \001(\r\022\024\n\014frames_coun"
+    "t\030\006 \001(\r\022#\n\006layout\030\007 \001(\0162\023.ego.v1.AudioLa"
+    "yout\022\020\n\010pcm_data\030\010 \001(\014\"\263\003\n\tImuWindow\022\021\n\t"
+    "window_id\030\001 \001(\006\022!\n\004time\030\002 \001(\0132\023.ego.v1.T"
+    "imeRangeNs\022\024\n\014sample_count\030\003 \001(\r\022\r\n\005flag"
+    "s\030\004 \001(\r\022\031\n\021accel_mean_x_mps2\030\005 \001(\002\022\031\n\021ac"
+    "cel_mean_y_mps2\030\006 \001(\002\022\031\n\021accel_mean_z_mp"
+    "s2\030\007 \001(\002\022\031\n\021gyro_mean_x_rad_s\030\010 \001(\002\022\031\n\021g"
+    "yro_mean_y_rad_s\030\t \001(\002\022\031\n\021gyro_mean_z_ra"
+    "d_s\030\n \001(\002\022\034\n\024delta_velocity_x_mps\030\013 \001(\002\022"
+    "\034\n\024delta_velocity_y_mps\030\014 \001(\002\022\034\n\024delta_v"
+    "elocity_z_mps\030\r \001(\002\022\031\n\021delta_angle_x_rad"
+    "\030\016 \001(\002\022\031\n\021delta_angle_y_rad\030\017 \001(\002\022\031\n\021del"
+    "ta_angle_z_rad\030\020 \001(\002\"\177\n\017CanDecodedValue\022"
+    "\014\n\004t_ns\030\001 \001(\006\022\020\n\010value_id\030\002 \001(\r\022\016\n\006can_i"
+    "d\030\003 \001(\r\022\r\n\005value\030\004 \001(\002\022\021\n\traw_value\030\005 \001("
+    "\r\022\r\n\005flags\030\006 \001(\r\022\013\n\003dlc\030\007 \001(\r\"z\n\013CanRawF"
+    "rame\022\014\n\004t_ns\030\001 \001(\006\022\016\n\006can_id\030\002 \001(\r\022\013\n\003dl"
+    "c\030\003 \001(\r\022\023\n\013is_extended\030\004 \001(\010\022\016\n\006bus_id\030\005"
+    " \001(\r\022\r\n\005flags\030\006 \001(\r\022\014\n\004data\030\007 \001(\014\"\200\002\n\017Tr"
+    "ajectoryPoint\022\014\n\004t_ns\030\001 \001(\006\022\013\n\003x_m\030\002 \001(\002"
+    "\022\013\n\003y_m\030\003 \001(\002\022\013\n\003z_m\030\004 \001(\002\022\016\n\006vx_mps\030\005 \001"
+    "(\002\022\016\n\006vy_mps\030\006 \001(\002\022\016\n\006vz_mps\030\007 \001(\002\022\017\n\007ya"
+    "w_rad\030\010 \001(\002\022\021\n\tpitch_rad\030\t \001(\002\022\020\n\010roll_r"
+    "ad\030\n \001(\002\022\026\n\016yaw_rate_rad_s\030\013 \001(\002\022\020\n\010path"
+    "_s_m\030\014 \001(\002\022\031\n\021vehicle_speed_mps\030\r \001(\002\022\r\n"
+    "\005flags\030\016 \001(\r\"\356\001\n\006GpsFix\022\014\n\004t_ns\030\001 \001(\006\022\017\n"
+    "\007lat_deg\030\002 \001(\001\022\017\n\007lon_deg\030\003 \001(\001\022\r\n\005alt_m"
+    "\030\004 \001(\001\022\021\n\tspeed_mps\030\005 \001(\002\022\023\n\013heading_rad"
+    "\030\006 \001(\002\022\017\n\007h_acc_m\030\007 \001(\002\022\017\n\007v_acc_m\030\010 \001(\002"
+    "\022$\n\010fix_type\030\t \001(\0162\022.ego.v1.GpsFixType\022\022"
+    "\n\nsatellites\030\n \001(\r\022\022\n\nrtk_status\030\013 \001(\r\022\r"
+    "\n\005flags\030\014 \001(\r\"\271\001\n\nTimeStatus\022\014\n\004t_ns\030\001 \001"
+    "(\006\022\024\n\014monotonic_ns\030\002 \001(\006\022\025\n\rutc_offset_n"
+    "s\030\003 \001(\020\022\'\n\013time_source\030\004 \001(\0162\022.ego.v1.Ti"
+    "meSource\022\023\n\013sync_status\030\005 \001(\r\022\033\n\023estimat"
+    "ed_drift_ppm\030\006 \001(\002\022\025\n\rsync_error_us\030\007 \001("
+    "\002\"\260\002\n\014SystemStatus\022\014\n\004t_ns\030\001 \001(\006\022\024\n\014audi"
+    "o_status\030\002 \001(\r\022\022\n\ncan_status\030\003 \001(\r\022\022\n\nim"
+    "u_status\030\004 \001(\r\022\022\n\ngps_status\030\005 \001(\r\022\026\n\016ne"
+    "twork_status\030\006 \001(\r\022\026\n\016audio_overruns\030\n \001"
+    "(\r\022\031\n\021imu_fifo_overruns\030\013 \001(\r\022\025\n\rcan_rx_"
+    "errors\030\014 \001(\r\022\026\n\016dropped_frames\030\r \001(\r\022\024\n\014"
+    "cpu_load_arm\030\024 \001(\002\022\027\n\017cpu_load_sharc0\030\025 "
+    "\001(\002\022\027\n\017cpu_load_sharc1\030\026 \001(\002\"\207\002\n\023ImuCali"
+    "brationEvent\022\014\n\004t_ns\030\001 \001(\006\022\031\n\021gyro_bias_"
+    "x_rad_s\030\002 \001(\002\022\031\n\021gyro_bias_y_rad_s\030\003 \001(\002"
+    "\022\031\n\021gyro_bias_z_rad_s\030\004 \001(\002\022\030\n\020accel_ref"
+    "_x_mps2\030\005 \001(\002\022\030\n\020accel_ref_y_mps2\030\006 \001(\002\022"
+    "\030\n\020accel_ref_z_mps2\030\007 \001(\002\022\026\n\016collect_tim"
+    "e_s\030\010 \001(\002\022\024\n\014sample_count\030\t \001(\r\022\025\n\rquali"
+    "ty_flags\030\n \001(\r\"c\n\013MarkerEvent\022\014\n\004t_ns\030\001 "
+    "\001(\006\022\021\n\tmarker_id\030\002 \001(\t\022\023\n\013description\030\003 "
+    "\001(\t\022\036\n\004tags\030\004 \003(\0132\020.ego.v1.KeyValue\"k\n\014S"
+    "essionEnded\022\014\n\004t_ns\030\001 \001(\006\022\022\n\nsession_id\030"
+    "\002 \001(\t\022\016\n\006reason\030\003 \001(\t\022\024\n\014total_frames\030\004 "
+    "\001(\004\022\023\n\013total_bytes\030\005 \001(\004\"\206\005\n\013DataPayload"
+    "\0221\n\017session_started\030\001 \001(\0132\026.ego.v1.Sessi"
+    "onStartedH\000\0226\n\017config_snapshot\030\002 \001(\0132\033.e"
+    "go.v1.ConfigSnapshotFrameH\000\022)\n\013audio_blo"
+    "ck\030d \001(\0132\022.ego.v1.AudioBlockH\000\022\'\n\nimu_wi"
+    "ndow\030e \001(\0132\021.ego.v1.ImuWindowH\000\0224\n\021can_d"
+    "ecoded_value\030f \001(\0132\027.ego.v1.CanDecodedVa"
+    "lueH\000\022,\n\rcan_raw_frame\030g \001(\0132\023.ego.v1.Ca"
+    "nRawFrameH\000\0223\n\020trajectory_point\030h \001(\0132\027."
+    "ego.v1.TrajectoryPointH\000\022!\n\007gps_fix\030i \001("
+    "\0132\016.ego.v1.GpsFixH\000\022*\n\013time_status\030\310\001 \001("
+    "\0132\022.ego.v1.TimeStatusH\000\022.\n\rsystem_status"
+    "\030\311\001 \001(\0132\024.ego.v1.SystemStatusH\000\0227\n\017imu_c"
+    "alib_event\030\312\001 \001(\0132\033.ego.v1.ImuCalibratio"
+    "nEventH\000\022,\n\014marker_event\030\313\001 \001(\0132\023.ego.v1"
+    ".MarkerEventH\000\022.\n\rsession_ended\030\204\007 \001(\0132\024"
+    ".ego.v1.SessionEndedH\000B\t\n\007payloadb\006proto"
+    "3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
-    descriptor_table_ego_2fv1_2fego_5fdata_2eproto_deps[1] = {
+    descriptor_table_ego_2fv1_2fego_5fdata_2eproto_deps[3] = {
         &::descriptor_table_ego_2fv1_2fego_5fcommon_2eproto,
+        &::descriptor_table_ego_2fv1_2fego_5fconfig_2eproto,
+        &::descriptor_table_ego_2fv1_2fego_5fcontrol_2eproto,
 };
 static ::absl::once_flag descriptor_table_ego_2fv1_2fego_5fdata_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego_5fdata_2eproto = {
     false,
     false,
-    2915,
+    3361,
     descriptor_table_protodef_ego_2fv1_2fego_5fdata_2eproto,
     "ego/v1/ego_data.proto",
     &descriptor_table_ego_2fv1_2fego_5fdata_2eproto_once,
     descriptor_table_ego_2fv1_2fego_5fdata_2eproto_deps,
-    1,
-    12,
+    3,
+    14,
     schemas,
     file_default_instances,
     TableStruct_ego_2fv1_2fego_5fdata_2eproto::offsets,
@@ -815,6 +912,686 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego
 };
 namespace ego {
 namespace v1 {
+// ===================================================================
+
+class SessionStarted::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<SessionStarted>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_._has_bits_);
+};
+
+void SessionStarted::clear_session() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.session_ != nullptr) _impl_.session_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+void SessionStarted::clear_config_inventory() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.config_inventory_ != nullptr) _impl_.config_inventory_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+SessionStarted::SessionStarted(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, SessionStarted_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:ego.v1.SessionStarted)
+}
+PROTOBUF_NDEBUG_INLINE SessionStarted::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::ego::v1::SessionStarted& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0} {}
+
+SessionStarted::SessionStarted(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const SessionStarted& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, SessionStarted_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SessionStarted* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.session_ = (CheckHasBit(cached_has_bits, 0x00000001U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.session_)
+                : nullptr;
+  _impl_.config_inventory_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.config_inventory_)
+                : nullptr;
+  _impl_.t_ns_ = from._impl_.t_ns_;
+
+  // @@protoc_insertion_point(copy_constructor:ego.v1.SessionStarted)
+}
+PROTOBUF_NDEBUG_INLINE SessionStarted::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void SessionStarted::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, session_),
+           0,
+           offsetof(Impl_, t_ns_) -
+               offsetof(Impl_, session_) +
+               sizeof(Impl_::t_ns_));
+}
+SessionStarted::~SessionStarted() {
+  // @@protoc_insertion_point(destructor:ego.v1.SessionStarted)
+  SharedDtor(*this);
+}
+inline void SessionStarted::SharedDtor(MessageLite& self) {
+  SessionStarted& this_ = static_cast<SessionStarted&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.session_;
+  delete this_._impl_.config_inventory_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL SessionStarted::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) SessionStarted(arena);
+}
+constexpr auto SessionStarted::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(SessionStarted),
+                                            alignof(SessionStarted));
+}
+constexpr auto SessionStarted::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_SessionStarted_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &SessionStarted::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<SessionStarted>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &SessionStarted::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<SessionStarted>(), &SessionStarted::ByteSizeLong,
+              &SessionStarted::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_._cached_size_),
+          false,
+      },
+      &SessionStarted::kDescriptorMethods,
+      &descriptor_table_ego_2fv1_2fego_5fdata_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull SessionStarted_class_data_ =
+        SessionStarted::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+SessionStarted::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&SessionStarted_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(SessionStarted_class_data_.tc_table);
+  return SessionStarted_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<2, 3, 2, 0, 2>
+SessionStarted::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_._has_bits_),
+    0, // no _extensions_
+    3, 24,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967288,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    3,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    SessionStarted_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::ego::v1::SessionStarted>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // fixed64 t_ns = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 2, 0,
+      PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.t_ns_)}},
+    // .ego.v1.SessionMetadata session = 2;
+    {::_pbi::TcParser::FastMtS1,
+     {18, 0, 0,
+      PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.session_)}},
+    // .ego.v1.ConfigInventory config_inventory = 3;
+    {::_pbi::TcParser::FastMtS1,
+     {26, 1, 1,
+      PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.config_inventory_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // fixed64 t_ns = 1;
+    {PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.t_ns_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
+    // .ego.v1.SessionMetadata session = 2;
+    {PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.session_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.ConfigInventory config_inventory = 3;
+    {PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.config_inventory_), _Internal::kHasBitsOffset + 1, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::ego::v1::SessionMetadata>()},
+      {::_pbi::TcParser::GetTable<::ego::v1::ConfigInventory>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void SessionStarted::Clear() {
+// @@protoc_insertion_point(message_clear_start:ego.v1.SessionStarted)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      ABSL_DCHECK(_impl_.session_ != nullptr);
+      _impl_.session_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(_impl_.config_inventory_ != nullptr);
+      _impl_.config_inventory_->Clear();
+    }
+  }
+  _impl_.t_ns_ = ::uint64_t{0u};
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL SessionStarted::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const SessionStarted& this_ = static_cast<const SessionStarted&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL SessionStarted::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const SessionStarted& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.SessionStarted)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // fixed64 t_ns = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (this_._internal_t_ns() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
+          1, this_._internal_t_ns(), target);
+    }
+  }
+
+  // .ego.v1.SessionMetadata session = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        2, *this_._impl_.session_, this_._impl_.session_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .ego.v1.ConfigInventory config_inventory = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        3, *this_._impl_.config_inventory_, this_._impl_.config_inventory_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.SessionStarted)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t SessionStarted::ByteSizeLong(const MessageLite& base) {
+  const SessionStarted& this_ = static_cast<const SessionStarted&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t SessionStarted::ByteSizeLong() const {
+  const SessionStarted& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:ego.v1.SessionStarted)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    // .ego.v1.SessionMetadata session = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.session_);
+    }
+    // .ego.v1.ConfigInventory config_inventory = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.config_inventory_);
+    }
+    // fixed64 t_ns = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (this_._internal_t_ns() != 0) {
+        total_size += 9;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void SessionStarted::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<SessionStarted*>(&to_msg);
+  auto& from = static_cast<const SessionStarted&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.SessionStarted)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      ABSL_DCHECK(from._impl_.session_ != nullptr);
+      if (_this->_impl_.session_ == nullptr) {
+        _this->_impl_.session_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.session_);
+      } else {
+        _this->_impl_.session_->MergeFrom(*from._impl_.session_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(from._impl_.config_inventory_ != nullptr);
+      if (_this->_impl_.config_inventory_ == nullptr) {
+        _this->_impl_.config_inventory_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.config_inventory_);
+      } else {
+        _this->_impl_.config_inventory_->MergeFrom(*from._impl_.config_inventory_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (from._internal_t_ns() != 0) {
+        _this->_impl_.t_ns_ = from._impl_.t_ns_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void SessionStarted::CopyFrom(const SessionStarted& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.SessionStarted)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void SessionStarted::InternalSwap(SessionStarted* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.t_ns_)
+      + sizeof(SessionStarted::_impl_.t_ns_)
+      - PROTOBUF_FIELD_OFFSET(SessionStarted, _impl_.session_)>(
+          reinterpret_cast<char*>(&_impl_.session_),
+          reinterpret_cast<char*>(&other->_impl_.session_));
+}
+
+::google::protobuf::Metadata SessionStarted::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class ConfigSnapshotFrame::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<ConfigSnapshotFrame>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_._has_bits_);
+};
+
+void ConfigSnapshotFrame::clear_snapshot() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.snapshot_ != nullptr) _impl_.snapshot_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+ConfigSnapshotFrame::ConfigSnapshotFrame(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ConfigSnapshotFrame_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:ego.v1.ConfigSnapshotFrame)
+}
+PROTOBUF_NDEBUG_INLINE ConfigSnapshotFrame::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::ego::v1::ConfigSnapshotFrame& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0} {}
+
+ConfigSnapshotFrame::ConfigSnapshotFrame(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const ConfigSnapshotFrame& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ConfigSnapshotFrame_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  ConfigSnapshotFrame* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.snapshot_ = (CheckHasBit(cached_has_bits, 0x00000001U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.snapshot_)
+                : nullptr;
+  _impl_.t_ns_ = from._impl_.t_ns_;
+
+  // @@protoc_insertion_point(copy_constructor:ego.v1.ConfigSnapshotFrame)
+}
+PROTOBUF_NDEBUG_INLINE ConfigSnapshotFrame::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void ConfigSnapshotFrame::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, snapshot_),
+           0,
+           offsetof(Impl_, t_ns_) -
+               offsetof(Impl_, snapshot_) +
+               sizeof(Impl_::t_ns_));
+}
+ConfigSnapshotFrame::~ConfigSnapshotFrame() {
+  // @@protoc_insertion_point(destructor:ego.v1.ConfigSnapshotFrame)
+  SharedDtor(*this);
+}
+inline void ConfigSnapshotFrame::SharedDtor(MessageLite& self) {
+  ConfigSnapshotFrame& this_ = static_cast<ConfigSnapshotFrame&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.snapshot_;
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ConfigSnapshotFrame::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ConfigSnapshotFrame(arena);
+}
+constexpr auto ConfigSnapshotFrame::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(ConfigSnapshotFrame),
+                                            alignof(ConfigSnapshotFrame));
+}
+constexpr auto ConfigSnapshotFrame::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ConfigSnapshotFrame_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ConfigSnapshotFrame::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ConfigSnapshotFrame>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ConfigSnapshotFrame::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ConfigSnapshotFrame>(), &ConfigSnapshotFrame::ByteSizeLong,
+              &ConfigSnapshotFrame::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_._cached_size_),
+          false,
+      },
+      &ConfigSnapshotFrame::kDescriptorMethods,
+      &descriptor_table_ego_2fv1_2fego_5fdata_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ConfigSnapshotFrame_class_data_ =
+        ConfigSnapshotFrame::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ConfigSnapshotFrame::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ConfigSnapshotFrame_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ConfigSnapshotFrame_class_data_.tc_table);
+  return ConfigSnapshotFrame_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 0, 2>
+ConfigSnapshotFrame::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    ConfigSnapshotFrame_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::ego::v1::ConfigSnapshotFrame>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // .ego.v1.DeviceConfigSnapshot snapshot = 2;
+    {::_pbi::TcParser::FastMtS1,
+     {18, 0, 0,
+      PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.snapshot_)}},
+    // fixed64 t_ns = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.t_ns_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // fixed64 t_ns = 1;
+    {PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.t_ns_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
+    // .ego.v1.DeviceConfigSnapshot snapshot = 2;
+    {PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.snapshot_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+  }},
+  {{
+      {::_pbi::TcParser::GetTable<::ego::v1::DeviceConfigSnapshot>()},
+  }},
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void ConfigSnapshotFrame::Clear() {
+// @@protoc_insertion_point(message_clear_start:ego.v1.ConfigSnapshotFrame)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    ABSL_DCHECK(_impl_.snapshot_ != nullptr);
+    _impl_.snapshot_->Clear();
+  }
+  _impl_.t_ns_ = ::uint64_t{0u};
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ConfigSnapshotFrame::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ConfigSnapshotFrame& this_ = static_cast<const ConfigSnapshotFrame&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ConfigSnapshotFrame::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ConfigSnapshotFrame& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.ConfigSnapshotFrame)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // fixed64 t_ns = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (this_._internal_t_ns() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
+          1, this_._internal_t_ns(), target);
+    }
+  }
+
+  // .ego.v1.DeviceConfigSnapshot snapshot = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        2, *this_._impl_.snapshot_, this_._impl_.snapshot_->GetCachedSize(), target,
+        stream);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.ConfigSnapshotFrame)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ConfigSnapshotFrame::ByteSizeLong(const MessageLite& base) {
+  const ConfigSnapshotFrame& this_ = static_cast<const ConfigSnapshotFrame&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ConfigSnapshotFrame::ByteSizeLong() const {
+  const ConfigSnapshotFrame& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:ego.v1.ConfigSnapshotFrame)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // .ego.v1.DeviceConfigSnapshot snapshot = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.snapshot_);
+    }
+    // fixed64 t_ns = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (this_._internal_t_ns() != 0) {
+        total_size += 9;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ConfigSnapshotFrame::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<ConfigSnapshotFrame*>(&to_msg);
+  auto& from = static_cast<const ConfigSnapshotFrame&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  ::google::protobuf::Arena* arena = _this->GetArena();
+  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.ConfigSnapshotFrame)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      ABSL_DCHECK(from._impl_.snapshot_ != nullptr);
+      if (_this->_impl_.snapshot_ == nullptr) {
+        _this->_impl_.snapshot_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.snapshot_);
+      } else {
+        _this->_impl_.snapshot_->MergeFrom(*from._impl_.snapshot_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (from._internal_t_ns() != 0) {
+        _this->_impl_.t_ns_ = from._impl_.t_ns_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void ConfigSnapshotFrame::CopyFrom(const ConfigSnapshotFrame& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.ConfigSnapshotFrame)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ConfigSnapshotFrame::InternalSwap(ConfigSnapshotFrame* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.t_ns_)
+      + sizeof(ConfigSnapshotFrame::_impl_.t_ns_)
+      - PROTOBUF_FIELD_OFFSET(ConfigSnapshotFrame, _impl_.snapshot_)>(
+          reinterpret_cast<char*>(&_impl_.snapshot_),
+          reinterpret_cast<char*>(&other->_impl_.snapshot_));
+}
+
+::google::protobuf::Metadata ConfigSnapshotFrame::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
 // ===================================================================
 
 class AudioBlock::_Internal {
@@ -3623,16 +4400,16 @@ GpsFix::GetClassData() const {
   return GpsFix_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 11, 0, 0, 2>
+const ::_pbi::TcParseTable<4, 12, 0, 0, 2>
 GpsFix::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(GpsFix, _impl_._has_bits_),
     0, // no _extensions_
-    11, 120,  // max_field_number, fast_idx_mask
+    12, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294965248,  // skipmap
+    4294963200,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    11,  // num_field_entries
+    12,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     GpsFix_class_data_.base(),
@@ -3683,11 +4460,14 @@ GpsFix::_table_ = {
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GpsFix, _impl_.satellites_), 9>(),
      {80, 9, 0,
       PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.satellites_)}},
-    // uint32 flags = 11;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GpsFix, _impl_.flags_), 10>(),
+    // uint32 rtk_status = 11;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GpsFix, _impl_.rtk_status_), 10>(),
      {88, 10, 0,
+      PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.rtk_status_)}},
+    // uint32 flags = 12;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GpsFix, _impl_.flags_), 11>(),
+     {96, 11, 0,
       PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.flags_)}},
-    {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -3714,8 +4494,10 @@ GpsFix::_table_ = {
     {PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.fix_type_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // uint32 satellites = 10;
     {PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.satellites_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 flags = 11;
-    {PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.flags_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 rtk_status = 11;
+    {PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.rtk_status_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 flags = 12;
+    {PROTOBUF_FIELD_OFFSET(GpsFix, _impl_.flags_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
@@ -3734,7 +4516,7 @@ PROTOBUF_NOINLINE void GpsFix::Clear() {
         reinterpret_cast<char*>(&_impl_.v_acc_m_) -
         reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.v_acc_m_));
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000f00U)) {
     ::memset(&_impl_.fix_type_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.flags_) -
         reinterpret_cast<char*>(&_impl_.fix_type_)) + sizeof(_impl_.flags_));
@@ -3852,12 +4634,21 @@ PROTOBUF_NOINLINE void GpsFix::Clear() {
     }
   }
 
-  // uint32 flags = 11;
+  // uint32 rtk_status = 11;
   if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    if (this_._internal_rtk_status() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          11, this_._internal_rtk_status(), target);
+    }
+  }
+
+  // uint32 flags = 12;
+  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
     if (this_._internal_flags() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          11, this_._internal_flags(), target);
+          12, this_._internal_flags(), target);
     }
   }
 
@@ -3936,7 +4727,7 @@ PROTOBUF_NOINLINE void GpsFix::Clear() {
       }
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000f00U)) {
     // .ego.v1.GpsFixType fix_type = 9;
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (this_._internal_fix_type() != 0) {
@@ -3951,8 +4742,15 @@ PROTOBUF_NOINLINE void GpsFix::Clear() {
             this_._internal_satellites());
       }
     }
-    // uint32 flags = 11;
+    // uint32 rtk_status = 11;
     if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (this_._internal_rtk_status() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_rtk_status());
+      }
+    }
+    // uint32 flags = 12;
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       if (this_._internal_flags() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_flags());
@@ -4019,7 +4817,7 @@ void GpsFix::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000f00U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (from._internal_fix_type() != 0) {
         _this->_impl_.fix_type_ = from._impl_.fix_type_;
@@ -4031,6 +4829,11 @@ void GpsFix::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (from._internal_rtk_status() != 0) {
+        _this->_impl_.rtk_status_ = from._impl_.rtk_status_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       if (from._internal_flags() != 0) {
         _this->_impl_.flags_ = from._impl_.flags_;
       }
@@ -4193,9 +4996,9 @@ TimeStatus::_table_ = {
     {::_pbi::TcParser::FastF64S1,
      {17, 1, 0,
       PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.monotonic_ns_)}},
-    // sint64 utc_offset_ns = 3;
-    {::_pbi::TcParser::FastZ64S1,
-     {24, 2, 0,
+    // sfixed64 utc_offset_ns = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 2, 0,
       PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.utc_offset_ns_)}},
     // .ego.v1.TimeSource time_source = 4;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TimeStatus, _impl_.time_source_), 3>(),
@@ -4220,8 +5023,8 @@ TimeStatus::_table_ = {
     {PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.t_ns_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
     // fixed64 monotonic_ns = 2;
     {PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.monotonic_ns_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // sint64 utc_offset_ns = 3;
-    {PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.utc_offset_ns_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kSInt64)},
+    // sfixed64 utc_offset_ns = 3;
+    {PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.utc_offset_ns_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kSFixed64)},
     // .ego.v1.TimeSource time_source = 4;
     {PROTOBUF_FIELD_OFFSET(TimeStatus, _impl_.time_source_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // uint32 sync_status = 5;
@@ -4289,11 +5092,11 @@ PROTOBUF_NOINLINE void TimeStatus::Clear() {
     }
   }
 
-  // sint64 utc_offset_ns = 3;
+  // sfixed64 utc_offset_ns = 3;
   if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     if (this_._internal_utc_offset_ns() != 0) {
       target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteSInt64ToArray(
+      target = ::_pbi::WireFormatLite::WriteSFixed64ToArray(
           3, this_._internal_utc_offset_ns(), target);
     }
   }
@@ -4372,11 +5175,10 @@ PROTOBUF_NOINLINE void TimeStatus::Clear() {
         total_size += 9;
       }
     }
-    // sint64 utc_offset_ns = 3;
+    // sfixed64 utc_offset_ns = 3;
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (this_._internal_utc_offset_ns() != 0) {
-        total_size += ::_pbi::WireFormatLite::SInt64SizePlusOne(
-            this_._internal_utc_offset_ns());
+        total_size += 9;
       }
     }
     // .ego.v1.TimeSource time_source = 4;
@@ -4529,9 +5331,9 @@ inline void SystemStatus::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, t_ns_),
            0,
-           offsetof(Impl_, cpu_load_sharc1_) -
+           offsetof(Impl_, cpu_load_sharc0_) -
                offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::cpu_load_sharc1_));
+               sizeof(Impl_::cpu_load_sharc0_));
 }
 SystemStatus::~SystemStatus() {
   // @@protoc_insertion_point(destructor:ego.v1.SystemStatus)
@@ -4595,9 +5397,9 @@ SystemStatus::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_._has_bits_),
     0, // no _extensions_
-    13, 120,  // max_field_number, fast_idx_mask
+    22, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294959104,  // skipmap
+    4291289536,  // skipmap
     offsetof(decltype(_table_), field_entries),
     13,  // num_field_entries
     0,  // num_aux_entries
@@ -4634,34 +5436,25 @@ SystemStatus::_table_ = {
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SystemStatus, _impl_.network_status_), 5>(),
      {48, 5, 0,
       PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.network_status_)}},
-    // uint32 audio_overruns = 7;
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 audio_overruns = 10;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SystemStatus, _impl_.audio_overruns_), 6>(),
-     {56, 6, 0,
+     {80, 6, 0,
       PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.audio_overruns_)}},
-    // uint32 imu_fifo_overruns = 8;
+    // uint32 imu_fifo_overruns = 11;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SystemStatus, _impl_.imu_fifo_overruns_), 7>(),
-     {64, 7, 0,
+     {88, 7, 0,
       PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.imu_fifo_overruns_)}},
-    // uint32 can_rx_errors = 9;
+    // uint32 can_rx_errors = 12;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SystemStatus, _impl_.can_rx_errors_), 8>(),
-     {72, 8, 0,
+     {96, 8, 0,
       PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.can_rx_errors_)}},
-    // uint32 dropped_frames = 10;
+    // uint32 dropped_frames = 13;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SystemStatus, _impl_.dropped_frames_), 9>(),
-     {80, 9, 0,
+     {104, 9, 0,
       PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.dropped_frames_)}},
-    // float cpu_load_arm = 11;
-    {::_pbi::TcParser::FastF32S1,
-     {93, 10, 0,
-      PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_arm_)}},
-    // float cpu_load_sharc0 = 12;
-    {::_pbi::TcParser::FastF32S1,
-     {101, 11, 0,
-      PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc0_)}},
-    // float cpu_load_sharc1 = 13;
-    {::_pbi::TcParser::FastF32S1,
-     {109, 12, 0,
-      PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc1_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
@@ -4679,20 +5472,20 @@ SystemStatus::_table_ = {
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.gps_status_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // uint32 network_status = 6;
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.network_status_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 audio_overruns = 7;
+    // uint32 audio_overruns = 10;
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.audio_overruns_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 imu_fifo_overruns = 8;
+    // uint32 imu_fifo_overruns = 11;
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.imu_fifo_overruns_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 can_rx_errors = 9;
+    // uint32 can_rx_errors = 12;
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.can_rx_errors_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 dropped_frames = 10;
+    // uint32 dropped_frames = 13;
     {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.dropped_frames_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // float cpu_load_arm = 11;
-    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_arm_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float cpu_load_sharc0 = 12;
-    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc0_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float cpu_load_sharc1 = 13;
-    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc1_), _Internal::kHasBitsOffset + 12, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float cpu_load_arm = 20;
+    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_arm_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float cpu_load_sharc0 = 21;
+    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc0_), _Internal::kHasBitsOffset + 12, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float cpu_load_sharc1 = 22;
+    {PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc1_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
   }},
   // no aux_entries
   {{
@@ -4713,8 +5506,8 @@ PROTOBUF_NOINLINE void SystemStatus::Clear() {
   }
   if (BatchCheckHasBit(cached_has_bits, 0x00001f00U)) {
     ::memset(&_impl_.can_rx_errors_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.cpu_load_sharc1_) -
-        reinterpret_cast<char*>(&_impl_.can_rx_errors_)) + sizeof(_impl_.cpu_load_sharc1_));
+        reinterpret_cast<char*>(&_impl_.cpu_load_sharc0_) -
+        reinterpret_cast<char*>(&_impl_.can_rx_errors_)) + sizeof(_impl_.cpu_load_sharc0_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -4793,66 +5586,66 @@ PROTOBUF_NOINLINE void SystemStatus::Clear() {
     }
   }
 
-  // uint32 audio_overruns = 7;
+  // uint32 audio_overruns = 10;
   if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (this_._internal_audio_overruns() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          7, this_._internal_audio_overruns(), target);
+          10, this_._internal_audio_overruns(), target);
     }
   }
 
-  // uint32 imu_fifo_overruns = 8;
+  // uint32 imu_fifo_overruns = 11;
   if (CheckHasBit(cached_has_bits, 0x00000080U)) {
     if (this_._internal_imu_fifo_overruns() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          8, this_._internal_imu_fifo_overruns(), target);
+          11, this_._internal_imu_fifo_overruns(), target);
     }
   }
 
-  // uint32 can_rx_errors = 9;
+  // uint32 can_rx_errors = 12;
   if (CheckHasBit(cached_has_bits, 0x00000100U)) {
     if (this_._internal_can_rx_errors() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          9, this_._internal_can_rx_errors(), target);
+          12, this_._internal_can_rx_errors(), target);
     }
   }
 
-  // uint32 dropped_frames = 10;
+  // uint32 dropped_frames = 13;
   if (CheckHasBit(cached_has_bits, 0x00000200U)) {
     if (this_._internal_dropped_frames() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          10, this_._internal_dropped_frames(), target);
+          13, this_._internal_dropped_frames(), target);
     }
   }
 
-  // float cpu_load_arm = 11;
-  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+  // float cpu_load_arm = 20;
+  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_arm()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          11, this_._internal_cpu_load_arm(), target);
+          20, this_._internal_cpu_load_arm(), target);
     }
   }
 
-  // float cpu_load_sharc0 = 12;
-  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+  // float cpu_load_sharc0 = 21;
+  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_sharc0()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          12, this_._internal_cpu_load_sharc0(), target);
+          21, this_._internal_cpu_load_sharc0(), target);
     }
   }
 
-  // float cpu_load_sharc1 = 13;
-  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+  // float cpu_load_sharc1 = 22;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_sharc1()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          13, this_._internal_cpu_load_sharc1(), target);
+          22, this_._internal_cpu_load_sharc1(), target);
     }
   }
 
@@ -4923,14 +5716,14 @@ PROTOBUF_NOINLINE void SystemStatus::Clear() {
             this_._internal_network_status());
       }
     }
-    // uint32 audio_overruns = 7;
+    // uint32 audio_overruns = 10;
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (this_._internal_audio_overruns() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_audio_overruns());
       }
     }
-    // uint32 imu_fifo_overruns = 8;
+    // uint32 imu_fifo_overruns = 11;
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
       if (this_._internal_imu_fifo_overruns() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
@@ -4939,36 +5732,36 @@ PROTOBUF_NOINLINE void SystemStatus::Clear() {
     }
   }
   if (BatchCheckHasBit(cached_has_bits, 0x00001f00U)) {
-    // uint32 can_rx_errors = 9;
+    // uint32 can_rx_errors = 12;
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (this_._internal_can_rx_errors() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_can_rx_errors());
       }
     }
-    // uint32 dropped_frames = 10;
+    // uint32 dropped_frames = 13;
     if (CheckHasBit(cached_has_bits, 0x00000200U)) {
       if (this_._internal_dropped_frames() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_dropped_frames());
       }
     }
-    // float cpu_load_arm = 11;
+    // float cpu_load_sharc1 = 22;
     if (CheckHasBit(cached_has_bits, 0x00000400U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_arm()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float cpu_load_sharc0 = 12;
-    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_sharc0()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float cpu_load_sharc1 = 13;
-    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_sharc1()) != 0) {
-        total_size += 5;
+        total_size += 6;
+      }
+    }
+    // float cpu_load_arm = 20;
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_arm()) != 0) {
+        total_size += 6;
+      }
+    }
+    // float cpu_load_sharc0 = 21;
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_cpu_load_sharc0()) != 0) {
+        total_size += 6;
       }
     }
   }
@@ -5044,18 +5837,18 @@ void SystemStatus::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_cpu_load_sharc1()) != 0) {
+        _this->_impl_.cpu_load_sharc1_ = from._impl_.cpu_load_sharc1_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
       if (::absl::bit_cast<::uint32_t>(from._internal_cpu_load_arm()) != 0) {
         _this->_impl_.cpu_load_arm_ = from._impl_.cpu_load_arm_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
       if (::absl::bit_cast<::uint32_t>(from._internal_cpu_load_sharc0()) != 0) {
         _this->_impl_.cpu_load_sharc0_ = from._impl_.cpu_load_sharc0_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_cpu_load_sharc1()) != 0) {
-        _this->_impl_.cpu_load_sharc1_ = from._impl_.cpu_load_sharc1_;
       }
     }
   }
@@ -5077,8 +5870,8 @@ void SystemStatus::InternalSwap(SystemStatus* PROTOBUF_RESTRICT PROTOBUF_NONNULL
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc1_)
-      + sizeof(SystemStatus::_impl_.cpu_load_sharc1_)
+      PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.cpu_load_sharc0_)
+      + sizeof(SystemStatus::_impl_.cpu_load_sharc0_)
       - PROTOBUF_FIELD_OFFSET(SystemStatus, _impl_.t_ns_)>(
           reinterpret_cast<char*>(&_impl_.t_ns_),
           reinterpret_cast<char*>(&other->_impl_.t_ns_));
@@ -5613,6 +6406,12 @@ class MarkerEvent::_Internal {
       8 * PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_._has_bits_);
 };
 
+void MarkerEvent::clear_tags() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tags_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000001U);
+}
 MarkerEvent::MarkerEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, MarkerEvent_class_data_.base()) {
@@ -5628,8 +6427,9 @@ PROTOBUF_NDEBUG_INLINE MarkerEvent::Impl_::Impl_(
     [[maybe_unused]] const ::ego::v1::MarkerEvent& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
-        marker_type_(arena, from.marker_type_),
-        text_(arena, from.text_) {}
+        tags_{visibility, arena, from.tags_},
+        marker_id_(arena, from.marker_id_),
+        description_(arena, from.description_) {}
 
 MarkerEvent::MarkerEvent(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -5644,13 +6444,7 @@ MarkerEvent::MarkerEvent(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  ::memcpy(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, t_ns_),
-           reinterpret_cast<const char*>(&from._impl_) +
-               offsetof(Impl_, t_ns_),
-           offsetof(Impl_, flags_) -
-               offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::flags_));
+  _impl_.t_ns_ = from._impl_.t_ns_;
 
   // @@protoc_insertion_point(copy_constructor:ego.v1.MarkerEvent)
 }
@@ -5658,17 +6452,13 @@ PROTOBUF_NDEBUG_INLINE MarkerEvent::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
-        marker_type_(arena),
-        text_(arena) {}
+        tags_{visibility, arena},
+        marker_id_(arena),
+        description_(arena) {}
 
 inline void MarkerEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  ::memset(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, t_ns_),
-           0,
-           offsetof(Impl_, flags_) -
-               offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::flags_));
+  _impl_.t_ns_ = {};
 }
 MarkerEvent::~MarkerEvent() {
   // @@protoc_insertion_point(destructor:ego.v1.MarkerEvent)
@@ -5681,8 +6471,8 @@ inline void MarkerEvent::SharedDtor(MessageLite& self) {
   }
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.marker_type_.Destroy();
-  this_._impl_.text_.Destroy();
+  this_._impl_.marker_id_.Destroy();
+  this_._impl_.description_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -5692,8 +6482,20 @@ inline void* PROTOBUF_NONNULL MarkerEvent::PlacementNew_(
   return ::new (mem) MarkerEvent(arena);
 }
 constexpr auto MarkerEvent::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(MarkerEvent),
-                                            alignof(MarkerEvent));
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.tags_) +
+          decltype(MarkerEvent::_impl_.tags_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(MarkerEvent), alignof(MarkerEvent), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&MarkerEvent::PlacementNew_,
+                                 sizeof(MarkerEvent),
+                                 alignof(MarkerEvent));
+  }
 }
 constexpr auto MarkerEvent::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
@@ -5729,7 +6531,7 @@ MarkerEvent::GetClassData() const {
   return MarkerEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 42, 2>
+const ::_pbi::TcParseTable<2, 4, 1, 47, 2>
 MarkerEvent::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_._has_bits_),
@@ -5739,8 +6541,8 @@ MarkerEvent::_table_ = {
     4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
     4,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     MarkerEvent_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -5748,40 +6550,42 @@ MarkerEvent::_table_ = {
     ::_pbi::TcParser::GetTable<::ego::v1::MarkerEvent>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // uint32 flags = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(MarkerEvent, _impl_.flags_), 3>(),
-     {32, 3, 0,
-      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.flags_)}},
+    // repeated .ego.v1.KeyValue tags = 4;
+    {::_pbi::TcParser::FastMtR1,
+     {34, 0, 0,
+      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.tags_)}},
     // fixed64 t_ns = 1;
     {::_pbi::TcParser::FastF64S1,
-     {9, 2, 0,
+     {9, 3, 0,
       PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.t_ns_)}},
-    // string marker_type = 2;
+    // string marker_id = 2;
     {::_pbi::TcParser::FastUS1,
-     {18, 0, 0,
-      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.marker_type_)}},
-    // string text = 3;
+     {18, 1, 0,
+      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.marker_id_)}},
+    // string description = 3;
     {::_pbi::TcParser::FastUS1,
-     {26, 1, 0,
-      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.text_)}},
+     {26, 2, 0,
+      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.description_)}},
   }}, {{
     65535, 65535
   }}, {{
     // fixed64 t_ns = 1;
-    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.t_ns_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // string marker_type = 2;
-    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.marker_type_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string text = 3;
-    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.text_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // uint32 flags = 4;
-    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.flags_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.t_ns_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
+    // string marker_id = 2;
+    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.marker_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string description = 3;
+    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.description_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated .ego.v1.KeyValue tags = 4;
+    {PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.tags_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
-  // no aux_entries
   {{
-    "\22\0\13\4\0\0\0\0"
+      {::_pbi::TcParser::GetTable<::ego::v1::KeyValue>()},
+  }},
+  {{
+    "\22\0\11\13\0\0\0\0"
     "ego.v1.MarkerEvent"
-    "marker_type"
-    "text"
+    "marker_id"
+    "description"
   }},
 };
 PROTOBUF_NOINLINE void MarkerEvent::Clear() {
@@ -5792,19 +6596,18 @@ PROTOBUF_NOINLINE void MarkerEvent::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      _impl_.marker_type_.ClearNonDefaultToEmpty();
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _impl_.tags_.Clear();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _impl_.text_.ClearNonDefaultToEmpty();
+      _impl_.marker_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.description_.ClearNonDefaultToEmpty();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000cU)) {
-    ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.flags_) -
-        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.flags_));
-  }
+  _impl_.t_ns_ = ::uint64_t{0u};
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -5829,7 +6632,7 @@ PROTOBUF_NOINLINE void MarkerEvent::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // fixed64 t_ns = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (this_._internal_t_ns() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
@@ -5837,32 +6640,36 @@ PROTOBUF_NOINLINE void MarkerEvent::Clear() {
     }
   }
 
-  // string marker_type = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    if (!this_._internal_marker_type().empty()) {
-      const ::std::string& _s = this_._internal_marker_type();
+  // string marker_id = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_marker_id().empty()) {
+      const ::std::string& _s = this_._internal_marker_id();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.MarkerEvent.marker_type");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.MarkerEvent.marker_id");
       target = stream->WriteStringMaybeAliased(2, _s, target);
     }
   }
 
-  // string text = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (!this_._internal_text().empty()) {
-      const ::std::string& _s = this_._internal_text();
+  // string description = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_description().empty()) {
+      const ::std::string& _s = this_._internal_description();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.MarkerEvent.text");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.MarkerEvent.description");
       target = stream->WriteStringMaybeAliased(3, _s, target);
     }
   }
 
-  // uint32 flags = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (this_._internal_flags() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          4, this_._internal_flags(), target);
+  // repeated .ego.v1.KeyValue tags = 4;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_tags_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_tags().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              4, repfield, repfield.GetCachedSize(),
+              target, stream);
     }
   }
 
@@ -5892,31 +6699,31 @@ PROTOBUF_NOINLINE void MarkerEvent::Clear() {
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
   if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    // string marker_type = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!this_._internal_marker_type().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_marker_type());
+    // repeated .ego.v1.KeyValue tags = 4;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      total_size += 1UL * this_._internal_tags_size();
+      for (const auto& msg : this_._internal_tags()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
       }
     }
-    // string text = 3;
+    // string marker_id = 2;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!this_._internal_text().empty()) {
+      if (!this_._internal_marker_id().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_text());
+                                        this_._internal_marker_id());
+      }
+    }
+    // string description = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_description().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_description());
       }
     }
     // fixed64 t_ns = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_t_ns() != 0) {
         total_size += 9;
-      }
-    }
-    // uint32 flags = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (this_._internal_flags() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_flags());
       }
     }
   }
@@ -5932,6 +6739,7 @@ void MarkerEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
+  ::google::protobuf::Arena* arena = _this->GetArena();
   // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.MarkerEvent)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
@@ -5939,32 +6747,32 @@ void MarkerEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
 
   cached_has_bits = from._impl_._has_bits_[0];
   if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!from._internal_marker_type().empty()) {
-        _this->_internal_set_marker_type(from._internal_marker_type());
-      } else {
-        if (_this->_impl_.marker_type_.IsDefault()) {
-          _this->_internal_set_marker_type("");
-        }
-      }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _this->_internal_mutable_tags()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_tags());
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!from._internal_text().empty()) {
-        _this->_internal_set_text(from._internal_text());
+      if (!from._internal_marker_id().empty()) {
+        _this->_internal_set_marker_id(from._internal_marker_id());
       } else {
-        if (_this->_impl_.text_.IsDefault()) {
-          _this->_internal_set_text("");
+        if (_this->_impl_.marker_id_.IsDefault()) {
+          _this->_internal_set_marker_id("");
         }
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (from._internal_t_ns() != 0) {
-        _this->_impl_.t_ns_ = from._impl_.t_ns_;
+      if (!from._internal_description().empty()) {
+        _this->_internal_set_description(from._internal_description());
+      } else {
+        if (_this->_impl_.description_.IsDefault()) {
+          _this->_internal_set_description("");
+        }
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (from._internal_flags() != 0) {
-        _this->_impl_.flags_ = from._impl_.flags_;
+      if (from._internal_t_ns() != 0) {
+        _this->_impl_.t_ns_ = from._impl_.t_ns_;
       }
     }
   }
@@ -5987,14 +6795,10 @@ void MarkerEvent::InternalSwap(MarkerEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.marker_type_, &other->_impl_.marker_type_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.text_, &other->_impl_.text_, arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.flags_)
-      + sizeof(MarkerEvent::_impl_.flags_)
-      - PROTOBUF_FIELD_OFFSET(MarkerEvent, _impl_.t_ns_)>(
-          reinterpret_cast<char*>(&_impl_.t_ns_),
-          reinterpret_cast<char*>(&other->_impl_.t_ns_));
+  _impl_.tags_.InternalSwap(&other->_impl_.tags_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.marker_id_, &other->_impl_.marker_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.description_, &other->_impl_.description_, arena);
+  swap(_impl_.t_ns_, other->_impl_.t_ns_);
 }
 
 ::google::protobuf::Metadata MarkerEvent::GetMetadata() const {
@@ -6002,40 +6806,41 @@ void MarkerEvent::InternalSwap(MarkerEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 }
 // ===================================================================
 
-class SessionEnd::_Internal {
+class SessionEnded::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<SessionEnd>()._impl_._has_bits_);
+      decltype(::std::declval<SessionEnded>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_._has_bits_);
 };
 
-SessionEnd::SessionEnd(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+SessionEnded::SessionEnded(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, SessionEnd_class_data_.base()) {
+    : ::google::protobuf::Message(arena, SessionEnded_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(arena_constructor:ego.v1.SessionEnded)
 }
-PROTOBUF_NDEBUG_INLINE SessionEnd::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE SessionEnded::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::ego::v1::SessionEnd& from_msg)
+    [[maybe_unused]] const ::ego::v1::SessionEnded& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
+        session_id_(arena, from.session_id_),
         reason_(arena, from.reason_) {}
 
-SessionEnd::SessionEnd(
+SessionEnded::SessionEnded(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const SessionEnd& from)
+    const SessionEnded& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, SessionEnd_class_data_.base()) {
+    : ::google::protobuf::Message(arena, SessionEnded_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  SessionEnd* const _this = this;
+  SessionEnded* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
@@ -6044,180 +6849,197 @@ SessionEnd::SessionEnd(
                offsetof(Impl_, t_ns_),
            reinterpret_cast<const char*>(&from._impl_) +
                offsetof(Impl_, t_ns_),
-           offsetof(Impl_, status_) -
+           offsetof(Impl_, total_bytes_) -
                offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::status_));
+               sizeof(Impl_::total_bytes_));
 
-  // @@protoc_insertion_point(copy_constructor:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(copy_constructor:ego.v1.SessionEnded)
 }
-PROTOBUF_NDEBUG_INLINE SessionEnd::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE SessionEnded::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
+        session_id_(arena),
         reason_(arena) {}
 
-inline void SessionEnd::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void SessionEnded::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, t_ns_),
            0,
-           offsetof(Impl_, status_) -
+           offsetof(Impl_, total_bytes_) -
                offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::status_));
+               sizeof(Impl_::total_bytes_));
 }
-SessionEnd::~SessionEnd() {
-  // @@protoc_insertion_point(destructor:ego.v1.SessionEnd)
+SessionEnded::~SessionEnded() {
+  // @@protoc_insertion_point(destructor:ego.v1.SessionEnded)
   SharedDtor(*this);
 }
-inline void SessionEnd::SharedDtor(MessageLite& self) {
-  SessionEnd& this_ = static_cast<SessionEnd&>(self);
+inline void SessionEnded::SharedDtor(MessageLite& self) {
+  SessionEnded& this_ = static_cast<SessionEnded&>(self);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.session_id_.Destroy();
   this_._impl_.reason_.Destroy();
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL SessionEnd::PlacementNew_(
+inline void* PROTOBUF_NONNULL SessionEnded::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) SessionEnd(arena);
+  return ::new (mem) SessionEnded(arena);
 }
-constexpr auto SessionEnd::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(SessionEnd),
-                                            alignof(SessionEnd));
+constexpr auto SessionEnded::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(SessionEnded),
+                                            alignof(SessionEnded));
 }
-constexpr auto SessionEnd::InternalGenerateClassData_() {
+constexpr auto SessionEnded::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_SessionEnd_default_instance_._instance,
+          &_SessionEnded_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &SessionEnd::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<SessionEnd>(),
+          &SessionEnded::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<SessionEnded>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &SessionEnd::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<SessionEnd>(), &SessionEnd::ByteSizeLong,
-              &SessionEnd::_InternalSerialize,
+          &SessionEnded::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<SessionEnded>(), &SessionEnded::ByteSizeLong,
+              &SessionEnded::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_._cached_size_),
           false,
       },
-      &SessionEnd::kDescriptorMethods,
+      &SessionEnded::kDescriptorMethods,
       &descriptor_table_ego_2fv1_2fego_5fdata_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull SessionEnd_class_data_ =
-        SessionEnd::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull SessionEnded_class_data_ =
+        SessionEnded::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-SessionEnd::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&SessionEnd_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(SessionEnd_class_data_.tc_table);
-  return SessionEnd_class_data_.base();
+SessionEnded::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&SessionEnded_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(SessionEnded_class_data_.tc_table);
+  return SessionEnded_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 32, 2>
-SessionEnd::_table_ = {
+const ::_pbi::TcParseTable<3, 5, 0, 44, 2>
+SessionEnded::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    SessionEnd_class_data_.base(),
+    SessionEnded_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::ego::v1::SessionEnd>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::ego::v1::SessionEnded>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // string reason = 4;
-    {::_pbi::TcParser::FastUS1,
-     {34, 0, 0,
-      PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.reason_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // fixed64 t_ns = 1;
     {::_pbi::TcParser::FastF64S1,
-     {9, 1, 0,
-      PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.t_ns_)}},
-    // uint64 total_frames = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(SessionEnd, _impl_.total_frames_), 2>(),
-     {16, 2, 0,
-      PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.total_frames_)}},
-    // uint32 status = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(SessionEnd, _impl_.status_), 3>(),
-     {24, 3, 0,
-      PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.status_)}},
+     {9, 2, 0,
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.t_ns_)}},
+    // string session_id = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 0, 0,
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.session_id_)}},
+    // string reason = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 1, 0,
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.reason_)}},
+    // uint64 total_frames = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(SessionEnded, _impl_.total_frames_), 3>(),
+     {32, 3, 0,
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.total_frames_)}},
+    // uint64 total_bytes = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(SessionEnded, _impl_.total_bytes_), 4>(),
+     {40, 4, 0,
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.total_bytes_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // fixed64 t_ns = 1;
-    {PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.t_ns_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // uint64 total_frames = 2;
-    {PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.total_frames_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint32 status = 3;
-    {PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.status_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // string reason = 4;
-    {PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.reason_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.t_ns_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
+    // string session_id = 2;
+    {PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.session_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string reason = 3;
+    {PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.reason_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint64 total_frames = 4;
+    {PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.total_frames_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 total_bytes = 5;
+    {PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.total_bytes_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   // no aux_entries
   {{
-    "\21\0\0\0\6\0\0\0"
-    "ego.v1.SessionEnd"
+    "\23\0\12\6\0\0\0\0"
+    "ego.v1.SessionEnded"
+    "session_id"
     "reason"
   }},
 };
-PROTOBUF_NOINLINE void SessionEnd::Clear() {
-// @@protoc_insertion_point(message_clear_start:ego.v1.SessionEnd)
+PROTOBUF_NOINLINE void SessionEnded::Clear() {
+// @@protoc_insertion_point(message_clear_start:ego.v1.SessionEnded)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _impl_.reason_.ClearNonDefaultToEmpty();
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.session_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.reason_.ClearNonDefaultToEmpty();
+    }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000eU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001cU)) {
     ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.status_) -
-        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.status_));
+        reinterpret_cast<char*>(&_impl_.total_bytes_) -
+        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.total_bytes_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL SessionEnd::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL SessionEnded::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const SessionEnd& this_ = static_cast<const SessionEnd&>(base);
+  const SessionEnded& this_ = static_cast<const SessionEnded&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL SessionEnd::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL SessionEnded::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const SessionEnd& this_ = *this;
+  const SessionEnded& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.SessionEnded)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // fixed64 t_ns = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     if (this_._internal_t_ns() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
@@ -6225,31 +7047,41 @@ PROTOBUF_NOINLINE void SessionEnd::Clear() {
     }
   }
 
-  // uint64 total_frames = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    if (this_._internal_total_frames() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          2, this_._internal_total_frames(), target);
-    }
-  }
-
-  // uint32 status = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (this_._internal_status() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          3, this_._internal_status(), target);
-    }
-  }
-
-  // string reason = 4;
+  // string session_id = 2;
   if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_session_id().empty()) {
+      const ::std::string& _s = this_._internal_session_id();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.SessionEnded.session_id");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string reason = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
     if (!this_._internal_reason().empty()) {
       const ::std::string& _s = this_._internal_reason();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.SessionEnd.reason");
-      target = stream->WriteStringMaybeAliased(4, _s, target);
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.SessionEnded.reason");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // uint64 total_frames = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (this_._internal_total_frames() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_total_frames(), target);
+    }
+  }
+
+  // uint64 total_bytes = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (this_._internal_total_bytes() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          5, this_._internal_total_bytes(), target);
     }
   }
 
@@ -6258,18 +7090,18 @@ PROTOBUF_NOINLINE void SessionEnd::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.SessionEnded)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t SessionEnd::ByteSizeLong(const MessageLite& base) {
-  const SessionEnd& this_ = static_cast<const SessionEnd&>(base);
+::size_t SessionEnded::ByteSizeLong(const MessageLite& base) {
+  const SessionEnded& this_ = static_cast<const SessionEnded&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t SessionEnd::ByteSizeLong() const {
-  const SessionEnd& this_ = *this;
+::size_t SessionEnded::ByteSizeLong() const {
+  const SessionEnded& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(message_byte_size_start:ego.v1.SessionEnded)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -6278,32 +7110,39 @@ PROTOBUF_NOINLINE void SessionEnd::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    // string reason = 4;
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    // string session_id = 2;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_session_id().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_session_id());
+      }
+    }
+    // string reason = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       if (!this_._internal_reason().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_reason());
       }
     }
     // fixed64 t_ns = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (this_._internal_t_ns() != 0) {
         total_size += 9;
       }
     }
-    // uint64 total_frames = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    // uint64 total_frames = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_total_frames() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_total_frames());
       }
     }
-    // uint32 status = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (this_._internal_status() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_status());
+    // uint64 total_bytes = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (this_._internal_total_bytes() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_total_bytes());
       }
     }
   }
@@ -6311,22 +7150,31 @@ PROTOBUF_NOINLINE void SessionEnd::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void SessionEnd::MergeImpl(::google::protobuf::MessageLite& to_msg,
+void SessionEnded::MergeImpl(::google::protobuf::MessageLite& to_msg,
                             const ::google::protobuf::MessageLite& from_msg) {
    auto* const _this =
-      static_cast<SessionEnd*>(&to_msg);
-  auto& from = static_cast<const SessionEnd&>(from_msg);
+      static_cast<SessionEnded*>(&to_msg);
+  auto& from = static_cast<const SessionEnded&>(from_msg);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.SessionEnd)
+  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.SessionEnded)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_session_id().empty()) {
+        _this->_internal_set_session_id(from._internal_session_id());
+      } else {
+        if (_this->_impl_.session_id_.IsDefault()) {
+          _this->_internal_set_session_id("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       if (!from._internal_reason().empty()) {
         _this->_internal_set_reason(from._internal_reason());
       } else {
@@ -6335,19 +7183,19 @@ void SessionEnd::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (from._internal_t_ns() != 0) {
         _this->_impl_.t_ns_ = from._impl_.t_ns_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (from._internal_total_frames() != 0) {
         _this->_impl_.total_frames_ = from._impl_.total_frames_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (from._internal_status() != 0) {
-        _this->_impl_.status_ = from._impl_.status_;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (from._internal_total_bytes() != 0) {
+        _this->_impl_.total_bytes_ = from._impl_.total_bytes_;
       }
     }
   }
@@ -6356,30 +7204,31 @@ void SessionEnd::MergeImpl(::google::protobuf::MessageLite& to_msg,
       from._internal_metadata_);
 }
 
-void SessionEnd::CopyFrom(const SessionEnd& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.SessionEnd)
+void SessionEnded::CopyFrom(const SessionEnded& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.SessionEnded)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void SessionEnd::InternalSwap(SessionEnd* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void SessionEnded::InternalSwap(SessionEnded* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   auto* arena = GetArena();
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.session_id_, &other->_impl_.session_id_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.reason_, &other->_impl_.reason_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.status_)
-      + sizeof(SessionEnd::_impl_.status_)
-      - PROTOBUF_FIELD_OFFSET(SessionEnd, _impl_.t_ns_)>(
+      PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.total_bytes_)
+      + sizeof(SessionEnded::_impl_.total_bytes_)
+      - PROTOBUF_FIELD_OFFSET(SessionEnded, _impl_.t_ns_)>(
           reinterpret_cast<char*>(&_impl_.t_ns_),
           reinterpret_cast<char*>(&other->_impl_.t_ns_));
 }
 
-::google::protobuf::Metadata SessionEnd::GetMetadata() const {
+::google::protobuf::Metadata SessionEnded::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -6390,6 +7239,32 @@ class DataPayload::_Internal {
       PROTOBUF_FIELD_OFFSET(::ego::v1::DataPayload, _impl_._oneof_case_);
 };
 
+void DataPayload::set_allocated_session_started(::ego::v1::SessionStarted* PROTOBUF_NULLABLE session_started) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_payload();
+  if (session_started) {
+    ::google::protobuf::Arena* submessage_arena = session_started->GetArena();
+    if (message_arena != submessage_arena) {
+      session_started = ::google::protobuf::internal::GetOwnedMessage(message_arena, session_started, submessage_arena);
+    }
+    set_has_session_started();
+    _impl_.payload_.session_started_ = session_started;
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.DataPayload.session_started)
+}
+void DataPayload::set_allocated_config_snapshot(::ego::v1::ConfigSnapshotFrame* PROTOBUF_NULLABLE config_snapshot) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_payload();
+  if (config_snapshot) {
+    ::google::protobuf::Arena* submessage_arena = config_snapshot->GetArena();
+    if (message_arena != submessage_arena) {
+      config_snapshot = ::google::protobuf::internal::GetOwnedMessage(message_arena, config_snapshot, submessage_arena);
+    }
+    set_has_config_snapshot();
+    _impl_.payload_.config_snapshot_ = config_snapshot;
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.DataPayload.config_snapshot)
+}
 void DataPayload::set_allocated_audio_block(::ego::v1::AudioBlock* PROTOBUF_NULLABLE audio_block) {
   ::google::protobuf::Arena* message_arena = GetArena();
   clear_payload();
@@ -6520,18 +7395,18 @@ void DataPayload::set_allocated_marker_event(::ego::v1::MarkerEvent* PROTOBUF_NU
   }
   // @@protoc_insertion_point(field_set_allocated:ego.v1.DataPayload.marker_event)
 }
-void DataPayload::set_allocated_session_end(::ego::v1::SessionEnd* PROTOBUF_NULLABLE session_end) {
+void DataPayload::set_allocated_session_ended(::ego::v1::SessionEnded* PROTOBUF_NULLABLE session_ended) {
   ::google::protobuf::Arena* message_arena = GetArena();
   clear_payload();
-  if (session_end) {
-    ::google::protobuf::Arena* submessage_arena = session_end->GetArena();
+  if (session_ended) {
+    ::google::protobuf::Arena* submessage_arena = session_ended->GetArena();
     if (message_arena != submessage_arena) {
-      session_end = ::google::protobuf::internal::GetOwnedMessage(message_arena, session_end, submessage_arena);
+      session_ended = ::google::protobuf::internal::GetOwnedMessage(message_arena, session_ended, submessage_arena);
     }
-    set_has_session_end();
-    _impl_.payload_.session_end_ = session_end;
+    set_has_session_ended();
+    _impl_.payload_.session_ended_ = session_ended;
   }
-  // @@protoc_insertion_point(field_set_allocated:ego.v1.DataPayload.session_end)
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.DataPayload.session_ended)
 }
 DataPayload::DataPayload(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -6566,6 +7441,12 @@ DataPayload::DataPayload(
   switch (payload_case()) {
     case PAYLOAD_NOT_SET:
       break;
+      case kSessionStarted:
+        _impl_.payload_.session_started_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_started_);
+        break;
+      case kConfigSnapshot:
+        _impl_.payload_.config_snapshot_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.config_snapshot_);
+        break;
       case kAudioBlock:
         _impl_.payload_.audio_block_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.audio_block_);
         break;
@@ -6596,8 +7477,8 @@ DataPayload::DataPayload(
       case kMarkerEvent:
         _impl_.payload_.marker_event_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.marker_event_);
         break;
-      case kSessionEnd:
-        _impl_.payload_.session_end_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_end_);
+      case kSessionEnded:
+        _impl_.payload_.session_ended_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_ended_);
         break;
   }
 
@@ -6634,6 +7515,22 @@ void DataPayload::clear_payload() {
 // @@protoc_insertion_point(one_of_clear_start:ego.v1.DataPayload)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   switch (payload_case()) {
+    case kSessionStarted: {
+      if (GetArena() == nullptr) {
+        delete _impl_.payload_.session_started_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.session_started_);
+      }
+      break;
+    }
+    case kConfigSnapshot: {
+      if (GetArena() == nullptr) {
+        delete _impl_.payload_.config_snapshot_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.config_snapshot_);
+      }
+      break;
+    }
     case kAudioBlock: {
       if (GetArena() == nullptr) {
         delete _impl_.payload_.audio_block_;
@@ -6714,11 +7611,11 @@ void DataPayload::clear_payload() {
       }
       break;
     }
-    case kSessionEnd: {
+    case kSessionEnded: {
       if (GetArena() == nullptr) {
-        delete _impl_.payload_.session_end_;
+        delete _impl_.payload_.session_ended_;
       } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
-        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.session_end_);
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.session_ended_);
       }
       break;
     }
@@ -6773,17 +7670,17 @@ DataPayload::GetClassData() const {
   return DataPayload_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 11, 11, 0, 2>
+const ::_pbi::TcParseTable<0, 13, 13, 0, 17>
 DataPayload::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    11, 0,  // max_field_number, fast_idx_mask
+    900, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294965248,  // skipmap
+    4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    11,  // num_field_entries
-    11,  // num_aux_entries
+    13,  // num_field_entries
+    13,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     DataPayload_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -6794,32 +7691,44 @@ DataPayload::_table_ = {
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
+    100, 0, 1,
+    65472, 2,
+    200, 0, 1,
+    65520, 8,
+    900, 0, 1,
+    65534, 12,
     65535, 65535
   }}, {{
-    // .ego.v1.AudioBlock audio_block = 1;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.audio_block_), _Internal::kOneofCaseOffset + 0, 0, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.ImuWindow imu_window = 2;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.imu_window_), _Internal::kOneofCaseOffset + 0, 1, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.CanDecodedValue can_decoded_value = 3;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.can_decoded_value_), _Internal::kOneofCaseOffset + 0, 2, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.CanRawFrame can_raw_frame = 4;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.can_raw_frame_), _Internal::kOneofCaseOffset + 0, 3, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.TrajectoryPoint trajectory_point = 5;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.trajectory_point_), _Internal::kOneofCaseOffset + 0, 4, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.GpsFix gps_fix = 6;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.gps_fix_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.TimeStatus time_status = 7;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.time_status_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.SystemStatus system_status = 8;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.system_status_), _Internal::kOneofCaseOffset + 0, 7, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.ImuCalibrationEvent imu_calib_event = 9;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.imu_calib_event_), _Internal::kOneofCaseOffset + 0, 8, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.MarkerEvent marker_event = 10;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.marker_event_), _Internal::kOneofCaseOffset + 0, 9, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .ego.v1.SessionEnd session_end = 11;
-    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.session_end_), _Internal::kOneofCaseOffset + 0, 10, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.SessionStarted session_started = 1;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.session_started_), _Internal::kOneofCaseOffset + 0, 0, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.ConfigSnapshotFrame config_snapshot = 2;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.config_snapshot_), _Internal::kOneofCaseOffset + 0, 1, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.AudioBlock audio_block = 100;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.audio_block_), _Internal::kOneofCaseOffset + 0, 2, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.ImuWindow imu_window = 101;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.imu_window_), _Internal::kOneofCaseOffset + 0, 3, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.CanDecodedValue can_decoded_value = 102;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.can_decoded_value_), _Internal::kOneofCaseOffset + 0, 4, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.CanRawFrame can_raw_frame = 103;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.can_raw_frame_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.TrajectoryPoint trajectory_point = 104;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.trajectory_point_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.GpsFix gps_fix = 105;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.gps_fix_), _Internal::kOneofCaseOffset + 0, 7, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.TimeStatus time_status = 200;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.time_status_), _Internal::kOneofCaseOffset + 0, 8, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.SystemStatus system_status = 201;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.system_status_), _Internal::kOneofCaseOffset + 0, 9, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.ImuCalibrationEvent imu_calib_event = 202;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.imu_calib_event_), _Internal::kOneofCaseOffset + 0, 10, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.MarkerEvent marker_event = 203;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.marker_event_), _Internal::kOneofCaseOffset + 0, 11, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .ego.v1.SessionEnded session_ended = 900;
+    {PROTOBUF_FIELD_OFFSET(DataPayload, _impl_.payload_.session_ended_), _Internal::kOneofCaseOffset + 0, 12, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
+      {::_pbi::TcParser::GetTable<::ego::v1::SessionStarted>()},
+      {::_pbi::TcParser::GetTable<::ego::v1::ConfigSnapshotFrame>()},
       {::_pbi::TcParser::GetTable<::ego::v1::AudioBlock>()},
       {::_pbi::TcParser::GetTable<::ego::v1::ImuWindow>()},
       {::_pbi::TcParser::GetTable<::ego::v1::CanDecodedValue>()},
@@ -6830,7 +7739,7 @@ DataPayload::_table_ = {
       {::_pbi::TcParser::GetTable<::ego::v1::SystemStatus>()},
       {::_pbi::TcParser::GetTable<::ego::v1::ImuCalibrationEvent>()},
       {::_pbi::TcParser::GetTable<::ego::v1::MarkerEvent>()},
-      {::_pbi::TcParser::GetTable<::ego::v1::SessionEnd>()},
+      {::_pbi::TcParser::GetTable<::ego::v1::SessionEnded>()},
   }},
   {{
   }},
@@ -6865,69 +7774,81 @@ PROTOBUF_NOINLINE void DataPayload::Clear() {
   (void)cached_has_bits;
 
   switch (this_.payload_case()) {
+    case kSessionStarted: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          1, *this_._impl_.payload_.session_started_, this_._impl_.payload_.session_started_->GetCachedSize(), target,
+          stream);
+      break;
+    }
+    case kConfigSnapshot: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          2, *this_._impl_.payload_.config_snapshot_, this_._impl_.payload_.config_snapshot_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     case kAudioBlock: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          1, *this_._impl_.payload_.audio_block_, this_._impl_.payload_.audio_block_->GetCachedSize(), target,
+          100, *this_._impl_.payload_.audio_block_, this_._impl_.payload_.audio_block_->GetCachedSize(), target,
           stream);
       break;
     }
     case kImuWindow: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          2, *this_._impl_.payload_.imu_window_, this_._impl_.payload_.imu_window_->GetCachedSize(), target,
+          101, *this_._impl_.payload_.imu_window_, this_._impl_.payload_.imu_window_->GetCachedSize(), target,
           stream);
       break;
     }
     case kCanDecodedValue: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          3, *this_._impl_.payload_.can_decoded_value_, this_._impl_.payload_.can_decoded_value_->GetCachedSize(), target,
+          102, *this_._impl_.payload_.can_decoded_value_, this_._impl_.payload_.can_decoded_value_->GetCachedSize(), target,
           stream);
       break;
     }
     case kCanRawFrame: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          4, *this_._impl_.payload_.can_raw_frame_, this_._impl_.payload_.can_raw_frame_->GetCachedSize(), target,
+          103, *this_._impl_.payload_.can_raw_frame_, this_._impl_.payload_.can_raw_frame_->GetCachedSize(), target,
           stream);
       break;
     }
     case kTrajectoryPoint: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          5, *this_._impl_.payload_.trajectory_point_, this_._impl_.payload_.trajectory_point_->GetCachedSize(), target,
+          104, *this_._impl_.payload_.trajectory_point_, this_._impl_.payload_.trajectory_point_->GetCachedSize(), target,
           stream);
       break;
     }
     case kGpsFix: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          6, *this_._impl_.payload_.gps_fix_, this_._impl_.payload_.gps_fix_->GetCachedSize(), target,
+          105, *this_._impl_.payload_.gps_fix_, this_._impl_.payload_.gps_fix_->GetCachedSize(), target,
           stream);
       break;
     }
     case kTimeStatus: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          7, *this_._impl_.payload_.time_status_, this_._impl_.payload_.time_status_->GetCachedSize(), target,
+          200, *this_._impl_.payload_.time_status_, this_._impl_.payload_.time_status_->GetCachedSize(), target,
           stream);
       break;
     }
     case kSystemStatus: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          8, *this_._impl_.payload_.system_status_, this_._impl_.payload_.system_status_->GetCachedSize(), target,
+          201, *this_._impl_.payload_.system_status_, this_._impl_.payload_.system_status_->GetCachedSize(), target,
           stream);
       break;
     }
     case kImuCalibEvent: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          9, *this_._impl_.payload_.imu_calib_event_, this_._impl_.payload_.imu_calib_event_->GetCachedSize(), target,
+          202, *this_._impl_.payload_.imu_calib_event_, this_._impl_.payload_.imu_calib_event_->GetCachedSize(), target,
           stream);
       break;
     }
     case kMarkerEvent: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          10, *this_._impl_.payload_.marker_event_, this_._impl_.payload_.marker_event_->GetCachedSize(), target,
+          203, *this_._impl_.payload_.marker_event_, this_._impl_.payload_.marker_event_->GetCachedSize(), target,
           stream);
       break;
     }
-    case kSessionEnd: {
+    case kSessionEnded: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          11, *this_._impl_.payload_.session_end_, this_._impl_.payload_.session_end_->GetCachedSize(), target,
+          900, *this_._impl_.payload_.session_ended_, this_._impl_.payload_.session_ended_->GetCachedSize(), target,
           stream);
       break;
     }
@@ -6958,70 +7879,82 @@ PROTOBUF_NOINLINE void DataPayload::Clear() {
   (void)cached_has_bits;
 
   switch (this_.payload_case()) {
-    // .ego.v1.AudioBlock audio_block = 1;
-    case kAudioBlock: {
+    // .ego.v1.SessionStarted session_started = 1;
+    case kSessionStarted: {
       total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.session_started_);
+      break;
+    }
+    // .ego.v1.ConfigSnapshotFrame config_snapshot = 2;
+    case kConfigSnapshot: {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.config_snapshot_);
+      break;
+    }
+    // .ego.v1.AudioBlock audio_block = 100;
+    case kAudioBlock: {
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.audio_block_);
       break;
     }
-    // .ego.v1.ImuWindow imu_window = 2;
+    // .ego.v1.ImuWindow imu_window = 101;
     case kImuWindow: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.imu_window_);
       break;
     }
-    // .ego.v1.CanDecodedValue can_decoded_value = 3;
+    // .ego.v1.CanDecodedValue can_decoded_value = 102;
     case kCanDecodedValue: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.can_decoded_value_);
       break;
     }
-    // .ego.v1.CanRawFrame can_raw_frame = 4;
+    // .ego.v1.CanRawFrame can_raw_frame = 103;
     case kCanRawFrame: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.can_raw_frame_);
       break;
     }
-    // .ego.v1.TrajectoryPoint trajectory_point = 5;
+    // .ego.v1.TrajectoryPoint trajectory_point = 104;
     case kTrajectoryPoint: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.trajectory_point_);
       break;
     }
-    // .ego.v1.GpsFix gps_fix = 6;
+    // .ego.v1.GpsFix gps_fix = 105;
     case kGpsFix: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.gps_fix_);
       break;
     }
-    // .ego.v1.TimeStatus time_status = 7;
+    // .ego.v1.TimeStatus time_status = 200;
     case kTimeStatus: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.time_status_);
       break;
     }
-    // .ego.v1.SystemStatus system_status = 8;
+    // .ego.v1.SystemStatus system_status = 201;
     case kSystemStatus: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.system_status_);
       break;
     }
-    // .ego.v1.ImuCalibrationEvent imu_calib_event = 9;
+    // .ego.v1.ImuCalibrationEvent imu_calib_event = 202;
     case kImuCalibEvent: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.imu_calib_event_);
       break;
     }
-    // .ego.v1.MarkerEvent marker_event = 10;
+    // .ego.v1.MarkerEvent marker_event = 203;
     case kMarkerEvent: {
-      total_size += 1 +
+      total_size += 2 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.marker_event_);
       break;
     }
-    // .ego.v1.SessionEnd session_end = 11;
-    case kSessionEnd: {
-      total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.session_end_);
+    // .ego.v1.SessionEnded session_ended = 900;
+    case kSessionEnded: {
+      total_size += 2 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.payload_.session_ended_);
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -7058,6 +7991,22 @@ void DataPayload::MergeImpl(::google::protobuf::MessageLite& to_msg,
     }
 
     switch (oneof_from_case) {
+      case kSessionStarted: {
+        if (oneof_needs_init) {
+          _this->_impl_.payload_.session_started_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_started_);
+        } else {
+          _this->_impl_.payload_.session_started_->MergeFrom(*from._impl_.payload_.session_started_);
+        }
+        break;
+      }
+      case kConfigSnapshot: {
+        if (oneof_needs_init) {
+          _this->_impl_.payload_.config_snapshot_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.config_snapshot_);
+        } else {
+          _this->_impl_.payload_.config_snapshot_->MergeFrom(*from._impl_.payload_.config_snapshot_);
+        }
+        break;
+      }
       case kAudioBlock: {
         if (oneof_needs_init) {
           _this->_impl_.payload_.audio_block_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.audio_block_);
@@ -7138,11 +8087,11 @@ void DataPayload::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
         break;
       }
-      case kSessionEnd: {
+      case kSessionEnded: {
         if (oneof_needs_init) {
-          _this->_impl_.payload_.session_end_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_end_);
+          _this->_impl_.payload_.session_ended_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.payload_.session_ended_);
         } else {
-          _this->_impl_.payload_.session_end_->MergeFrom(*from._impl_.payload_.session_end_);
+          _this->_impl_.payload_.session_ended_->MergeFrom(*from._impl_.payload_.session_ended_);
         }
         break;
       }

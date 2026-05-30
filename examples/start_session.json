@@ -1,0 +1,29 @@
+{
+  "request_id": 2001,
+  "start_session": {
+    "session": {
+      "session_id": "ego_2026_05_29_001",
+      "test_id": "polygon_run_001",
+      "test_description": "Проезд эго-автомобиля мимо подвижного источника сирены по сценарию A.",
+      "scenario_id": "scenario_a",
+      "scenario_name": "parallel_pass",
+      "operator_name": "operator",
+      "project": "siren_dataset",
+      "vehicle_id": "ego_vehicle_01",
+      "source_id": "siren_source_01",
+      "tags": [
+        {
+          "key": "weather",
+          "value": "dry"
+        },
+        {
+          "key": "road",
+          "value": "test_polygon"
+        }
+      ]
+    },
+    "start_data_stream": true,
+    "emit_config_snapshot_to_data_stream": true,
+    "require_valid_saved_configs": true
+  }
+}

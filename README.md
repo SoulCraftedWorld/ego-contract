@@ -1,53 +1,97 @@
-# EGO Protocol Contract
+# EGO Protocol Contract v1.3
 
-Контракт сетевого обмена между ADSP-SC589 и бортовым мини-ПК.
+Контракт сетевого обмена между **ADSP-SC589 ego acquisition module** и бортовым мини-ПК.
 
-## Состав
+## Назначение
+
+Контракт описывает:
+
+- Control TCP API для управления платой и загрузки конфигураций;
+- Data TCP frame format для передачи измерительных данных;
+- protobuf-схемы конфигураций, метаданных и small/structured data payload;
+- формат сырого файла `ego.bin`;
+- правила последующей сборки MDF4 на мини-ПК.
+
+## Главная схема
+
+ADSP-SC589 работает как TCP-сервер.
+
+| Канал | Порт | Назначение |
+|---|---:|---|
+| Control TCP | 5000 | команды, конфигурации, статус, старт/стоп |
+| Data TCP | 5001 | поток фреймов данных для записи в `ego.bin` |
+
+## Конфигурации
+
+Конфигурации устройства не передаются внутри `StartSessionRequest`.
+
+До запуска сессии клиент отдельно загружает и сохраняет на SD-карту платы:
+
+- `AudioConfig`;
+- `ImuConfig`;
+- `CanConfig`;
+- `GpsConfig`;
+- `VehicleGeometryConfig`;
+- `TimeConfig`;
+- `NetworkConfig`.
+
+После прошивки на плате уже должны быть конфигурации по умолчанию. Пользовательские конфигурации могут обновляться по отдельности.
+
+## Старт сессии
+
+`StartSessionRequest` содержит только метаданные испытания:
+
+- `session_id`;
+- `test_id`;
+- `test_description`;
+- `scenario_id`;
+- `scenario_name`;
+- `operator_name`;
+- `project`;
+- `vehicle_id`;
+- `source_id`;
+- `tags`.
+
+Перед запуском плата проверяет наличие и валидность сохранённых конфигураций. Если required-конфигурация отсутствует или невалидна, старт отклоняется, а ответ содержит `missing_configs` и `invalid_configs`.
+
+## Data stream
+
+После успешного старта плата передаёт по Data TCP:
 
 ```text
-proto/ego/v1/ego_common.proto
-proto/ego/v1/ego_metadata.proto
-proto/ego/v1/ego_data.proto
-proto/ego/v1/ego_control.proto
-
-docs/FRAME_CONTRACT.md
-docs/CONTROL_API.md
-docs/DATA_PACKETS.md
-docs/EGO_BIN.md
-
-scripts/gen_cpp.sh
-scripts/gen_python.sh
+SessionStarted
+ConfigSnapshotFrame
+AudioBlock / ImuWindow / CanDecodedValue / CanRawFrame / TrajectoryPoint / GpsFix / ...
+SessionEnded
 ```
 
-## Каналы
+`ConfigSnapshotFrame` нужен, чтобы `ego.bin` был самодостаточным и мог быть преобразован в MDF4 без отдельного доступа к SD-карте платы.
 
-| Канал | Назначение |
-|---|---|
-| Control TCP | управление, настройки, старт/стоп, статус |
-| Data TCP | поток фреймов данных |
+## Генерация
 
-## Генерация C++
+```bash
+make cpp
+make python
+```
+
+или напрямую:
 
 ```bash
 ./scripts/gen_cpp.sh
-```
-
-## Генерация Python
-
-```bash
 ./scripts/gen_python.sh
 ```
-## Ключевая схема контракта
-### 5000 Control TCP:
-- protobuf request/response
-- hello / status / set_config / start_session / stop_session
 
-### 5001 Data TCP:
-- EgoFrameHeader + payload
-- payload = protobuf или production binary payload
+## Integration helpers
 
-## Принцип
+The package also contains language-level packet descriptions and module extension examples:
 
-- Статические метаданные и конфиги описаны protobuf.
-- Высокочастотные данные могут передаваться protobuf или production binary payload.
-- `ego.bin` на мини-ПК является последовательностью принятых Data TCP фреймов.
+```text
+include/ego_protocol_packets.hpp
+python/ego_protocol_packets.py
+docs/MODULE_EXTENSION_EXAMPLES.md
+docs/CPP_PYTHON_STRUCTURES.md
+examples/cpp/module_extensions.hpp
+examples/python/module_extensions.py
+```
+
+Use them for integration when a module needs to write or read production binary data frames without protobuf overhead.

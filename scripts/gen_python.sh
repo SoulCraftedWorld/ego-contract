@@ -9,8 +9,8 @@ python3 -m grpc_tools.protoc \
   -I "$ROOT_DIR/proto" \
   --python_out="$OUT_DIR" \
   "$ROOT_DIR/proto/ego/v1/ego_common.proto" \
-  "$ROOT_DIR/proto/ego/v1/ego_metadata.proto" \
-  "$ROOT_DIR/proto/ego/v1/ego_data.proto" \
-  "$ROOT_DIR/proto/ego/v1/ego_control.proto"
+  "$ROOT_DIR/proto/ego/v1/ego_config.proto" \
+  "$ROOT_DIR/proto/ego/v1/ego_control.proto" \
+  "$ROOT_DIR/proto/ego/v1/ego_data.proto"
 
 echo "Generated Python files into $OUT_DIR"

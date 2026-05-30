@@ -23,36 +23,52 @@ _sym_db = _symbol_database.Default()
 
 
 from ego.v1 import ego_common_pb2 as ego_dot_v1_dot_ego__common__pb2
-from ego.v1 import ego_metadata_pb2 as ego_dot_v1_dot_ego__metadata__pb2
+from ego.v1 import ego_config_pb2 as ego_dot_v1_dot_ego__config__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x65go/v1/ego_control.proto\x12\x06\x65go.v1\x1a\x17\x65go/v1/ego_common.proto\x1a\x19\x65go/v1/ego_metadata.proto\"=\n\x0cHelloRequest\x12\x13\n\x0b\x63lient_name\x18\x01 \x01(\t\x12\x18\n\x10protocol_version\x18\x02 \x01(\r\"u\n\rHelloResponse\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x18\n\x10protocol_version\x18\x02 \x01(\r\x12\x18\n\x10\x66irmware_version\x18\x03 \x01(\t\x12\x1d\n\x15\x64\x61ta_stream_available\x18\x04 \x01(\x08\"\x12\n\x10GetStatusRequest\"\xc8\x01\n\rRuntimeStatus\x12\x0c\n\x04t_ns\x18\x01 \x01(\x06\x12\x16\n\x0esession_active\x18\x02 \x01(\x08\x12\x1a\n\x12\x64\x61ta_stream_active\x18\x03 \x01(\x08\x12\x11\n\ttx_frames\x18\x04 \x01(\x04\x12\x10\n\x08tx_bytes\x18\x05 \x01(\x04\x12\x14\n\x0c\x61udio_status\x18\x06 \x01(\r\x12\x12\n\ncan_status\x18\x07 \x01(\r\x12\x12\n\nimu_status\x18\x08 \x01(\r\x12\x12\n\ngps_status\x18\t \x01(\r\"i\n\x10SetConfigRequest\x12(\n\x07session\x18\x01 \x01(\x0b\x32\x17.ego.v1.SessionMetadata\x12+\n\rdevice_config\x18\x02 \x01(\x0b\x32\x14.ego.v1.DeviceConfig\"U\n\x13StartSessionRequest\x12#\n\nsession_id\x18\x01 \x01(\x0b\x32\x0f.ego.v1.Uuid128\x12\x19\n\x11start_data_stream\x18\x02 \x01(\x08\"$\n\x12StopSessionRequest\x12\x0e\n\x06reason\x18\x01 \x01(\t\"\x14\n\x12StartStreamRequest\"\x13\n\x11StopStreamRequest\"\x86\x03\n\x0e\x43ontrolRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\x04\x12%\n\x05hello\x18\x02 \x01(\x0b\x32\x14.ego.v1.HelloRequestH\x00\x12.\n\nget_status\x18\x03 \x01(\x0b\x32\x18.ego.v1.GetStatusRequestH\x00\x12.\n\nset_config\x18\x04 \x01(\x0b\x32\x18.ego.v1.SetConfigRequestH\x00\x12\x34\n\rstart_session\x18\x05 \x01(\x0b\x32\x1b.ego.v1.StartSessionRequestH\x00\x12\x32\n\x0cstop_session\x18\x06 \x01(\x0b\x32\x1a.ego.v1.StopSessionRequestH\x00\x12\x32\n\x0cstart_stream\x18\x07 \x01(\x0b\x32\x1a.ego.v1.StartStreamRequestH\x00\x12\x30\n\x0bstop_stream\x18\x08 \x01(\x0b\x32\x19.ego.v1.StopStreamRequestH\x00\x42\t\n\x07request\"\xb9\x01\n\x0f\x43ontrolResponse\x12\x12\n\nrequest_id\x18\x01 \x01(\x04\x12\n\n\x02ok\x18\x02 \x01(\x08\x12\x12\n\nerror_code\x18\x03 \x01(\r\x12\x15\n\rerror_message\x18\x04 \x01(\t\x12&\n\x05hello\x18\n \x01(\x0b\x32\x15.ego.v1.HelloResponseH\x00\x12\'\n\x06status\x18\x0b \x01(\x0b\x32\x15.ego.v1.RuntimeStatusH\x00\x42\n\n\x08responseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18\x65go/v1/ego_control.proto\x12\x06\x65go.v1\x1a\x17\x65go/v1/ego_common.proto\x1a\x17\x65go/v1/ego_config.proto\"\xeb\x01\n\x0fSessionMetadata\x12\x12\n\nsession_id\x18\x01 \x01(\t\x12\x0f\n\x07test_id\x18\x02 \x01(\t\x12\x18\n\x10test_description\x18\x03 \x01(\t\x12\x13\n\x0bscenario_id\x18\x04 \x01(\t\x12\x15\n\rscenario_name\x18\x05 \x01(\t\x12\x15\n\roperator_name\x18\x06 \x01(\t\x12\x0f\n\x07project\x18\x07 \x01(\t\x12\x12\n\nvehicle_id\x18\x08 \x01(\t\x12\x11\n\tsource_id\x18\t \x01(\t\x12\x1e\n\x04tags\x18\x14 \x03(\x0b\x32\x10.ego.v1.KeyValue\"U\n\x0cHelloRequest\x12\x13\n\x0b\x63lient_name\x18\x01 \x01(\t\x12\x16\n\x0e\x63lient_version\x18\x02 \x01(\t\x12\x18\n\x10protocol_version\x18\x03 \x01(\r\"\xb0\x01\n\rHelloResponse\x12\"\n\x06result\x18\x01 \x01(\x0e\x32\x12.ego.v1.ResultCode\x12 \n\x05\x65rror\x18\x02 \x01(\x0b\x32\x11.ego.v1.ErrorInfo\x12&\n\x06\x64\x65vice\x18\x03 \x01(\x0b\x32\x16.ego.v1.DeviceIdentity\x12\x31\n\x10\x63onfig_inventory\x18\x04 \x01(\x0b\x32\x17.ego.v1.ConfigInventory\"\x12\n\x10GetStatusRequest\"\xbf\x02\n\x0c\x44\x65viceStatus\x12\x0c\n\x04t_ns\x18\x01 \x01(\x06\x12\x16\n\x0esession_active\x18\x02 \x01(\x08\x12\x1a\n\x12\x64\x61ta_stream_active\x18\x03 \x01(\x08\x12\x19\n\x11\x61\x63tive_session_id\x18\x04 \x01(\t\x12\x11\n\ttx_frames\x18\n \x01(\x04\x12\x10\n\x08tx_bytes\x18\x0b \x01(\x04\x12\x14\n\x0c\x61udio_status\x18\x14 \x01(\r\x12\x12\n\ncan_status\x18\x15 \x01(\r\x12\x12\n\nimu_status\x18\x16 \x01(\r\x12\x12\n\ngps_status\x18\x17 \x01(\r\x12\x16\n\x0enetwork_status\x18\x18 \x01(\r\x12\x31\n\x10\x63onfig_inventory\x18\x1e \x01(\x0b\x32\x17.ego.v1.ConfigInventory\x12\x10\n\x08warnings\x18( \x03(\t\"\x1b\n\x19GetConfigInventoryRequest\"=\n\x18GetConfigSnapshotRequest\x12!\n\x05types\x18\x01 \x03(\x0e\x32\x12.ego.v1.ConfigType\"l\n\x13UpdateConfigRequest\x12*\n\x06update\x18\x01 \x01(\x0b\x32\x1a.ego.v1.DeviceConfigUpdate\x12\x15\n\rvalidate_only\x18\x02 \x01(\x08\x12\x12\n\nsave_to_sd\x18\x03 \x01(\x08\"\x8f\x01\n\x14UpdateConfigResponse\x12\"\n\x06result\x18\x01 \x01(\x0e\x32\x12.ego.v1.ResultCode\x12 \n\x05\x65rror\x18\x02 \x01(\x0b\x32\x11.ego.v1.ErrorInfo\x12\x31\n\x10\x63onfig_inventory\x18\x03 \x01(\x0b\x32\x17.ego.v1.ConfigInventory\"6\n\x11SaveConfigRequest\x12!\n\x05types\x18\x01 \x03(\x0e\x32\x12.ego.v1.ConfigType\"T\n\x1bRestoreDefaultConfigRequest\x12!\n\x05types\x18\x01 \x03(\x0e\x32\x12.ego.v1.ConfigType\x12\x12\n\nsave_to_sd\x18\x02 \x01(\x08\"\xac\x01\n\x13StartSessionRequest\x12(\n\x07session\x18\x01 \x01(\x0b\x32\x17.ego.v1.SessionMetadata\x12\x19\n\x11start_data_stream\x18\x02 \x01(\x08\x12+\n#emit_config_snapshot_to_data_stream\x18\x03 \x01(\x08\x12#\n\x1brequire_valid_saved_configs\x18\x04 \x01(\x08\"\xdb\x01\n\x14StartSessionResponse\x12\"\n\x06result\x18\x01 \x01(\x0e\x32\x12.ego.v1.ResultCode\x12 \n\x05\x65rror\x18\x02 \x01(\x0b\x32\x11.ego.v1.ErrorInfo\x12\x12\n\nsession_id\x18\x03 \x01(\t\x12\x31\n\x10\x63onfig_inventory\x18\x04 \x01(\x0b\x32\x17.ego.v1.ConfigInventory\x12\x36\n\x10\x65\x66\x66\x65\x63tive_config\x18\x05 \x01(\x0b\x32\x1c.ego.v1.DeviceConfigSnapshot\"8\n\x12StopSessionRequest\x12\x12\n\nsession_id\x18\x01 \x01(\t\x12\x0e\n\x06reason\x18\x02 \x01(\t\"o\n\x13StopSessionResponse\x12\"\n\x06result\x18\x01 \x01(\x0e\x32\x12.ego.v1.ResultCode\x12 \n\x05\x65rror\x18\x02 \x01(\x0b\x32\x11.ego.v1.ErrorInfo\x12\x12\n\nsession_id\x18\x03 \x01(\t\"k\n\rMarkerRequest\x12\x12\n\nsession_id\x18\x01 \x01(\t\x12\x11\n\tmarker_id\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x1e\n\x04tags\x18\x04 \x03(\x0b\x32\x10.ego.v1.KeyValue\"V\n\x0eMarkerResponse\x12\"\n\x06result\x18\x01 \x01(\x0e\x32\x12.ego.v1.ResultCode\x12 \n\x05\x65rror\x18\x02 \x01(\x0b\x32\x11.ego.v1.ErrorInfo\"\xcc\x04\n\x0e\x43ontrolRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\x06\x12%\n\x05hello\x18\n \x01(\x0b\x32\x14.ego.v1.HelloRequestH\x00\x12.\n\nget_status\x18\x0b \x01(\x0b\x32\x18.ego.v1.GetStatusRequestH\x00\x12\x41\n\x14get_config_inventory\x18\x0c \x01(\x0b\x32!.ego.v1.GetConfigInventoryRequestH\x00\x12?\n\x13get_config_snapshot\x18\r \x01(\x0b\x32 .ego.v1.GetConfigSnapshotRequestH\x00\x12\x34\n\rupdate_config\x18\x0e \x01(\x0b\x32\x1b.ego.v1.UpdateConfigRequestH\x00\x12\x30\n\x0bsave_config\x18\x0f \x01(\x0b\x32\x19.ego.v1.SaveConfigRequestH\x00\x12\x45\n\x16restore_default_config\x18\x10 \x01(\x0b\x32#.ego.v1.RestoreDefaultConfigRequestH\x00\x12\x34\n\rstart_session\x18\x11 \x01(\x0b\x32\x1b.ego.v1.StartSessionRequestH\x00\x12\x32\n\x0cstop_session\x18\x12 \x01(\x0b\x32\x1a.ego.v1.StopSessionRequestH\x00\x12\'\n\x06marker\x18\x13 \x01(\x0b\x32\x15.ego.v1.MarkerRequestH\x00\x42\t\n\x07request\"\xb1\x04\n\x0f\x43ontrolResponse\x12\x12\n\nrequest_id\x18\x01 \x01(\x06\x12&\n\x05hello\x18\n \x01(\x0b\x32\x15.ego.v1.HelloResponseH\x00\x12&\n\x06status\x18\x0b \x01(\x0b\x32\x14.ego.v1.DeviceStatusH\x00\x12\x33\n\x10\x63onfig_inventory\x18\x0c \x01(\x0b\x32\x17.ego.v1.ConfigInventoryH\x00\x12\x37\n\x0f\x63onfig_snapshot\x18\r \x01(\x0b\x32\x1c.ego.v1.DeviceConfigSnapshotH\x00\x12\x35\n\rupdate_config\x18\x0e \x01(\x0b\x32\x1c.ego.v1.UpdateConfigResponseH\x00\x12\x33\n\x0bsave_config\x18\x0f \x01(\x0b\x32\x1c.ego.v1.UpdateConfigResponseH\x00\x12>\n\x16restore_default_config\x18\x10 \x01(\x0b\x32\x1c.ego.v1.UpdateConfigResponseH\x00\x12\x35\n\rstart_session\x18\x11 \x01(\x0b\x32\x1c.ego.v1.StartSessionResponseH\x00\x12\x33\n\x0cstop_session\x18\x12 \x01(\x0b\x32\x1b.ego.v1.StopSessionResponseH\x00\x12(\n\x06marker\x18\x13 \x01(\x0b\x32\x16.ego.v1.MarkerResponseH\x00\x42\n\n\x08responseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ego.v1.ego_control_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_HELLOREQUEST']._serialized_start=88
-  _globals['_HELLOREQUEST']._serialized_end=149
-  _globals['_HELLORESPONSE']._serialized_start=151
-  _globals['_HELLORESPONSE']._serialized_end=268
-  _globals['_GETSTATUSREQUEST']._serialized_start=270
-  _globals['_GETSTATUSREQUEST']._serialized_end=288
-  _globals['_RUNTIMESTATUS']._serialized_start=291
-  _globals['_RUNTIMESTATUS']._serialized_end=491
-  _globals['_SETCONFIGREQUEST']._serialized_start=493
-  _globals['_SETCONFIGREQUEST']._serialized_end=598
-  _globals['_STARTSESSIONREQUEST']._serialized_start=600
-  _globals['_STARTSESSIONREQUEST']._serialized_end=685
-  _globals['_STOPSESSIONREQUEST']._serialized_start=687
-  _globals['_STOPSESSIONREQUEST']._serialized_end=723
-  _globals['_STARTSTREAMREQUEST']._serialized_start=725
-  _globals['_STARTSTREAMREQUEST']._serialized_end=745
-  _globals['_STOPSTREAMREQUEST']._serialized_start=747
-  _globals['_STOPSTREAMREQUEST']._serialized_end=766
-  _globals['_CONTROLREQUEST']._serialized_start=769
-  _globals['_CONTROLREQUEST']._serialized_end=1159
-  _globals['_CONTROLRESPONSE']._serialized_start=1162
-  _globals['_CONTROLRESPONSE']._serialized_end=1347
+  _globals['_SESSIONMETADATA']._serialized_start=87
+  _globals['_SESSIONMETADATA']._serialized_end=322
+  _globals['_HELLOREQUEST']._serialized_start=324
+  _globals['_HELLOREQUEST']._serialized_end=409
+  _globals['_HELLORESPONSE']._serialized_start=412
+  _globals['_HELLORESPONSE']._serialized_end=588
+  _globals['_GETSTATUSREQUEST']._serialized_start=590
+  _globals['_GETSTATUSREQUEST']._serialized_end=608
+  _globals['_DEVICESTATUS']._serialized_start=611
+  _globals['_DEVICESTATUS']._serialized_end=930
+  _globals['_GETCONFIGINVENTORYREQUEST']._serialized_start=932
+  _globals['_GETCONFIGINVENTORYREQUEST']._serialized_end=959
+  _globals['_GETCONFIGSNAPSHOTREQUEST']._serialized_start=961
+  _globals['_GETCONFIGSNAPSHOTREQUEST']._serialized_end=1022
+  _globals['_UPDATECONFIGREQUEST']._serialized_start=1024
+  _globals['_UPDATECONFIGREQUEST']._serialized_end=1132
+  _globals['_UPDATECONFIGRESPONSE']._serialized_start=1135
+  _globals['_UPDATECONFIGRESPONSE']._serialized_end=1278
+  _globals['_SAVECONFIGREQUEST']._serialized_start=1280
+  _globals['_SAVECONFIGREQUEST']._serialized_end=1334
+  _globals['_RESTOREDEFAULTCONFIGREQUEST']._serialized_start=1336
+  _globals['_RESTOREDEFAULTCONFIGREQUEST']._serialized_end=1420
+  _globals['_STARTSESSIONREQUEST']._serialized_start=1423
+  _globals['_STARTSESSIONREQUEST']._serialized_end=1595
+  _globals['_STARTSESSIONRESPONSE']._serialized_start=1598
+  _globals['_STARTSESSIONRESPONSE']._serialized_end=1817
+  _globals['_STOPSESSIONREQUEST']._serialized_start=1819
+  _globals['_STOPSESSIONREQUEST']._serialized_end=1875
+  _globals['_STOPSESSIONRESPONSE']._serialized_start=1877
+  _globals['_STOPSESSIONRESPONSE']._serialized_end=1988
+  _globals['_MARKERREQUEST']._serialized_start=1990
+  _globals['_MARKERREQUEST']._serialized_end=2097
+  _globals['_MARKERRESPONSE']._serialized_start=2099
+  _globals['_MARKERRESPONSE']._serialized_end=2185
+  _globals['_CONTROLREQUEST']._serialized_start=2188
+  _globals['_CONTROLREQUEST']._serialized_end=2776
+  _globals['_CONTROLRESPONSE']._serialized_start=2779
+  _globals['_CONTROLRESPONSE']._serialized_end=3340
 # @@protoc_insertion_point(module_scope)

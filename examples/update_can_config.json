@@ -1,0 +1,45 @@
+{
+  "request_id": 1002,
+  "update_config": {
+    "validate_only": false,
+    "save_to_sd": true,
+    "update": {
+      "can": {
+        "enabled": true,
+        "bus_name": "CAN0",
+        "bitrate": 500000,
+        "save_raw_frames": true,
+        "signals": [
+          {
+            "name": "vehicle_speed",
+            "value_id": 1001,
+            "can_id": 291,
+            "is_extended": false,
+            "start_bit": 0,
+            "bit_length": 16,
+            "byte_order": "BYTE_ORDER_LITTLE_ENDIAN",
+            "is_unsigned": true,
+            "scale": 0.01,
+            "offset": 0.0,
+            "unit": "m/s",
+            "role": "CAN_SIGNAL_ROLE_BASE_SPEED"
+          },
+          {
+            "name": "gear_mode",
+            "value_id": 1002,
+            "can_id": 292,
+            "is_extended": false,
+            "start_bit": 8,
+            "bit_length": 4,
+            "byte_order": "BYTE_ORDER_LITTLE_ENDIAN",
+            "is_unsigned": true,
+            "scale": 1.0,
+            "offset": 0.0,
+            "unit": "enum",
+            "role": "CAN_SIGNAL_ROLE_GEAR_MODE"
+          }
+        ]
+      }
+    }
+  }
+}

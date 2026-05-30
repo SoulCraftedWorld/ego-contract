@@ -14,6 +14,32 @@ payload bytes
 ...
 ```
 
+## Состав
+
+В начале нормальной сессии должны быть:
+
+```text
+SessionStarted
+ConfigSnapshotFrame
+```
+
+Далее идут realtime frames:
+
+```text
+AudioBlock
+ImuWindow
+CanDecodedValue
+CanRawFrame
+TrajectoryPoint
+GpsFix
+TimeStatus
+SystemStatus
+ImuCalibrationEvent
+MarkerEvent
+...
+SessionEnded
+```
+
 ## Индекс
 
 Рядом рекомендуется создавать `ego.index`.
@@ -47,5 +73,7 @@ MDF4 должен получить отдельные группы канало�
 - CAN raw;
 - trajectory;
 - GPS;
+- time status;
 - system status;
-- calibration events.
+- calibration events;
+- markers.

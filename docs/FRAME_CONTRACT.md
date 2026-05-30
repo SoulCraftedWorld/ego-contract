@@ -4,13 +4,13 @@
 
 Поток данных передаётся от ADSP-SC589 на бортовой мини-ПК по TCP. Мини-ПК последовательно пишет принятые фреймы в `ego.bin` и строит рядом индекс `ego.index`.
 
-`ego.bin` — это конечный сырой файл сессии, но он состоит из последовательности сетевых фреймов. По сети передаётся не весь файл, а отдельные фреймы.
+`ego.bin` — конечный сырой файл сессии, но он состоит из последовательности сетевых фреймов. По сети передаётся не весь файл, а отдельные фреймы.
 
 ## TCP-каналы
 
 | Порт | Канал | Назначение |
 |---:|---|---|
-| 5000 | Control TCP | команды, настройки, старт/стоп, статус |
+| 5000 | Control TCP | команды, конфигурации, старт/стоп, статус |
 | 5001 | Data TCP | поток фреймов данных |
 
 ADSP-SC589 работает как TCP-сервер. Мини-ПК подключается как TCP-клиент.
@@ -53,7 +53,7 @@ typedef struct {
 | `magic` | всегда `EGO1` |
 | `protocol_ver` | версия бинарного контракта |
 | `header_size` | размер `EgoFrameHeader`, сейчас 72 |
-| `frame_type` | тип payload из `FrameType` |
+| `frame_type` | тип payload из `FramePayloadType` |
 | `seq` | общий монотонный счётчик фреймов в сессии |
 | `t0_ns` | начало временного диапазона данных |
 | `t1_ns` | конец временного диапазона данных |
@@ -65,14 +65,9 @@ typedef struct {
 
 | frame_type | Payload |
 |---:|---|
-| 1 | `SessionMetadata` protobuf |
-| 2 | `DeviceConfig` protobuf |
-| 3 | `AudioConfig` protobuf |
-| 4 | `ImuConfig` protobuf |
-| 5 | `CanConfig` protobuf |
-| 6 | `GpsConfig` protobuf |
-| 7 | `VehicleConfig` protobuf |
-| 100 | `AudioBlock` protobuf или raw audio block по production-схеме |
+| 1 | `SessionStarted` protobuf |
+| 2 | `ConfigSnapshotFrame` protobuf |
+| 100 | `AudioBlock` protobuf или production raw audio payload |
 | 101 | `ImuWindow` protobuf |
 | 102 | `CanDecodedValue` protobuf |
 | 103 | `CanRawFrame` protobuf |
@@ -82,16 +77,17 @@ typedef struct {
 | 201 | `SystemStatus` protobuf |
 | 202 | `ImuCalibrationEvent` protobuf |
 | 203 | `MarkerEvent` protobuf |
-| 900 | `SessionEnd` protobuf |
+| 900 | `SessionEnded` protobuf |
 
-## Audio production mode
+## Payload encoding
 
-Для прототипа можно передавать аудио как protobuf `AudioBlock` с полем `pcm_data`.
+Для metadata/config/status/event payload используется protobuf.
 
-Для production-режима рекомендуется payload:
+Для высокочастотного аудио допустимы два режима:
 
-```text
-AudioBlockFixedHeader + raw PCM bytes
-```
+| Режим | Описание |
+|---|---|
+| Prototype | `AudioBlock` protobuf с `pcm_data` |
+| Production | компактный бинарный audio block header + raw PCM payload |
 
-Это уменьшает нагрузку на ADSP-SC589 и упрощает запись больших аудиоблоков.
+В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.

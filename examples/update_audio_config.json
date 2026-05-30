@@ -1,0 +1,32 @@
+{
+  "request_id": 1001,
+  "update_config": {
+    "validate_only": false,
+    "save_to_sd": true,
+    "update": {
+      "audio": {
+        "enabled": true,
+        "sample_rate_hz": 48000,
+        "sample_format": "SAMPLE_FORMAT_INT24_IN_I32",
+        "valid_bits": 24,
+        "layout": "AUDIO_LAYOUT_INTERLEAVED",
+        "block_frames": 960,
+        "channels_count": 16,
+        "channels": [
+          {
+            "channel_index": 0,
+            "name": "mic_00",
+            "sensor_id": "a2b_mic_00",
+            "mount_pose": {
+              "x_m": 1.2,
+              "y_m": -0.8,
+              "z_m": 1.1
+            },
+            "a2b_node": 0,
+            "a2b_slot": 0
+          }
+        ]
+      }
+    }
+  }
+}

@@ -4,6 +4,8 @@ Control TCP использует protobuf request/response с length-prefixed fr
 
 ## Framing
 
+Запрос:
+
 ```text
 uint32_le message_size
 ControlRequest protobuf bytes
@@ -14,6 +16,38 @@ ControlRequest protobuf bytes
 ```text
 uint32_le message_size
 ControlResponse protobuf bytes
+```
+
+## Основной workflow
+
+```text
+client -> HELLO
+device -> HELLO_RESPONSE + config inventory
+
+client -> GET_CONFIG_INVENTORY
+device -> ConfigInventory
+
+client -> UPDATE_CONFIG(audio)
+device -> UpdateConfigResponse
+
+client -> UPDATE_CONFIG(imu)
+device -> UpdateConfigResponse
+
+client -> UPDATE_CONFIG(can)
+device -> UpdateConfigResponse
+
+client -> UPDATE_CONFIG(gps)
+device -> UpdateConfigResponse
+
+client -> UPDATE_CONFIG(vehicle)
+device -> UpdateConfigResponse
+
+client -> START_SESSION(session metadata)
+device -> StartSessionResponse OK или REJECTED
+
+device -> DATA: SessionStarted
+device -> DATA: ConfigSnapshotFrame
+device -> DATA: realtime frames
 ```
 
 ## CONTROL /hello
@@ -30,24 +64,74 @@ Response payload: `HelloResponse`
 
 Request payload: `GetStatusRequest`
 
-Response payload: `RuntimeStatus`
+Response payload: `DeviceStatus`
 
-## CONTROL /config/set
+## CONTROL /config/inventory
 
-Загрузка статической конфигурации сессии и устройства.
+Запрос перечня сохранённых конфигураций и их состояния.
 
-Request payload: `SetConfigRequest`
+Request payload: `GetConfigInventoryRequest`
 
-Содержит:
+Response payload: `ConfigInventory`
 
-- `SessionMetadata`
-- `DeviceConfig`
+## CONTROL /config/get
+
+Запрос текущего effective snapshot.
+
+Request payload: `GetConfigSnapshotRequest`
+
+Response payload: `DeviceConfigSnapshot`
+
+## CONTROL /config/update
+
+Обновление одной или нескольких конфигураций.
+
+Request payload: `UpdateConfigRequest`
+
+Особенности:
+
+- `DeviceConfigUpdate` содержит optional-поля;
+- можно обновить только audio, только CAN или любой другой набор;
+- `validate_only=true` выполняет проверку без сохранения;
+- `save_to_sd=true` сохраняет конфигурации на SD-карту.
+
+## CONTROL /config/save
+
+Сохранение текущих конфигураций на SD-карту.
+
+Request payload: `SaveConfigRequest`
+
+## CONTROL /config/defaults
+
+Восстановление конфигураций по умолчанию.
+
+Request payload: `RestoreDefaultConfigRequest`
 
 ## CONTROL /session/start
 
-Запуск сессии записи и опционально запуск Data TCP потока.
+Запуск сессии.
 
 Request payload: `StartSessionRequest`
+
+Важно:
+
+- команда содержит только session/test metadata;
+- audio/IMU/CAN/GPS/vehicle configs должны уже быть на плате;
+- при `require_valid_saved_configs=true` старт отклоняется, если required-конфигурации отсутствуют или невалидны.
+
+Пример отказа:
+
+```json
+{
+  "result": "RESULT_CODE_REJECTED",
+  "error": {
+    "code": "RESULT_CODE_REJECTED",
+    "message": "Required configuration is missing or invalid",
+    "missing_configs": ["CONFIG_TYPE_CAN"],
+    "invalid_configs": ["CONFIG_TYPE_AUDIO"]
+  }
+}
+```
 
 ## CONTROL /session/stop
 
@@ -55,14 +139,8 @@ Request payload: `StartSessionRequest`
 
 Request payload: `StopSessionRequest`
 
-## CONTROL /stream/start
+## CONTROL /marker
 
-Запуск Data TCP потока без перезапуска сессии.
+Добавление пользовательской метки события в текущую сессию.
 
-Request payload: `StartStreamRequest`
-
-## CONTROL /stream/stop
-
-Остановка Data TCP потока без завершения сессии.
-
-Request payload: `StopStreamRequest`
+Request payload: `MarkerRequest`

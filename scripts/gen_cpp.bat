@@ -14,7 +14,7 @@ protoc ^
   -I "%PROTO_DIR%" ^
   --cpp_out="%OUT_DIR%" ^
   "%PROTO_DIR%\ego\v1\ego_common.proto" ^
-  "%PROTO_DIR%\ego\v1\ego_metadata.proto" ^
+  "%PROTO_DIR%\ego\v1\ego_config.proto" ^
   "%PROTO_DIR%\ego\v1\ego_data.proto" ^
   "%PROTO_DIR%\ego\v1\ego_control.proto"
 
