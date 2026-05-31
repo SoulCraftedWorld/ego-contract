@@ -9,6 +9,11 @@ namespace ego::protocol::v1 {
 static constexpr uint32_t EGO_FRAME_MAGIC = 0x314F4745u; // 'EGO1' little-endian
 static constexpr uint16_t EGO_PROTOCOL_VERSION = 2u;
 static constexpr uint16_t EGO_FRAME_HEADER_SIZE = 72u;
+static constexpr uint32_t EGO_CONFIG_SNAPSHOT_MAGIC = 0x31474643u; // 'CFG1' little-endian
+static constexpr uint16_t EGO_CONFIG_SNAPSHOT_FORMAT_VERSION = 1u;
+static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FORMAT_TEXT_KV = 1u;
+static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_SD_LOADED = 1u << 0;
+static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_DIRTY = 1u << 1;
 
 // Data TCP payload type. Values match proto/ego/v1/ego_common.proto.
 enum class FramePayloadType : uint32_t {
@@ -243,6 +248,25 @@ struct SystemStatusPacket {
     float cpu_load_sharc1;
 };
 
+// Current minimal firmware CONFIG_SNAPSHOT binary payload.
+// The text bytes start immediately after ConfigSnapshotBinaryHeader and are
+// UTF-8/ASCII key=value lines.
+struct ConfigSnapshotBinaryHeader {
+    uint32_t magic;
+    uint16_t format_version;
+    uint16_t header_size;
+    uint32_t payload_format;
+    uint32_t flags;
+    uint64_t generated_t_ns;
+    uint32_t text_size;
+    uint32_t text_crc32;
+    uint32_t config_generation;
+    uint32_t active_mask;
+    uint32_t required_mask;
+    uint32_t invalid_mask;
+    uint32_t reserved0;
+};
+
 struct ImuCalibrationEventPacket {
     uint64_t t_ns;
 
@@ -273,6 +297,7 @@ static_assert(sizeof(TrajectoryPointPacket) == 44, "TrajectoryPointPacket size m
 static_assert(sizeof(GpsFixPacket) == 56, "GpsFixPacket size must be 56 bytes");
 static_assert(sizeof(TimeStatusPacket) == 40, "TimeStatusPacket size must be 40 bytes");
 static_assert(sizeof(SystemStatusPacket) == 56, "SystemStatusPacket size must be 56 bytes");
+static_assert(sizeof(ConfigSnapshotBinaryHeader) == 52, "ConfigSnapshotBinaryHeader size must be 52 bytes");
 static_assert(sizeof(ImuCalibrationEventPacket) == 44, "ImuCalibrationEventPacket size must be 44 bytes");
 
 inline EgoFrameHeader make_frame_header(

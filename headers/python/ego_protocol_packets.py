@@ -8,7 +8,12 @@ from typing import ClassVar, Tuple
 
 EGO_FRAME_MAGIC = 0x314F4745  # 'EGO1' little-endian
 EGO_CONTROL_MAGIC = 0x434F4745  # 'EGOC' little-endian
+EGO_CONFIG_SNAPSHOT_MAGIC = 0x31474643  # 'CFG1' little-endian
 EGO_PROTOCOL_VERSION = 2
+EGO_CONFIG_SNAPSHOT_FORMAT_VERSION = 1
+EGO_CONFIG_SNAPSHOT_FORMAT_TEXT_KV = 1
+EGO_CONFIG_SNAPSHOT_FLAG_SD_LOADED = 1 << 0
+EGO_CONFIG_SNAPSHOT_FLAG_DIRTY = 1 << 1
 
 
 class FramePayloadType(IntEnum):
@@ -415,6 +420,45 @@ class SystemStatusPacket:
 
     def to_packed_bytes(self) -> bytes:
         return self.STRUCT.pack(*self.as_tuple())
+
+
+@dataclass(slots=True)
+class ConfigSnapshotBinaryHeader:
+    magic: int
+    format_version: int
+    header_size: int
+    payload_format: int
+    flags: int
+    generated_t_ns: int
+    text_size: int
+    text_crc32: int
+    config_generation: int
+    active_mask: int
+    required_mask: int
+    invalid_mask: int
+    reserved0: int = 0
+
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<IHHIIQIIIIIII")
+    SIZE: ClassVar[int] = STRUCT.size
+
+    def to_bytes(self) -> bytes:
+        return self.STRUCT.pack(
+            self.magic, self.format_version, self.header_size,
+            self.payload_format, self.flags, self.generated_t_ns,
+            self.text_size, self.text_crc32, self.config_generation,
+            self.active_mask, self.required_mask, self.invalid_mask,
+            self.reserved0,
+        )
+
+    @classmethod
+    def unpack(cls, data: bytes) -> "ConfigSnapshotBinaryHeader":
+        return cls(*cls.STRUCT.unpack(data[:cls.SIZE]))
+
+    def validate_basic(self) -> None:
+        if self.magic != EGO_CONFIG_SNAPSHOT_MAGIC:
+            raise ValueError(f"bad config snapshot magic: 0x{self.magic:08x}")
+        if self.header_size != self.SIZE:
+            raise ValueError(f"bad config snapshot header size: {self.header_size}")
 
 
 @dataclass(slots=True)

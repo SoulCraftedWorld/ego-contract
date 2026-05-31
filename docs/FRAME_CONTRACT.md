@@ -66,7 +66,7 @@ typedef struct {
 | frame_type | Payload |
 |---:|---|
 | 1 | `SessionStarted` protobuf, or zero-payload session marker in minimal firmware mode |
-| 2 | `ConfigSnapshotFrame` protobuf |
+| 2 | `ConfigSnapshotFrame` protobuf, or binary text-kv snapshot in minimal firmware mode |
 | 100 | `AudioBlockBinaryHeader + raw PCM` in production |
 | 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` in production |
 | 102 | `CanDecodedValuePacket` binary in production |
@@ -96,5 +96,8 @@ Current ARM firmware emits zero-payload `SESSION_STARTED` and `SESSION_ENDED`
 markers around the binary data stream until full protobuf session metadata is
 enabled on target. The marker timestamp and session id are carried by
 `EgoFrameHeader`.
+Current ARM firmware also emits `CONFIG_SNAPSHOT` as a binary keyframe:
+`ConfigSnapshotBinaryHeader + text_size bytes` of `key=value` effective config
+text. The target format remains protobuf `DeviceConfigSnapshot`.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.

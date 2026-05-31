@@ -1,4 +1,4 @@
-# EGO Protocol Contract v1.3
+# **EGO Protocol Contract v1.3**
 
 Контракт сетевого обмена между **ADSP-SC589 ego acquisition module** и бортовым мини-ПК.
 

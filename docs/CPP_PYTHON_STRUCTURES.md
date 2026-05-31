@@ -58,6 +58,8 @@
 - `ego.bin` записывает фреймы как есть: `EgoFrameHeader + payload`.
 Current binary wire-format notes:
 
+- `CONFIG_SNAPSHOT` in current minimal firmware mode:
+  `ConfigSnapshotBinaryHeader + text_size bytes` of `key=value` config text.
 - `IMU_WINDOW`: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
 - `CAN_DECODED_VALUE`: one 28-byte `CanDecodedValuePacket`.
 - `CAN_RAW_FRAME`: one 28-byte `CanRawFramePacket`.

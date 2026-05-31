@@ -41,6 +41,18 @@ protobuf metadata remains the target format for richer session description.
 
 Назначение: сделать `ego.bin` самодостаточным для offline-конвертации в MDF4.
 
+Current minimal firmware mode: until protobuf encoding is enabled on the target,
+`CONFIG_SNAPSHOT` is emitted as a binary keyframe with
+`FrameFlags::PAYLOAD_BINARY | FrameFlags::PAYLOAD_KEYFRAME`. Payload layout:
+
+```text
+ConfigSnapshotBinaryHeader
+ASCII/UTF-8 key=value text, text_size bytes
+```
+
+The text blob is the effective `sd:ego/config/effective.cfg` content or firmware
+defaults if the SD config file is missing.
+
 ## AudioBlock
 
 Содержит аудиоблок.

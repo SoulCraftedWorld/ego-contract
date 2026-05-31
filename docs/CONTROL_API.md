@@ -157,6 +157,10 @@ status
 logs
 log_get <name>
 log_delete <ego_log_name.bin>
+config_get
+config_set <key> <value>
+config_reload
+config_save
 ```
 
 If `bin_path` is omitted, firmware creates a new log in `sd:ego/logs/`:
@@ -171,3 +175,8 @@ with `OK log name=<name> size=<bytes>`, then exactly `size` raw bytes, then an
 `END log` line. The client must read by byte count, not by newline scanning.
 `log_delete` accepts only `ego_*.bin`, deletes the matching `.index`, and is
 rejected while a session is active.
+
+`config_get` returns the active text-kv effective config. `config_set` updates
+one key and saves `sd:ego/config/effective.cfg`; changes are rejected while a
+session is active. `config_reload` reloads the SD config or falls back to
+firmware defaults. `config_save` writes the current effective config to SD.

@@ -100,3 +100,7 @@ MDF4 должен получить отдельные группы канало�
   `logs`, `log_get <name>`, and `log_delete <ego_*.bin>`. Binary download starts
   with a text header that contains the byte size, then sends exactly that many
   file bytes.
+- Current minimal firmware emits `CONFIG_SNAPSHOT` immediately after
+  `SESSION_STARTED`. It is a binary keyframe containing
+  `ConfigSnapshotBinaryHeader` plus the active `key=value` text config, making
+  the SD log self-describing before the full protobuf config encoder is enabled.
