@@ -10,6 +10,10 @@ Data TCP передаёт последовательность `EgoFrameHeader +
 
 ## SessionStarted
 
+Current minimal ARM firmware mode emits this as a zero-payload marker. The
+session id, sequence number, and timestamp are in `EgoFrameHeader`. Full
+protobuf metadata remains the target format for richer session description.
+
 Первый служебный frame после успешного старта сессии.
 
 Содержит:
@@ -208,6 +212,10 @@ Production binary payload: one 44-byte `TrajectoryPointPacket` with `t_ns`, `loc
 - `tags`.
 
 ## SessionEnded
+
+Current minimal ARM firmware mode emits this as a zero-payload final marker.
+The final marker is queued after final time/system status frames and before the
+record file is closed.
 
 Финальный frame сессии.
 

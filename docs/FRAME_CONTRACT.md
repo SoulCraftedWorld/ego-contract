@@ -65,7 +65,7 @@ typedef struct {
 
 | frame_type | Payload |
 |---:|---|
-| 1 | `SessionStarted` protobuf |
+| 1 | `SessionStarted` protobuf, or zero-payload session marker in minimal firmware mode |
 | 2 | `ConfigSnapshotFrame` protobuf |
 | 100 | `AudioBlockBinaryHeader + raw PCM` in production |
 | 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` in production |
@@ -77,7 +77,7 @@ typedef struct {
 | 201 | `SystemStatusPacket` binary in production |
 | 202 | `ImuCalibrationEvent` protobuf |
 | 203 | `MarkerEvent` protobuf |
-| 900 | `SessionEnded` protobuf |
+| 900 | `SessionEnded` protobuf, or zero-payload final marker in minimal firmware mode |
 
 ## Payload encoding
 
@@ -92,5 +92,9 @@ typedef struct {
 
 Current production data frames use `FrameFlags::PAYLOAD_BINARY`.
 Variable metadata/config/session/event frames remain protobuf unless explicitly moved to a fixed binary packet.
+Current ARM firmware emits zero-payload `SESSION_STARTED` and `SESSION_ENDED`
+markers around the binary data stream until full protobuf session metadata is
+enabled on target. The marker timestamp and session id are carried by
+`EgoFrameHeader`.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.
