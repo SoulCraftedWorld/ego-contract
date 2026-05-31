@@ -77,3 +77,22 @@ MDF4 должен получить отдельные группы канало�
 - system status;
 - calibration events;
 - markers.
+
+## Current firmware SD recording note
+
+- The ARM firmware writes the same `EgoFrameHeader + payload` stream to SD
+  while it streams frames to TCP.
+- Default log files are created under `sd:ego/logs/` as
+  `ego_YYYYMMDD_HHMMSS.bin` when RTC/GPS time is valid. Before time is valid,
+  the fallback name is `ego_mono_<timestamp>.bin`.
+- It also writes a sidecar CSV `.index` next to the `.bin` file with:
+  `seq,frame_type,t0_ns,t1_ns,file_offset,payload_size,payload_crc32,header_crc32,flags`.
+- For a custom binary path, the index path is derived by replacing the extension
+  with `.index`, unless an explicit index path is passed to the current minimal
+  Control TCP `start` command.
+- Firmware creates `sd:ego/logs/` for recordings and `sd:ego/config/` for module
+  settings. Automatic cleanup deletes only old `ego_*.bin` logs from
+  `sd:ego/logs/` and their matching `.index` files.
+- Before recording and then periodically during recording, firmware checks that
+  SD free space is at least 1 GiB. If it is lower, it tries to remove the oldest
+  completed log file.

@@ -144,3 +144,18 @@ Request payload: `StopSessionRequest`
 Добавление пользовательской метки события в текущую сессию.
 
 Request payload: `MarkerRequest`
+
+## Current minimal firmware mode
+
+The current firmware exposes a line-oriented debug/control interface before the
+full protobuf control API is enabled.
+
+```text
+start [bin_path] [index_path]
+```
+
+If `bin_path` is omitted, firmware creates a new log in `sd:ego/logs/`:
+`ego_YYYYMMDD_HHMMSS.bin` when RTC/GPS time is valid, otherwise
+`ego_mono_<timestamp>.bin`. If `bin_path` is custom and `index_path` is omitted,
+the firmware derives the index path by replacing the binary file extension with
+`.index`.
