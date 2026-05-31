@@ -152,6 +152,11 @@ full protobuf control API is enabled.
 
 ```text
 start [bin_path] [index_path]
+stop
+status
+logs
+log_get <name>
+log_delete <ego_log_name.bin>
 ```
 
 If `bin_path` is omitted, firmware creates a new log in `sd:ego/logs/`:
@@ -159,3 +164,10 @@ If `bin_path` is omitted, firmware creates a new log in `sd:ego/logs/`:
 `ego_mono_<timestamp>.bin`. If `bin_path` is custom and `index_path` is omitted,
 the firmware derives the index path by replacing the binary file extension with
 `.index`.
+
+`logs` lists completed `.bin` and `.index` files in `sd:ego/logs/`.
+`log_get` streams one selected file from `sd:ego/logs/`: the response starts
+with `OK log name=<name> size=<bytes>`, then exactly `size` raw bytes, then an
+`END log` line. The client must read by byte count, not by newline scanning.
+`log_delete` accepts only `ego_*.bin`, deletes the matching `.index`, and is
+rejected while a session is active.

@@ -96,3 +96,7 @@ MDF4 должен получить отдельные группы канало�
 - Before recording and then periodically during recording, firmware checks that
   SD free space is at least 1 GiB. If it is lower, it tries to remove the oldest
   completed log file.
+- Current minimal Control TCP supports log maintenance:
+  `logs`, `log_get <name>`, and `log_delete <ego_*.bin>`. Binary download starts
+  with a text header that contains the byte size, then sends exactly that many
+  file bytes.
