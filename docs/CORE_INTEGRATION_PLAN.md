@@ -8,8 +8,33 @@ network, storage, shell, and SHARC IPC paths.
 
 The target system is an ADSP-SC589 MINI based realtime acquisition module that
 streams synchronized audio, vehicle motion, CAN, IMU, GPS, time, and status
-frames to a mini-PC over TCP. The mini-PC writes `ego.bin`; the board only
-produces and transmits frames.
+frames to a mini-PC over TCP. ARM also records the same framed stream to SD as
+`ego.bin` while TCP streaming is active.
+
+## Current Implementation Status
+
+Implemented in the project:
+
+- shared EGO frame, timestamp, status, and IPC envelope headers;
+- ARM EGO runtime with bounded data queue, TCP data server, TCP control server,
+  shell `ego` command, SD recording path, frame CRC, and status counters;
+- ARM A2B input tap that accumulates 3 x 64-frame source blocks into one
+  192-frame, 4 ms audio payload at 48 kHz without changing the existing audio
+  routing table;
+- SHARC1 packetizer for `IMU_WINDOW`, `CAN_RAW_FRAME`,
+  `CAN_DECODED_VALUE`, and `TRAJECTORY_POINT`;
+- SHARC1 CAN bridge for ADI CAN RX callbacks and fixed signal extraction table;
+- SHARC1 LSM6DS3 source adapter and IMU service layer driven by SPI read/write
+  callbacks;
+- successful `mingw32-make app` build producing
+  `build/SAM-Audio-Starter.ldr`.
+
+Still not implemented:
+
+- real CAN0 controller open/pinmux/timing validation on target;
+- real SPI1 transport binding and PB_13 interrupt service;
+- GPS input parser;
+- trajectory estimator fed by decoded speed and IMU yaw-rate.
 
 ## Confirmed Project Baseline
 
@@ -153,14 +178,15 @@ but it cannot provide an IMU sample for every 4 ms audio slice.
 
 Recommended IMU ODR:
 
-- use 500 Hz if SPI1/FIFO load is stable;
-- aggregate two IMU samples per 4 ms slice;
-- publish each 4 ms `ImuWindowPacket` with `sample_count` normally equal to 2.
+- use LSM6DS3 416 Hz as the current primary mode; it gives about 2.4 ms between
+  samples and fits 4 ms windows better than 200/208 Hz;
+- aggregate one or two IMU samples per 4 ms slice depending on phase;
+- publish each 4 ms `ImuWindowPacket` with precise per-sample timestamps.
 
 Fallback:
 
-- use 250 Hz if 500 Hz causes FIFO/CPU pressure;
-- aggregate one sample per 4 ms slice, with occasional timestamp interpolation.
+- use LSM6DS3 208 Hz if SPI/CPU pressure appears on target;
+- accept occasional empty/single-sample 4 ms windows or explicitly interpolate.
 
 Avoid 200 Hz for the primary synchronized mode unless the final requirement is
 relaxed to 5 ms slices or interpolation is explicitly accepted.
@@ -428,7 +454,7 @@ Use flags in each payload for local quality:
 
 - Add SPI1 platform read/write for `docs/lsm6ds3-pid` driver.
 - Configure LSM6DS3 FIFO/INT.
-- Start with 500 Hz ODR and 4 ms windows.
+- Start with 416 Hz ODR and 4 ms windows.
 - Emit `IMU_WINDOW` and local quality flags.
 
 ### Phase 5: SHARC1 CAN path
@@ -493,12 +519,11 @@ document or in a dedicated build note.
 
 ## Recommended Immediate Next Step
 
-Implement Phase 1 and Phase 2 only:
+Bind the new SHARC1 bridge layers to real hardware:
 
-- add `EGO_ACQ_ENABLE`;
-- add common EGO headers;
-- add no-op init points on ARM/SHARC0/SHARC1;
-- add monotonic timestamp conversion helpers;
-- add compile-time size checks for existing protocol structs.
-
-This creates stable integration points without changing existing audio behavior.
+- initialize CAN0 with verified 500 kbit/s timing and register
+  `ego_sharc1_can_adi_*_callback`;
+- implement SPI1 register read/write callbacks for LSM6DS3 on `SPI1_SEL4`;
+- call `ego_sharc1_imu_service_sample()` from the PB_13 interrupt bottom-half
+  or a high-priority polling service;
+- then add the first trajectory estimator using decoded speed plus IMU yaw-rate.
