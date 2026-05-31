@@ -36,6 +36,17 @@ class FrameFlags(IntFlag):
     PAYLOAD_KEYFRAME = 1 << 3
 
 
+class TimeSource(IntEnum):
+    UNKNOWN = 0
+    BOARD_MONOTONIC = 1
+    GPS_UTC = 2
+
+
+class TimeSyncStatus(IntEnum):
+    FREE_RUNNING = 0
+    GPS_LOCKED = 1
+
+
 @dataclass(slots=True)
 class EgoFrameHeader:
     magic: int

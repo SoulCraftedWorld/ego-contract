@@ -39,11 +39,30 @@ enum class FrameFlags : uint32_t {
     PAYLOAD_KEYFRAME = 1u << 3,
 };
 
+enum class TimeSource : uint32_t {
+    UNKNOWN = 0,
+    BOARD_MONOTONIC = 1,
+    GPS_UTC = 2,
+};
+
+enum class TimeSyncStatus : uint32_t {
+    FREE_RUNNING = 0,
+    GPS_LOCKED = 1,
+};
+
 inline constexpr uint32_t to_u32(FramePayloadType v) {
     return static_cast<uint32_t>(v);
 }
 
 inline constexpr uint32_t to_u32(FrameFlags v) {
+    return static_cast<uint32_t>(v);
+}
+
+inline constexpr uint32_t to_u32(TimeSource v) {
+    return static_cast<uint32_t>(v);
+}
+
+inline constexpr uint32_t to_u32(TimeSyncStatus v) {
     return static_cast<uint32_t>(v);
 }
 
