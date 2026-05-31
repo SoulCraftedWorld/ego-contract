@@ -67,14 +67,14 @@ typedef struct {
 |---:|---|
 | 1 | `SessionStarted` protobuf |
 | 2 | `ConfigSnapshotFrame` protobuf |
-| 100 | `AudioBlock` protobuf или production raw audio payload |
-| 101 | `ImuWindow` protobuf |
-| 102 | `CanDecodedValue` protobuf |
-| 103 | `CanRawFrame` protobuf |
-| 104 | `TrajectoryPoint` protobuf |
-| 105 | `GpsFix` protobuf |
-| 200 | `TimeStatus` protobuf |
-| 201 | `SystemStatus` protobuf |
+| 100 | `AudioBlockBinaryHeader + raw PCM` in production |
+| 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` in production |
+| 102 | `CanDecodedValuePacket` binary in production |
+| 103 | `CanRawFramePacket` binary in production |
+| 104 | `TrajectoryPointPacket` binary in production |
+| 105 | `GpsFixPacket` binary in production |
+| 200 | `TimeStatusPacket` binary in production |
+| 201 | `SystemStatusPacket` binary in production |
 | 202 | `ImuCalibrationEvent` protobuf |
 | 203 | `MarkerEvent` protobuf |
 | 900 | `SessionEnded` protobuf |
@@ -89,5 +89,8 @@ typedef struct {
 |---|---|
 | Prototype | `AudioBlock` protobuf с `pcm_data` |
 | Production | компактный бинарный audio block header + raw PCM payload |
+
+Current production data frames use `FrameFlags::PAYLOAD_BINARY`.
+Variable metadata/config/session/event frames remain protobuf unless explicitly moved to a fixed binary packet.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.

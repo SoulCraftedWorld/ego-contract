@@ -125,45 +125,42 @@ struct AudioBlockBinaryHeader {
     uint32_t reserved0;
 };
 
-struct ImuWindowPacket {
-    uint64_t window_id;
+struct ImuSampleBinary {
+    uint64_t t_ns;
+
+    float accel_mps2[3];
+    float gyro_rad_s[3];
+    float temperature_c;
+
+    uint32_t flags;
+};
+
+// IMU_WINDOW payload is ImuWindowBinaryHeader followed by sample_count
+// ImuSampleBinary records.
+struct ImuWindowBinaryHeader {
+    uint64_t imu_window_id;
     uint64_t t0_ns;
     uint64_t t1_ns;
 
+    uint32_t odr_hz;
     uint16_t sample_count;
-    uint16_t flags;
+    uint16_t sample_size;
 
-    float accel_mean_x_mps2;
-    float accel_mean_y_mps2;
-    float accel_mean_z_mps2;
-
-    float gyro_mean_x_rad_s;
-    float gyro_mean_y_rad_s;
-    float gyro_mean_z_rad_s;
-
-    float delta_velocity_x_mps;
-    float delta_velocity_y_mps;
-    float delta_velocity_z_mps;
-
-    float delta_angle_x_rad;
-    float delta_angle_y_rad;
-    float delta_angle_z_rad;
+    uint32_t flags;
+    uint32_t reserved0;
 };
+
+using ImuWindowPacket = ImuWindowBinaryHeader;
 
 struct CanDecodedValuePacket {
     uint64_t t_ns;
 
-    uint32_t value_id;
+    uint32_t signal_id;
     uint32_t can_id;
 
     float value;
-    uint32_t raw_value;
+    uint32_t quality;
     uint32_t flags;
-
-    uint8_t dlc;
-    uint8_t reserved0;
-    uint8_t reserved1;
-    uint8_t reserved2;
 };
 
 struct CanRawFramePacket {
@@ -171,34 +168,28 @@ struct CanRawFramePacket {
 
     uint32_t can_id;
     uint8_t dlc;
-    uint8_t is_extended;
-    uint8_t bus_id;
-    uint8_t flags;
+    uint8_t bus;
+    uint16_t flags;
 
     uint8_t data[8];
+    uint32_t reserved0;
 };
 
 struct TrajectoryPointPacket {
     uint64_t t_ns;
 
-    float x_m;
-    float y_m;
-    float z_m;
-
-    float vx_mps;
-    float vy_mps;
-    float vz_mps;
+    float loc_x_m;
+    float loc_y_m;
+    float loc_z_m;
 
     float yaw_rad;
     float pitch_rad;
     float roll_rad;
 
+    float velocity_mps;
     float yaw_rate_rad_s;
-    float path_s_m;
-    float vehicle_speed_mps;
 
     uint32_t flags;
-    uint32_t reserved0;
 };
 
 struct GpsFixPacket {
@@ -273,10 +264,12 @@ struct ImuCalibrationEventPacket {
 static_assert(sizeof(EgoFrameHeader) == 72, "EgoFrameHeader size must be 72 bytes");
 static_assert(sizeof(EgoControlMessageHeader) == 32, "EgoControlMessageHeader size must be 32 bytes");
 static_assert(sizeof(AudioBlockBinaryHeader) == 48, "AudioBlockBinaryHeader size must be 48 bytes");
-static_assert(sizeof(ImuWindowPacket) == 76, "ImuWindowPacket size must be 76 bytes");
-static_assert(sizeof(CanDecodedValuePacket) == 32, "CanDecodedValuePacket size must be 32 bytes");
-static_assert(sizeof(CanRawFramePacket) == 24, "CanRawFramePacket size must be 24 bytes");
-static_assert(sizeof(TrajectoryPointPacket) == 64, "TrajectoryPointPacket size must be 64 bytes");
+static_assert(sizeof(ImuSampleBinary) == 40, "ImuSampleBinary size must be 40 bytes");
+static_assert(sizeof(ImuWindowBinaryHeader) == 40, "ImuWindowBinaryHeader size must be 40 bytes");
+static_assert(sizeof(ImuWindowPacket) == 40, "ImuWindowPacket size must be 40 bytes");
+static_assert(sizeof(CanDecodedValuePacket) == 28, "CanDecodedValuePacket size must be 28 bytes");
+static_assert(sizeof(CanRawFramePacket) == 28, "CanRawFramePacket size must be 28 bytes");
+static_assert(sizeof(TrajectoryPointPacket) == 44, "TrajectoryPointPacket size must be 44 bytes");
 static_assert(sizeof(GpsFixPacket) == 56, "GpsFixPacket size must be 56 bytes");
 static_assert(sizeof(TimeStatusPacket) == 40, "TimeStatusPacket size must be 40 bytes");
 static_assert(sizeof(SystemStatusPacket) == 56, "SystemStatusPacket size must be 56 bytes");

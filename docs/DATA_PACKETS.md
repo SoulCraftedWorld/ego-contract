@@ -59,39 +59,45 @@ Data TCP передаёт последовательность `EgoFrameHeader +
 
 ## ImuWindow
 
-Содержит агрегированное окно IMU от LSM6DS3.
+Production binary payload:
+
+- `ImuWindowBinaryHeader` (40 bytes): `imu_window_id`, `t0_ns`, `t1_ns`, `odr_hz`, `sample_count`, `sample_size`, `flags`, `reserved0`.
+- Followed by `sample_count` records of `ImuSampleBinary` (40 bytes each): `t_ns`, `accel_mps2[3]`, `gyro_rad_s[3]`, `temperature_c`, `flags`.
+
+Содержит окно timestamped IMU-сэмплов от LSM6DS3, привязанное к аудио-блоку.
 
 Поля:
 
-- `window_id`;
+- `imu_window_id`;
 - `time.t0_ns`;
 - `time.t1_ns`;
+- `odr_hz`;
 - `sample_count`;
+- `sample_size`;
 - `flags`;
-- среднее ускорение XYZ;
-- средняя угловая скорость XYZ;
-- интегральное приращение скорости XYZ;
-- интегральное приращение угла XYZ.
 
 Назначение: вход для локальной траектории и последующей записи в MDF4.
 
 ## CanDecodedValue
+
+Production binary payload: one 28-byte `CanDecodedValuePacket` with `t_ns`, `signal_id`, `can_id`, `value`, `quality`, `flags`.
 
 Декодированное значение CAN-сигнала.
 
 Поля:
 
 - `t_ns`;
-- `value_id`;
+- `signal_id`;
 - `can_id`;
 - `value`;
-- `raw_value`;
+- `quality`;
 - `flags`;
-- `dlc`.
 
 Используется для скорости автомобиля, режима АКПП и опционально угла руля.
 
 ## CanRawFrame
+
+Production binary payload: one 28-byte `CanRawFramePacket` with `t_ns`, `can_id`, `dlc`, `bus`, `flags`, `data[8]`, `reserved0`.
 
 Сырой CAN-фрейм.
 
@@ -100,26 +106,26 @@ Data TCP передаёт последовательность `EgoFrameHeader +
 - `t_ns`;
 - `can_id`;
 - `dlc`;
-- `is_extended`;
-- `bus_id`;
+- `bus`;
 - `flags`;
-- `data`.
+- `data[8]`;
+- `reserved0`.
 
 Назначение: отладка, проверка декодера, возможный offline-пересчёт.
 
 ## TrajectoryPoint
+
+Production binary payload: one 44-byte `TrajectoryPointPacket` with `t_ns`, `loc_x_m`, `loc_y_m`, `loc_z_m`, `yaw_rad`, `pitch_rad`, `roll_rad`, `velocity_mps`, `yaw_rate_rad_s`, `flags`.
 
 Точка локальной траектории.
 
 Поля:
 
 - `t_ns`;
-- `x_m`, `y_m`, `z_m`;
-- `vx_mps`, `vy_mps`, `vz_mps`;
+- `loc_x_m`, `loc_y_m`, `loc_z_m`;
 - `yaw_rad`, `pitch_rad`, `roll_rad`;
+- `velocity_mps`;
 - `yaw_rate_rad_s`;
-- `path_s_m`;
-- `vehicle_speed_mps`;
 - `flags`.
 
 Строится на SHARC1 по скорости CAN и гироскопу.

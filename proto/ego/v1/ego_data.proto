@@ -35,69 +35,61 @@ message AudioBlock {
   bytes pcm_data = 8;
 }
 
+message ImuSample {
+  fixed64 t_ns = 1;
+  float accel_x_mps2 = 2;
+  float accel_y_mps2 = 3;
+  float accel_z_mps2 = 4;
+  float gyro_x_rad_s = 5;
+  float gyro_y_rad_s = 6;
+  float gyro_z_rad_s = 7;
+  float temperature_c = 8;
+  uint32 flags = 9;
+}
+
 message ImuWindow {
-  fixed64 window_id = 1;
+  fixed64 imu_window_id = 1;
   TimeRangeNs time = 2;
-  uint32 sample_count = 3;
-  uint32 flags = 4;
-
-  float accel_mean_x_mps2 = 5;
-  float accel_mean_y_mps2 = 6;
-  float accel_mean_z_mps2 = 7;
-
-  float gyro_mean_x_rad_s = 8;
-  float gyro_mean_y_rad_s = 9;
-  float gyro_mean_z_rad_s = 10;
-
-  float delta_velocity_x_mps = 11;
-  float delta_velocity_y_mps = 12;
-  float delta_velocity_z_mps = 13;
-
-  float delta_angle_x_rad = 14;
-  float delta_angle_y_rad = 15;
-  float delta_angle_z_rad = 16;
+  uint32 odr_hz = 3;
+  uint32 sample_count = 4;
+  uint32 sample_size = 5;
+  uint32 flags = 6;
+  repeated ImuSample samples = 7;
 }
 
 message CanDecodedValue {
   fixed64 t_ns = 1;
-  uint32 value_id = 2;
+  uint32 signal_id = 2;
   uint32 can_id = 3;
   float value = 4;
-  uint32 raw_value = 5;
+  uint32 quality = 5;
   uint32 flags = 6;
-  uint32 dlc = 7;
 }
 
 message CanRawFrame {
   fixed64 t_ns = 1;
   uint32 can_id = 2;
   uint32 dlc = 3;
-  bool is_extended = 4;
-  uint32 bus_id = 5;
-  uint32 flags = 6;
-  bytes data = 7; // expected length <= 8 for CAN 2.0
+  uint32 bus = 4;
+  uint32 flags = 5;
+  bytes data = 6; // expected length <= 8 for CAN 2.0
 }
 
 message TrajectoryPoint {
   fixed64 t_ns = 1;
 
-  float x_m = 2;
-  float y_m = 3;
-  float z_m = 4;
+  float loc_x_m = 2;
+  float loc_y_m = 3;
+  float loc_z_m = 4;
 
-  float vx_mps = 5;
-  float vy_mps = 6;
-  float vz_mps = 7;
+  float yaw_rad = 5;
+  float pitch_rad = 6;
+  float roll_rad = 7;
 
-  float yaw_rad = 8;
-  float pitch_rad = 9;
-  float roll_rad = 10;
+  float velocity_mps = 8;
+  float yaw_rate_rad_s = 9;
 
-  float yaw_rate_rad_s = 11;
-  float path_s_m = 12;
-  float vehicle_speed_mps = 13;
-
-  uint32 flags = 14;
+  uint32 flags = 10;
 }
 
 message GpsFix {

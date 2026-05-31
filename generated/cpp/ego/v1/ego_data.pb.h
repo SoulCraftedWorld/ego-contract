@@ -85,6 +85,10 @@ class ImuCalibrationEvent;
 struct ImuCalibrationEventDefaultTypeInternal;
 extern ImuCalibrationEventDefaultTypeInternal _ImuCalibrationEvent_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ImuCalibrationEvent_class_data_;
+class ImuSample;
+struct ImuSampleDefaultTypeInternal;
+extern ImuSampleDefaultTypeInternal _ImuSample_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ImuSample_class_data_;
 class ImuWindow;
 struct ImuWindowDefaultTypeInternal;
 extern ImuWindowDefaultTypeInternal _ImuWindow_default_instance_;
@@ -183,7 +187,7 @@ class TrajectoryPoint final : public ::google::protobuf::Message
     return *reinterpret_cast<const TrajectoryPoint*>(
         &_TrajectoryPoint_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 6;
+  static constexpr int kIndexInFileMessages = 7;
   friend void swap(TrajectoryPoint& a, TrajectoryPoint& b) { a.Swap(&b); }
   inline void Swap(TrajectoryPoint* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -271,19 +275,15 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kTNsFieldNumber = 1,
-    kXMFieldNumber = 2,
-    kYMFieldNumber = 3,
-    kZMFieldNumber = 4,
-    kVxMpsFieldNumber = 5,
-    kVyMpsFieldNumber = 6,
-    kVzMpsFieldNumber = 7,
-    kYawRadFieldNumber = 8,
-    kPitchRadFieldNumber = 9,
-    kRollRadFieldNumber = 10,
-    kYawRateRadSFieldNumber = 11,
-    kPathSMFieldNumber = 12,
-    kVehicleSpeedMpsFieldNumber = 13,
-    kFlagsFieldNumber = 14,
+    kLocXMFieldNumber = 2,
+    kLocYMFieldNumber = 3,
+    kLocZMFieldNumber = 4,
+    kYawRadFieldNumber = 5,
+    kPitchRadFieldNumber = 6,
+    kRollRadFieldNumber = 7,
+    kVelocityMpsFieldNumber = 8,
+    kYawRateRadSFieldNumber = 9,
+    kFlagsFieldNumber = 10,
   };
   // fixed64 t_ns = 1;
   void clear_t_ns() ;
@@ -295,67 +295,37 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   void _internal_set_t_ns(::uint64_t value);
 
   public:
-  // float x_m = 2;
-  void clear_x_m() ;
-  float x_m() const;
-  void set_x_m(float value);
+  // float loc_x_m = 2;
+  void clear_loc_x_m() ;
+  float loc_x_m() const;
+  void set_loc_x_m(float value);
 
   private:
-  float _internal_x_m() const;
-  void _internal_set_x_m(float value);
+  float _internal_loc_x_m() const;
+  void _internal_set_loc_x_m(float value);
 
   public:
-  // float y_m = 3;
-  void clear_y_m() ;
-  float y_m() const;
-  void set_y_m(float value);
+  // float loc_y_m = 3;
+  void clear_loc_y_m() ;
+  float loc_y_m() const;
+  void set_loc_y_m(float value);
 
   private:
-  float _internal_y_m() const;
-  void _internal_set_y_m(float value);
+  float _internal_loc_y_m() const;
+  void _internal_set_loc_y_m(float value);
 
   public:
-  // float z_m = 4;
-  void clear_z_m() ;
-  float z_m() const;
-  void set_z_m(float value);
+  // float loc_z_m = 4;
+  void clear_loc_z_m() ;
+  float loc_z_m() const;
+  void set_loc_z_m(float value);
 
   private:
-  float _internal_z_m() const;
-  void _internal_set_z_m(float value);
+  float _internal_loc_z_m() const;
+  void _internal_set_loc_z_m(float value);
 
   public:
-  // float vx_mps = 5;
-  void clear_vx_mps() ;
-  float vx_mps() const;
-  void set_vx_mps(float value);
-
-  private:
-  float _internal_vx_mps() const;
-  void _internal_set_vx_mps(float value);
-
-  public:
-  // float vy_mps = 6;
-  void clear_vy_mps() ;
-  float vy_mps() const;
-  void set_vy_mps(float value);
-
-  private:
-  float _internal_vy_mps() const;
-  void _internal_set_vy_mps(float value);
-
-  public:
-  // float vz_mps = 7;
-  void clear_vz_mps() ;
-  float vz_mps() const;
-  void set_vz_mps(float value);
-
-  private:
-  float _internal_vz_mps() const;
-  void _internal_set_vz_mps(float value);
-
-  public:
-  // float yaw_rad = 8;
+  // float yaw_rad = 5;
   void clear_yaw_rad() ;
   float yaw_rad() const;
   void set_yaw_rad(float value);
@@ -365,7 +335,7 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   void _internal_set_yaw_rad(float value);
 
   public:
-  // float pitch_rad = 9;
+  // float pitch_rad = 6;
   void clear_pitch_rad() ;
   float pitch_rad() const;
   void set_pitch_rad(float value);
@@ -375,7 +345,7 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   void _internal_set_pitch_rad(float value);
 
   public:
-  // float roll_rad = 10;
+  // float roll_rad = 7;
   void clear_roll_rad() ;
   float roll_rad() const;
   void set_roll_rad(float value);
@@ -385,7 +355,17 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   void _internal_set_roll_rad(float value);
 
   public:
-  // float yaw_rate_rad_s = 11;
+  // float velocity_mps = 8;
+  void clear_velocity_mps() ;
+  float velocity_mps() const;
+  void set_velocity_mps(float value);
+
+  private:
+  float _internal_velocity_mps() const;
+  void _internal_set_velocity_mps(float value);
+
+  public:
+  // float yaw_rate_rad_s = 9;
   void clear_yaw_rate_rad_s() ;
   float yaw_rate_rad_s() const;
   void set_yaw_rate_rad_s(float value);
@@ -395,27 +375,7 @@ class TrajectoryPoint final : public ::google::protobuf::Message
   void _internal_set_yaw_rate_rad_s(float value);
 
   public:
-  // float path_s_m = 12;
-  void clear_path_s_m() ;
-  float path_s_m() const;
-  void set_path_s_m(float value);
-
-  private:
-  float _internal_path_s_m() const;
-  void _internal_set_path_s_m(float value);
-
-  public:
-  // float vehicle_speed_mps = 13;
-  void clear_vehicle_speed_mps() ;
-  float vehicle_speed_mps() const;
-  void set_vehicle_speed_mps(float value);
-
-  private:
-  float _internal_vehicle_speed_mps() const;
-  void _internal_set_vehicle_speed_mps(float value);
-
-  public:
-  // uint32 flags = 14;
+  // uint32 flags = 10;
   void clear_flags() ;
   ::uint32_t flags() const;
   void set_flags(::uint32_t value);
@@ -429,7 +389,7 @@ class TrajectoryPoint final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 14,
+  static const ::google::protobuf::internal::TcParseTable<4, 10,
                                    0, 0,
                                    2>
       _table_;
@@ -452,18 +412,14 @@ class TrajectoryPoint final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint64_t t_ns_;
-    float x_m_;
-    float y_m_;
-    float z_m_;
-    float vx_mps_;
-    float vy_mps_;
-    float vz_mps_;
+    float loc_x_m_;
+    float loc_y_m_;
+    float loc_z_m_;
     float yaw_rad_;
     float pitch_rad_;
     float roll_rad_;
+    float velocity_mps_;
     float yaw_rate_rad_s_;
-    float path_s_m_;
-    float vehicle_speed_mps_;
     ::uint32_t flags_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -529,7 +485,7 @@ class TimeStatus final : public ::google::protobuf::Message
     return *reinterpret_cast<const TimeStatus*>(
         &_TimeStatus_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(TimeStatus& a, TimeStatus& b) { a.Swap(&b); }
   inline void Swap(TimeStatus* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -791,7 +747,7 @@ class SystemStatus final : public ::google::protobuf::Message
     return *reinterpret_cast<const SystemStatus*>(
         &_SystemStatus_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 9;
+  static constexpr int kIndexInFileMessages = 10;
   friend void swap(SystemStatus& a, SystemStatus& b) { a.Swap(&b); }
   inline void Swap(SystemStatus* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1125,7 +1081,7 @@ class SessionEnded final : public ::google::protobuf::Message
     return *reinterpret_cast<const SessionEnded*>(
         &_SessionEnded_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 12;
+  static constexpr int kIndexInFileMessages = 13;
   friend void swap(SessionEnded& a, SessionEnded& b) { a.Swap(&b); }
   inline void Swap(SessionEnded* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1318,6 +1274,292 @@ class SessionEnded final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull SessionEnded_class_data_;
 // -------------------------------------------------------------------
 
+class ImuSample final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ego.v1.ImuSample) */ {
+ public:
+  inline ImuSample() : ImuSample(nullptr) {}
+  ~ImuSample() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ImuSample* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ImuSample));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ImuSample(::google::protobuf::internal::ConstantInitialized);
+
+  inline ImuSample(const ImuSample& from) : ImuSample(nullptr, from) {}
+  inline ImuSample(ImuSample&& from) noexcept
+      : ImuSample(nullptr, ::std::move(from)) {}
+  inline ImuSample& operator=(const ImuSample& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ImuSample& operator=(ImuSample&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ImuSample& default_instance() {
+    return *reinterpret_cast<const ImuSample*>(
+        &_ImuSample_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 3;
+  friend void swap(ImuSample& a, ImuSample& b) { a.Swap(&b); }
+  inline void Swap(ImuSample* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ImuSample* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ImuSample* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ImuSample>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ImuSample& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ImuSample& from) { ImuSample::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ImuSample* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "ego.v1.ImuSample"; }
+
+  explicit ImuSample(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ImuSample(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ImuSample& from);
+  ImuSample(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ImuSample&& from) noexcept
+      : ImuSample(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kTNsFieldNumber = 1,
+    kAccelXMps2FieldNumber = 2,
+    kAccelYMps2FieldNumber = 3,
+    kAccelZMps2FieldNumber = 4,
+    kGyroXRadSFieldNumber = 5,
+    kGyroYRadSFieldNumber = 6,
+    kGyroZRadSFieldNumber = 7,
+    kTemperatureCFieldNumber = 8,
+    kFlagsFieldNumber = 9,
+  };
+  // fixed64 t_ns = 1;
+  void clear_t_ns() ;
+  ::uint64_t t_ns() const;
+  void set_t_ns(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_t_ns() const;
+  void _internal_set_t_ns(::uint64_t value);
+
+  public:
+  // float accel_x_mps2 = 2;
+  void clear_accel_x_mps2() ;
+  float accel_x_mps2() const;
+  void set_accel_x_mps2(float value);
+
+  private:
+  float _internal_accel_x_mps2() const;
+  void _internal_set_accel_x_mps2(float value);
+
+  public:
+  // float accel_y_mps2 = 3;
+  void clear_accel_y_mps2() ;
+  float accel_y_mps2() const;
+  void set_accel_y_mps2(float value);
+
+  private:
+  float _internal_accel_y_mps2() const;
+  void _internal_set_accel_y_mps2(float value);
+
+  public:
+  // float accel_z_mps2 = 4;
+  void clear_accel_z_mps2() ;
+  float accel_z_mps2() const;
+  void set_accel_z_mps2(float value);
+
+  private:
+  float _internal_accel_z_mps2() const;
+  void _internal_set_accel_z_mps2(float value);
+
+  public:
+  // float gyro_x_rad_s = 5;
+  void clear_gyro_x_rad_s() ;
+  float gyro_x_rad_s() const;
+  void set_gyro_x_rad_s(float value);
+
+  private:
+  float _internal_gyro_x_rad_s() const;
+  void _internal_set_gyro_x_rad_s(float value);
+
+  public:
+  // float gyro_y_rad_s = 6;
+  void clear_gyro_y_rad_s() ;
+  float gyro_y_rad_s() const;
+  void set_gyro_y_rad_s(float value);
+
+  private:
+  float _internal_gyro_y_rad_s() const;
+  void _internal_set_gyro_y_rad_s(float value);
+
+  public:
+  // float gyro_z_rad_s = 7;
+  void clear_gyro_z_rad_s() ;
+  float gyro_z_rad_s() const;
+  void set_gyro_z_rad_s(float value);
+
+  private:
+  float _internal_gyro_z_rad_s() const;
+  void _internal_set_gyro_z_rad_s(float value);
+
+  public:
+  // float temperature_c = 8;
+  void clear_temperature_c() ;
+  float temperature_c() const;
+  void set_temperature_c(float value);
+
+  private:
+  float _internal_temperature_c() const;
+  void _internal_set_temperature_c(float value);
+
+  public:
+  // uint32 flags = 9;
+  void clear_flags() ;
+  ::uint32_t flags() const;
+  void set_flags(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_flags() const;
+  void _internal_set_flags(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:ego.v1.ImuSample)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<4, 9,
+                                   0, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ImuSample& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::uint64_t t_ns_;
+    float accel_x_mps2_;
+    float accel_y_mps2_;
+    float accel_z_mps2_;
+    float gyro_x_rad_s_;
+    float gyro_y_rad_s_;
+    float gyro_z_rad_s_;
+    float temperature_c_;
+    ::uint32_t flags_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ego_2fv1_2fego_5fdata_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ImuSample_class_data_;
+// -------------------------------------------------------------------
+
 class ImuCalibrationEvent final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:ego.v1.ImuCalibrationEvent) */ {
  public:
@@ -1373,7 +1615,7 @@ class ImuCalibrationEvent final : public ::google::protobuf::Message
     return *reinterpret_cast<const ImuCalibrationEvent*>(
         &_ImuCalibrationEvent_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 11;
   friend void swap(ImuCalibrationEvent& a, ImuCalibrationEvent& b) { a.Swap(&b); }
   inline void Swap(ImuCalibrationEvent* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1671,7 +1913,7 @@ class GpsFix final : public ::google::protobuf::Message
     return *reinterpret_cast<const GpsFix*>(
         &_GpsFix_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 7;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(GpsFix& a, GpsFix& b) { a.Swap(&b); }
   inline void Swap(GpsFix* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1993,7 +2235,7 @@ class CanRawFrame final : public ::google::protobuf::Message
     return *reinterpret_cast<const CanRawFrame*>(
         &_CanRawFrame_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 5;
+  static constexpr int kIndexInFileMessages = 6;
   friend void swap(CanRawFrame& a, CanRawFrame& b) { a.Swap(&b); }
   inline void Swap(CanRawFrame* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2080,15 +2322,14 @@ class CanRawFrame final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kDataFieldNumber = 7,
+    kDataFieldNumber = 6,
     kTNsFieldNumber = 1,
     kCanIdFieldNumber = 2,
     kDlcFieldNumber = 3,
-    kIsExtendedFieldNumber = 4,
-    kBusIdFieldNumber = 5,
-    kFlagsFieldNumber = 6,
+    kBusFieldNumber = 4,
+    kFlagsFieldNumber = 5,
   };
-  // bytes data = 7;
+  // bytes data = 6;
   void clear_data() ;
   const ::std::string& data() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -2133,27 +2374,17 @@ class CanRawFrame final : public ::google::protobuf::Message
   void _internal_set_dlc(::uint32_t value);
 
   public:
-  // bool is_extended = 4;
-  void clear_is_extended() ;
-  bool is_extended() const;
-  void set_is_extended(bool value);
+  // uint32 bus = 4;
+  void clear_bus() ;
+  ::uint32_t bus() const;
+  void set_bus(::uint32_t value);
 
   private:
-  bool _internal_is_extended() const;
-  void _internal_set_is_extended(bool value);
+  ::uint32_t _internal_bus() const;
+  void _internal_set_bus(::uint32_t value);
 
   public:
-  // uint32 bus_id = 5;
-  void clear_bus_id() ;
-  ::uint32_t bus_id() const;
-  void set_bus_id(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_bus_id() const;
-  void _internal_set_bus_id(::uint32_t value);
-
-  public:
-  // uint32 flags = 6;
+  // uint32 flags = 5;
   void clear_flags() ;
   ::uint32_t flags() const;
   void set_flags(::uint32_t value);
@@ -2167,7 +2398,7 @@ class CanRawFrame final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
                                    0, 0,
                                    2>
       _table_;
@@ -2193,8 +2424,7 @@ class CanRawFrame final : public ::google::protobuf::Message
     ::uint64_t t_ns_;
     ::uint32_t can_id_;
     ::uint32_t dlc_;
-    bool is_extended_;
-    ::uint32_t bus_id_;
+    ::uint32_t bus_;
     ::uint32_t flags_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2260,7 +2490,7 @@ class CanDecodedValue final : public ::google::protobuf::Message
     return *reinterpret_cast<const CanDecodedValue*>(
         &_CanDecodedValue_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 4;
+  static constexpr int kIndexInFileMessages = 5;
   friend void swap(CanDecodedValue& a, CanDecodedValue& b) { a.Swap(&b); }
   inline void Swap(CanDecodedValue* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2348,12 +2578,11 @@ class CanDecodedValue final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kTNsFieldNumber = 1,
-    kValueIdFieldNumber = 2,
+    kSignalIdFieldNumber = 2,
     kCanIdFieldNumber = 3,
     kValueFieldNumber = 4,
-    kRawValueFieldNumber = 5,
+    kQualityFieldNumber = 5,
     kFlagsFieldNumber = 6,
-    kDlcFieldNumber = 7,
   };
   // fixed64 t_ns = 1;
   void clear_t_ns() ;
@@ -2365,14 +2594,14 @@ class CanDecodedValue final : public ::google::protobuf::Message
   void _internal_set_t_ns(::uint64_t value);
 
   public:
-  // uint32 value_id = 2;
-  void clear_value_id() ;
-  ::uint32_t value_id() const;
-  void set_value_id(::uint32_t value);
+  // uint32 signal_id = 2;
+  void clear_signal_id() ;
+  ::uint32_t signal_id() const;
+  void set_signal_id(::uint32_t value);
 
   private:
-  ::uint32_t _internal_value_id() const;
-  void _internal_set_value_id(::uint32_t value);
+  ::uint32_t _internal_signal_id() const;
+  void _internal_set_signal_id(::uint32_t value);
 
   public:
   // uint32 can_id = 3;
@@ -2395,14 +2624,14 @@ class CanDecodedValue final : public ::google::protobuf::Message
   void _internal_set_value(float value);
 
   public:
-  // uint32 raw_value = 5;
-  void clear_raw_value() ;
-  ::uint32_t raw_value() const;
-  void set_raw_value(::uint32_t value);
+  // uint32 quality = 5;
+  void clear_quality() ;
+  ::uint32_t quality() const;
+  void set_quality(::uint32_t value);
 
   private:
-  ::uint32_t _internal_raw_value() const;
-  void _internal_set_raw_value(::uint32_t value);
+  ::uint32_t _internal_quality() const;
+  void _internal_set_quality(::uint32_t value);
 
   public:
   // uint32 flags = 6;
@@ -2415,21 +2644,11 @@ class CanDecodedValue final : public ::google::protobuf::Message
   void _internal_set_flags(::uint32_t value);
 
   public:
-  // uint32 dlc = 7;
-  void clear_dlc() ;
-  ::uint32_t dlc() const;
-  void set_dlc(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_dlc() const;
-  void _internal_set_dlc(::uint32_t value);
-
-  public:
   // @@protoc_insertion_point(class_scope:ego.v1.CanDecodedValue)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
                                    0, 0,
                                    2>
       _table_;
@@ -2452,12 +2671,11 @@ class CanDecodedValue final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint64_t t_ns_;
-    ::uint32_t value_id_;
+    ::uint32_t signal_id_;
     ::uint32_t can_id_;
     float value_;
-    ::uint32_t raw_value_;
+    ::uint32_t quality_;
     ::uint32_t flags_;
-    ::uint32_t dlc_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2522,7 +2740,7 @@ class MarkerEvent final : public ::google::protobuf::Message
     return *reinterpret_cast<const MarkerEvent*>(
         &_MarkerEvent_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 11;
+  static constexpr int kIndexInFileMessages = 12;
   friend void swap(MarkerEvent& a, MarkerEvent& b) { a.Swap(&b); }
   inline void Swap(MarkerEvent* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2765,7 +2983,7 @@ class ImuWindow final : public ::google::protobuf::Message
     return *reinterpret_cast<const ImuWindow*>(
         &_ImuWindow_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 3;
+  static constexpr int kIndexInFileMessages = 4;
   friend void swap(ImuWindow& a, ImuWindow& b) { a.Swap(&b); }
   inline void Swap(ImuWindow* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2852,23 +3070,31 @@ class ImuWindow final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kSamplesFieldNumber = 7,
     kTimeFieldNumber = 2,
-    kWindowIdFieldNumber = 1,
-    kSampleCountFieldNumber = 3,
-    kFlagsFieldNumber = 4,
-    kAccelMeanXMps2FieldNumber = 5,
-    kAccelMeanYMps2FieldNumber = 6,
-    kAccelMeanZMps2FieldNumber = 7,
-    kGyroMeanXRadSFieldNumber = 8,
-    kGyroMeanYRadSFieldNumber = 9,
-    kGyroMeanZRadSFieldNumber = 10,
-    kDeltaVelocityXMpsFieldNumber = 11,
-    kDeltaVelocityYMpsFieldNumber = 12,
-    kDeltaVelocityZMpsFieldNumber = 13,
-    kDeltaAngleXRadFieldNumber = 14,
-    kDeltaAngleYRadFieldNumber = 15,
-    kDeltaAngleZRadFieldNumber = 16,
+    kImuWindowIdFieldNumber = 1,
+    kOdrHzFieldNumber = 3,
+    kSampleCountFieldNumber = 4,
+    kSampleSizeFieldNumber = 5,
+    kFlagsFieldNumber = 6,
   };
+  // repeated .ego.v1.ImuSample samples = 7;
+  int samples_size() const;
+  private:
+  int _internal_samples_size() const;
+
+  public:
+  void clear_samples() ;
+  ::ego::v1::ImuSample* PROTOBUF_NONNULL mutable_samples(int index);
+  ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>* PROTOBUF_NONNULL mutable_samples();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>& _internal_samples() const;
+  ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>* PROTOBUF_NONNULL _internal_mutable_samples();
+  public:
+  const ::ego::v1::ImuSample& samples(int index) const;
+  ::ego::v1::ImuSample* PROTOBUF_NONNULL add_samples();
+  const ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>& samples() const;
   // .ego.v1.TimeRangeNs time = 2;
   bool has_time() const;
   void clear_time() ;
@@ -2884,17 +3110,27 @@ class ImuWindow final : public ::google::protobuf::Message
   ::ego::v1::TimeRangeNs* PROTOBUF_NONNULL _internal_mutable_time();
 
   public:
-  // fixed64 window_id = 1;
-  void clear_window_id() ;
-  ::uint64_t window_id() const;
-  void set_window_id(::uint64_t value);
+  // fixed64 imu_window_id = 1;
+  void clear_imu_window_id() ;
+  ::uint64_t imu_window_id() const;
+  void set_imu_window_id(::uint64_t value);
 
   private:
-  ::uint64_t _internal_window_id() const;
-  void _internal_set_window_id(::uint64_t value);
+  ::uint64_t _internal_imu_window_id() const;
+  void _internal_set_imu_window_id(::uint64_t value);
 
   public:
-  // uint32 sample_count = 3;
+  // uint32 odr_hz = 3;
+  void clear_odr_hz() ;
+  ::uint32_t odr_hz() const;
+  void set_odr_hz(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_odr_hz() const;
+  void _internal_set_odr_hz(::uint32_t value);
+
+  public:
+  // uint32 sample_count = 4;
   void clear_sample_count() ;
   ::uint32_t sample_count() const;
   void set_sample_count(::uint32_t value);
@@ -2904,7 +3140,17 @@ class ImuWindow final : public ::google::protobuf::Message
   void _internal_set_sample_count(::uint32_t value);
 
   public:
-  // uint32 flags = 4;
+  // uint32 sample_size = 5;
+  void clear_sample_size() ;
+  ::uint32_t sample_size() const;
+  void set_sample_size(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_sample_size() const;
+  void _internal_set_sample_size(::uint32_t value);
+
+  public:
+  // uint32 flags = 6;
   void clear_flags() ;
   ::uint32_t flags() const;
   void set_flags(::uint32_t value);
@@ -2914,132 +3160,12 @@ class ImuWindow final : public ::google::protobuf::Message
   void _internal_set_flags(::uint32_t value);
 
   public:
-  // float accel_mean_x_mps2 = 5;
-  void clear_accel_mean_x_mps2() ;
-  float accel_mean_x_mps2() const;
-  void set_accel_mean_x_mps2(float value);
-
-  private:
-  float _internal_accel_mean_x_mps2() const;
-  void _internal_set_accel_mean_x_mps2(float value);
-
-  public:
-  // float accel_mean_y_mps2 = 6;
-  void clear_accel_mean_y_mps2() ;
-  float accel_mean_y_mps2() const;
-  void set_accel_mean_y_mps2(float value);
-
-  private:
-  float _internal_accel_mean_y_mps2() const;
-  void _internal_set_accel_mean_y_mps2(float value);
-
-  public:
-  // float accel_mean_z_mps2 = 7;
-  void clear_accel_mean_z_mps2() ;
-  float accel_mean_z_mps2() const;
-  void set_accel_mean_z_mps2(float value);
-
-  private:
-  float _internal_accel_mean_z_mps2() const;
-  void _internal_set_accel_mean_z_mps2(float value);
-
-  public:
-  // float gyro_mean_x_rad_s = 8;
-  void clear_gyro_mean_x_rad_s() ;
-  float gyro_mean_x_rad_s() const;
-  void set_gyro_mean_x_rad_s(float value);
-
-  private:
-  float _internal_gyro_mean_x_rad_s() const;
-  void _internal_set_gyro_mean_x_rad_s(float value);
-
-  public:
-  // float gyro_mean_y_rad_s = 9;
-  void clear_gyro_mean_y_rad_s() ;
-  float gyro_mean_y_rad_s() const;
-  void set_gyro_mean_y_rad_s(float value);
-
-  private:
-  float _internal_gyro_mean_y_rad_s() const;
-  void _internal_set_gyro_mean_y_rad_s(float value);
-
-  public:
-  // float gyro_mean_z_rad_s = 10;
-  void clear_gyro_mean_z_rad_s() ;
-  float gyro_mean_z_rad_s() const;
-  void set_gyro_mean_z_rad_s(float value);
-
-  private:
-  float _internal_gyro_mean_z_rad_s() const;
-  void _internal_set_gyro_mean_z_rad_s(float value);
-
-  public:
-  // float delta_velocity_x_mps = 11;
-  void clear_delta_velocity_x_mps() ;
-  float delta_velocity_x_mps() const;
-  void set_delta_velocity_x_mps(float value);
-
-  private:
-  float _internal_delta_velocity_x_mps() const;
-  void _internal_set_delta_velocity_x_mps(float value);
-
-  public:
-  // float delta_velocity_y_mps = 12;
-  void clear_delta_velocity_y_mps() ;
-  float delta_velocity_y_mps() const;
-  void set_delta_velocity_y_mps(float value);
-
-  private:
-  float _internal_delta_velocity_y_mps() const;
-  void _internal_set_delta_velocity_y_mps(float value);
-
-  public:
-  // float delta_velocity_z_mps = 13;
-  void clear_delta_velocity_z_mps() ;
-  float delta_velocity_z_mps() const;
-  void set_delta_velocity_z_mps(float value);
-
-  private:
-  float _internal_delta_velocity_z_mps() const;
-  void _internal_set_delta_velocity_z_mps(float value);
-
-  public:
-  // float delta_angle_x_rad = 14;
-  void clear_delta_angle_x_rad() ;
-  float delta_angle_x_rad() const;
-  void set_delta_angle_x_rad(float value);
-
-  private:
-  float _internal_delta_angle_x_rad() const;
-  void _internal_set_delta_angle_x_rad(float value);
-
-  public:
-  // float delta_angle_y_rad = 15;
-  void clear_delta_angle_y_rad() ;
-  float delta_angle_y_rad() const;
-  void set_delta_angle_y_rad(float value);
-
-  private:
-  float _internal_delta_angle_y_rad() const;
-  void _internal_set_delta_angle_y_rad(float value);
-
-  public:
-  // float delta_angle_z_rad = 16;
-  void clear_delta_angle_z_rad() ;
-  float delta_angle_z_rad() const;
-  void set_delta_angle_z_rad(float value);
-
-  private:
-  float _internal_delta_angle_z_rad() const;
-  void _internal_set_delta_angle_z_rad(float value);
-
-  public:
   // @@protoc_insertion_point(class_scope:ego.v1.ImuWindow)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 16,
-                                   1, 0,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   2, 0,
                                    2>
       _table_;
 
@@ -3060,22 +3186,13 @@ class ImuWindow final : public ::google::protobuf::Message
         const ImuWindow& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::ego::v1::ImuSample > samples_;
     ::ego::v1::TimeRangeNs* PROTOBUF_NULLABLE time_;
-    ::uint64_t window_id_;
+    ::uint64_t imu_window_id_;
+    ::uint32_t odr_hz_;
     ::uint32_t sample_count_;
+    ::uint32_t sample_size_;
     ::uint32_t flags_;
-    float accel_mean_x_mps2_;
-    float accel_mean_y_mps2_;
-    float accel_mean_z_mps2_;
-    float gyro_mean_x_rad_s_;
-    float gyro_mean_y_rad_s_;
-    float gyro_mean_z_rad_s_;
-    float delta_velocity_x_mps_;
-    float delta_velocity_y_mps_;
-    float delta_velocity_z_mps_;
-    float delta_angle_x_rad_;
-    float delta_angle_y_rad_;
-    float delta_angle_z_rad_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -3871,7 +3988,7 @@ class DataPayload final : public ::google::protobuf::Message
     kSessionEnded = 900,
     PAYLOAD_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 13;
+  static constexpr int kIndexInFileMessages = 14;
   friend void swap(DataPayload& a, DataPayload& b) { a.Swap(&b); }
   inline void Swap(DataPayload* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -4950,36 +5067,265 @@ inline void AudioBlock::set_allocated_pcm_data(::std::string* PROTOBUF_NULLABLE 
 
 // -------------------------------------------------------------------
 
-// ImuWindow
+// ImuSample
 
-// fixed64 window_id = 1;
-inline void ImuWindow::clear_window_id() {
+// fixed64 t_ns = 1;
+inline void ImuSample::clear_t_ns() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.window_id_ = ::uint64_t{0u};
+  _impl_.t_ns_ = ::uint64_t{0u};
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::uint64_t ImuSample::t_ns() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.t_ns)
+  return _internal_t_ns();
+}
+inline void ImuSample::set_t_ns(::uint64_t value) {
+  _internal_set_t_ns(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.t_ns)
+}
+inline ::uint64_t ImuSample::_internal_t_ns() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.t_ns_;
+}
+inline void ImuSample::_internal_set_t_ns(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.t_ns_ = value;
+}
+
+// float accel_x_mps2 = 2;
+inline void ImuSample::clear_accel_x_mps2() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accel_x_mps2_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000002U);
 }
-inline ::uint64_t ImuWindow::window_id() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.window_id)
-  return _internal_window_id();
+inline float ImuSample::accel_x_mps2() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.accel_x_mps2)
+  return _internal_accel_x_mps2();
 }
-inline void ImuWindow::set_window_id(::uint64_t value) {
-  _internal_set_window_id(value);
+inline void ImuSample::set_accel_x_mps2(float value) {
+  _internal_set_accel_x_mps2(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.window_id)
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.accel_x_mps2)
 }
-inline ::uint64_t ImuWindow::_internal_window_id() const {
+inline float ImuSample::_internal_accel_x_mps2() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.window_id_;
+  return _impl_.accel_x_mps2_;
 }
-inline void ImuWindow::_internal_set_window_id(::uint64_t value) {
+inline void ImuSample::_internal_set_accel_x_mps2(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.window_id_ = value;
+  _impl_.accel_x_mps2_ = value;
+}
+
+// float accel_y_mps2 = 3;
+inline void ImuSample::clear_accel_y_mps2() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accel_y_mps2_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline float ImuSample::accel_y_mps2() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.accel_y_mps2)
+  return _internal_accel_y_mps2();
+}
+inline void ImuSample::set_accel_y_mps2(float value) {
+  _internal_set_accel_y_mps2(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.accel_y_mps2)
+}
+inline float ImuSample::_internal_accel_y_mps2() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.accel_y_mps2_;
+}
+inline void ImuSample::_internal_set_accel_y_mps2(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accel_y_mps2_ = value;
+}
+
+// float accel_z_mps2 = 4;
+inline void ImuSample::clear_accel_z_mps2() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accel_z_mps2_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline float ImuSample::accel_z_mps2() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.accel_z_mps2)
+  return _internal_accel_z_mps2();
+}
+inline void ImuSample::set_accel_z_mps2(float value) {
+  _internal_set_accel_z_mps2(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.accel_z_mps2)
+}
+inline float ImuSample::_internal_accel_z_mps2() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.accel_z_mps2_;
+}
+inline void ImuSample::_internal_set_accel_z_mps2(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.accel_z_mps2_ = value;
+}
+
+// float gyro_x_rad_s = 5;
+inline void ImuSample::clear_gyro_x_rad_s() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_x_rad_s_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline float ImuSample::gyro_x_rad_s() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.gyro_x_rad_s)
+  return _internal_gyro_x_rad_s();
+}
+inline void ImuSample::set_gyro_x_rad_s(float value) {
+  _internal_set_gyro_x_rad_s(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.gyro_x_rad_s)
+}
+inline float ImuSample::_internal_gyro_x_rad_s() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.gyro_x_rad_s_;
+}
+inline void ImuSample::_internal_set_gyro_x_rad_s(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_x_rad_s_ = value;
+}
+
+// float gyro_y_rad_s = 6;
+inline void ImuSample::clear_gyro_y_rad_s() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_y_rad_s_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000020U);
+}
+inline float ImuSample::gyro_y_rad_s() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.gyro_y_rad_s)
+  return _internal_gyro_y_rad_s();
+}
+inline void ImuSample::set_gyro_y_rad_s(float value) {
+  _internal_set_gyro_y_rad_s(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.gyro_y_rad_s)
+}
+inline float ImuSample::_internal_gyro_y_rad_s() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.gyro_y_rad_s_;
+}
+inline void ImuSample::_internal_set_gyro_y_rad_s(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_y_rad_s_ = value;
+}
+
+// float gyro_z_rad_s = 7;
+inline void ImuSample::clear_gyro_z_rad_s() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_z_rad_s_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline float ImuSample::gyro_z_rad_s() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.gyro_z_rad_s)
+  return _internal_gyro_z_rad_s();
+}
+inline void ImuSample::set_gyro_z_rad_s(float value) {
+  _internal_set_gyro_z_rad_s(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.gyro_z_rad_s)
+}
+inline float ImuSample::_internal_gyro_z_rad_s() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.gyro_z_rad_s_;
+}
+inline void ImuSample::_internal_set_gyro_z_rad_s(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.gyro_z_rad_s_ = value;
+}
+
+// float temperature_c = 8;
+inline void ImuSample::clear_temperature_c() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.temperature_c_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+inline float ImuSample::temperature_c() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.temperature_c)
+  return _internal_temperature_c();
+}
+inline void ImuSample::set_temperature_c(float value) {
+  _internal_set_temperature_c(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.temperature_c)
+}
+inline float ImuSample::_internal_temperature_c() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.temperature_c_;
+}
+inline void ImuSample::_internal_set_temperature_c(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.temperature_c_ = value;
+}
+
+// uint32 flags = 9;
+inline void ImuSample::clear_flags() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.flags_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000100U);
+}
+inline ::uint32_t ImuSample::flags() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuSample.flags)
+  return _internal_flags();
+}
+inline void ImuSample::set_flags(::uint32_t value) {
+  _internal_set_flags(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuSample.flags)
+}
+inline ::uint32_t ImuSample::_internal_flags() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.flags_;
+}
+inline void ImuSample::_internal_set_flags(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.flags_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ImuWindow
+
+// fixed64 imu_window_id = 1;
+inline void ImuWindow::clear_imu_window_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.imu_window_id_ = ::uint64_t{0u};
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline ::uint64_t ImuWindow::imu_window_id() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.imu_window_id)
+  return _internal_imu_window_id();
+}
+inline void ImuWindow::set_imu_window_id(::uint64_t value) {
+  _internal_set_imu_window_id(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.imu_window_id)
+}
+inline ::uint64_t ImuWindow::_internal_imu_window_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.imu_window_id_;
+}
+inline void ImuWindow::_internal_set_imu_window_id(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.imu_window_id_ = value;
 }
 
 // .ego.v1.TimeRangeNs time = 2;
 inline bool ImuWindow::has_time() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
   PROTOBUF_ASSUME(!value || _impl_.time_ != nullptr);
   return value;
 }
@@ -5000,16 +5346,16 @@ inline void ImuWindow::unsafe_arena_set_allocated_time(
   }
   _impl_.time_ = reinterpret_cast<::ego::v1::TimeRangeNs*>(value);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ego.v1.ImuWindow.time)
 }
 inline ::ego::v1::TimeRangeNs* PROTOBUF_NULLABLE ImuWindow::release_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::ego::v1::TimeRangeNs* released = _impl_.time_;
   _impl_.time_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
@@ -5029,7 +5375,7 @@ inline ::ego::v1::TimeRangeNs* PROTOBUF_NULLABLE ImuWindow::unsafe_arena_release
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:ego.v1.ImuWindow.time)
 
-  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::ego::v1::TimeRangeNs* temp = _impl_.time_;
   _impl_.time_ = nullptr;
   return temp;
@@ -5044,7 +5390,7 @@ inline ::ego::v1::TimeRangeNs* PROTOBUF_NONNULL ImuWindow::_internal_mutable_tim
 }
 inline ::ego::v1::TimeRangeNs* PROTOBUF_NONNULL ImuWindow::mutable_time()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::ego::v1::TimeRangeNs* _msg = _internal_mutable_time();
   // @@protoc_insertion_point(field_mutable:ego.v1.ImuWindow.time)
   return _msg;
@@ -5061,21 +5407,46 @@ inline void ImuWindow::set_allocated_time(::ego::v1::TimeRangeNs* PROTOBUF_NULLA
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   }
 
   _impl_.time_ = reinterpret_cast<::ego::v1::TimeRangeNs*>(value);
   // @@protoc_insertion_point(field_set_allocated:ego.v1.ImuWindow.time)
 }
 
-// uint32 sample_count = 3;
+// uint32 odr_hz = 3;
+inline void ImuWindow::clear_odr_hz() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.odr_hz_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline ::uint32_t ImuWindow::odr_hz() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.odr_hz)
+  return _internal_odr_hz();
+}
+inline void ImuWindow::set_odr_hz(::uint32_t value) {
+  _internal_set_odr_hz(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.odr_hz)
+}
+inline ::uint32_t ImuWindow::_internal_odr_hz() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.odr_hz_;
+}
+inline void ImuWindow::_internal_set_odr_hz(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.odr_hz_ = value;
+}
+
+// uint32 sample_count = 4;
 inline void ImuWindow::clear_sample_count() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.sample_count_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000010U);
 }
 inline ::uint32_t ImuWindow::sample_count() const {
   // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.sample_count)
@@ -5083,7 +5454,7 @@ inline ::uint32_t ImuWindow::sample_count() const {
 }
 inline void ImuWindow::set_sample_count(::uint32_t value) {
   _internal_set_sample_count(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.sample_count)
 }
 inline ::uint32_t ImuWindow::_internal_sample_count() const {
@@ -5095,12 +5466,37 @@ inline void ImuWindow::_internal_set_sample_count(::uint32_t value) {
   _impl_.sample_count_ = value;
 }
 
-// uint32 flags = 4;
+// uint32 sample_size = 5;
+inline void ImuWindow::clear_sample_size() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sample_size_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000020U);
+}
+inline ::uint32_t ImuWindow::sample_size() const {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.sample_size)
+  return _internal_sample_size();
+}
+inline void ImuWindow::set_sample_size(::uint32_t value) {
+  _internal_set_sample_size(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.sample_size)
+}
+inline ::uint32_t ImuWindow::_internal_sample_size() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.sample_size_;
+}
+inline void ImuWindow::_internal_set_sample_size(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sample_size_ = value;
+}
+
+// uint32 flags = 6;
 inline void ImuWindow::clear_flags() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.flags_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000040U);
 }
 inline ::uint32_t ImuWindow::flags() const {
   // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.flags)
@@ -5108,7 +5504,7 @@ inline ::uint32_t ImuWindow::flags() const {
 }
 inline void ImuWindow::set_flags(::uint32_t value) {
   _internal_set_flags(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.flags)
 }
 inline ::uint32_t ImuWindow::_internal_flags() const {
@@ -5120,304 +5516,60 @@ inline void ImuWindow::_internal_set_flags(::uint32_t value) {
   _impl_.flags_ = value;
 }
 
-// float accel_mean_x_mps2 = 5;
-inline void ImuWindow::clear_accel_mean_x_mps2() {
+// repeated .ego.v1.ImuSample samples = 7;
+inline int ImuWindow::_internal_samples_size() const {
+  return _internal_samples().size();
+}
+inline int ImuWindow::samples_size() const {
+  return _internal_samples_size();
+}
+inline void ImuWindow::clear_samples() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_x_mps2_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+  _impl_.samples_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000001U);
 }
-inline float ImuWindow::accel_mean_x_mps2() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.accel_mean_x_mps2)
-  return _internal_accel_mean_x_mps2();
+inline ::ego::v1::ImuSample* PROTOBUF_NONNULL ImuWindow::mutable_samples(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:ego.v1.ImuWindow.samples)
+  return _internal_mutable_samples()->Mutable(index);
 }
-inline void ImuWindow::set_accel_mean_x_mps2(float value) {
-  _internal_set_accel_mean_x_mps2(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.accel_mean_x_mps2)
+inline ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>* PROTOBUF_NONNULL ImuWindow::mutable_samples()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_mutable_list:ego.v1.ImuWindow.samples)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_samples();
 }
-inline float ImuWindow::_internal_accel_mean_x_mps2() const {
+inline const ::ego::v1::ImuSample& ImuWindow::samples(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.samples)
+  return _internal_samples().Get(index);
+}
+inline ::ego::v1::ImuSample* PROTOBUF_NONNULL ImuWindow::add_samples()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::ego::v1::ImuSample* _add =
+      _internal_mutable_samples()->InternalAddWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), GetArena());
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_add:ego.v1.ImuWindow.samples)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>& ImuWindow::samples() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:ego.v1.ImuWindow.samples)
+  return _internal_samples();
+}
+inline const ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>&
+ImuWindow::_internal_samples() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.accel_mean_x_mps2_;
+  return _impl_.samples_;
 }
-inline void ImuWindow::_internal_set_accel_mean_x_mps2(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_x_mps2_ = value;
-}
-
-// float accel_mean_y_mps2 = 6;
-inline void ImuWindow::clear_accel_mean_y_mps2() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_y_mps2_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
-}
-inline float ImuWindow::accel_mean_y_mps2() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.accel_mean_y_mps2)
-  return _internal_accel_mean_y_mps2();
-}
-inline void ImuWindow::set_accel_mean_y_mps2(float value) {
-  _internal_set_accel_mean_y_mps2(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.accel_mean_y_mps2)
-}
-inline float ImuWindow::_internal_accel_mean_y_mps2() const {
+inline ::google::protobuf::RepeatedPtrField<::ego::v1::ImuSample>* PROTOBUF_NONNULL
+ImuWindow::_internal_mutable_samples() {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.accel_mean_y_mps2_;
-}
-inline void ImuWindow::_internal_set_accel_mean_y_mps2(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_y_mps2_ = value;
-}
-
-// float accel_mean_z_mps2 = 7;
-inline void ImuWindow::clear_accel_mean_z_mps2() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_z_mps2_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
-}
-inline float ImuWindow::accel_mean_z_mps2() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.accel_mean_z_mps2)
-  return _internal_accel_mean_z_mps2();
-}
-inline void ImuWindow::set_accel_mean_z_mps2(float value) {
-  _internal_set_accel_mean_z_mps2(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.accel_mean_z_mps2)
-}
-inline float ImuWindow::_internal_accel_mean_z_mps2() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.accel_mean_z_mps2_;
-}
-inline void ImuWindow::_internal_set_accel_mean_z_mps2(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.accel_mean_z_mps2_ = value;
-}
-
-// float gyro_mean_x_rad_s = 8;
-inline void ImuWindow::clear_gyro_mean_x_rad_s() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_x_rad_s_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000080U);
-}
-inline float ImuWindow::gyro_mean_x_rad_s() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.gyro_mean_x_rad_s)
-  return _internal_gyro_mean_x_rad_s();
-}
-inline void ImuWindow::set_gyro_mean_x_rad_s(float value) {
-  _internal_set_gyro_mean_x_rad_s(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.gyro_mean_x_rad_s)
-}
-inline float ImuWindow::_internal_gyro_mean_x_rad_s() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.gyro_mean_x_rad_s_;
-}
-inline void ImuWindow::_internal_set_gyro_mean_x_rad_s(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_x_rad_s_ = value;
-}
-
-// float gyro_mean_y_rad_s = 9;
-inline void ImuWindow::clear_gyro_mean_y_rad_s() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_y_rad_s_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000100U);
-}
-inline float ImuWindow::gyro_mean_y_rad_s() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.gyro_mean_y_rad_s)
-  return _internal_gyro_mean_y_rad_s();
-}
-inline void ImuWindow::set_gyro_mean_y_rad_s(float value) {
-  _internal_set_gyro_mean_y_rad_s(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.gyro_mean_y_rad_s)
-}
-inline float ImuWindow::_internal_gyro_mean_y_rad_s() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.gyro_mean_y_rad_s_;
-}
-inline void ImuWindow::_internal_set_gyro_mean_y_rad_s(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_y_rad_s_ = value;
-}
-
-// float gyro_mean_z_rad_s = 10;
-inline void ImuWindow::clear_gyro_mean_z_rad_s() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_z_rad_s_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000200U);
-}
-inline float ImuWindow::gyro_mean_z_rad_s() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.gyro_mean_z_rad_s)
-  return _internal_gyro_mean_z_rad_s();
-}
-inline void ImuWindow::set_gyro_mean_z_rad_s(float value) {
-  _internal_set_gyro_mean_z_rad_s(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.gyro_mean_z_rad_s)
-}
-inline float ImuWindow::_internal_gyro_mean_z_rad_s() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.gyro_mean_z_rad_s_;
-}
-inline void ImuWindow::_internal_set_gyro_mean_z_rad_s(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.gyro_mean_z_rad_s_ = value;
-}
-
-// float delta_velocity_x_mps = 11;
-inline void ImuWindow::clear_delta_velocity_x_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_x_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000400U);
-}
-inline float ImuWindow::delta_velocity_x_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_velocity_x_mps)
-  return _internal_delta_velocity_x_mps();
-}
-inline void ImuWindow::set_delta_velocity_x_mps(float value) {
-  _internal_set_delta_velocity_x_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_velocity_x_mps)
-}
-inline float ImuWindow::_internal_delta_velocity_x_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_velocity_x_mps_;
-}
-inline void ImuWindow::_internal_set_delta_velocity_x_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_x_mps_ = value;
-}
-
-// float delta_velocity_y_mps = 12;
-inline void ImuWindow::clear_delta_velocity_y_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_y_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000800U);
-}
-inline float ImuWindow::delta_velocity_y_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_velocity_y_mps)
-  return _internal_delta_velocity_y_mps();
-}
-inline void ImuWindow::set_delta_velocity_y_mps(float value) {
-  _internal_set_delta_velocity_y_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000800U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_velocity_y_mps)
-}
-inline float ImuWindow::_internal_delta_velocity_y_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_velocity_y_mps_;
-}
-inline void ImuWindow::_internal_set_delta_velocity_y_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_y_mps_ = value;
-}
-
-// float delta_velocity_z_mps = 13;
-inline void ImuWindow::clear_delta_velocity_z_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_z_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00001000U);
-}
-inline float ImuWindow::delta_velocity_z_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_velocity_z_mps)
-  return _internal_delta_velocity_z_mps();
-}
-inline void ImuWindow::set_delta_velocity_z_mps(float value) {
-  _internal_set_delta_velocity_z_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00001000U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_velocity_z_mps)
-}
-inline float ImuWindow::_internal_delta_velocity_z_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_velocity_z_mps_;
-}
-inline void ImuWindow::_internal_set_delta_velocity_z_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_velocity_z_mps_ = value;
-}
-
-// float delta_angle_x_rad = 14;
-inline void ImuWindow::clear_delta_angle_x_rad() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_x_rad_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00002000U);
-}
-inline float ImuWindow::delta_angle_x_rad() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_angle_x_rad)
-  return _internal_delta_angle_x_rad();
-}
-inline void ImuWindow::set_delta_angle_x_rad(float value) {
-  _internal_set_delta_angle_x_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00002000U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_angle_x_rad)
-}
-inline float ImuWindow::_internal_delta_angle_x_rad() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_angle_x_rad_;
-}
-inline void ImuWindow::_internal_set_delta_angle_x_rad(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_x_rad_ = value;
-}
-
-// float delta_angle_y_rad = 15;
-inline void ImuWindow::clear_delta_angle_y_rad() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_y_rad_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00004000U);
-}
-inline float ImuWindow::delta_angle_y_rad() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_angle_y_rad)
-  return _internal_delta_angle_y_rad();
-}
-inline void ImuWindow::set_delta_angle_y_rad(float value) {
-  _internal_set_delta_angle_y_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00004000U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_angle_y_rad)
-}
-inline float ImuWindow::_internal_delta_angle_y_rad() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_angle_y_rad_;
-}
-inline void ImuWindow::_internal_set_delta_angle_y_rad(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_y_rad_ = value;
-}
-
-// float delta_angle_z_rad = 16;
-inline void ImuWindow::clear_delta_angle_z_rad() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_z_rad_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00008000U);
-}
-inline float ImuWindow::delta_angle_z_rad() const {
-  // @@protoc_insertion_point(field_get:ego.v1.ImuWindow.delta_angle_z_rad)
-  return _internal_delta_angle_z_rad();
-}
-inline void ImuWindow::set_delta_angle_z_rad(float value) {
-  _internal_set_delta_angle_z_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00008000U);
-  // @@protoc_insertion_point(field_set:ego.v1.ImuWindow.delta_angle_z_rad)
-}
-inline float ImuWindow::_internal_delta_angle_z_rad() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.delta_angle_z_rad_;
-}
-inline void ImuWindow::_internal_set_delta_angle_z_rad(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.delta_angle_z_rad_ = value;
+  return &_impl_.samples_;
 }
 
 // -------------------------------------------------------------------
@@ -5449,29 +5601,29 @@ inline void CanDecodedValue::_internal_set_t_ns(::uint64_t value) {
   _impl_.t_ns_ = value;
 }
 
-// uint32 value_id = 2;
-inline void CanDecodedValue::clear_value_id() {
+// uint32 signal_id = 2;
+inline void CanDecodedValue::clear_signal_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.value_id_ = 0u;
+  _impl_.signal_id_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000002U);
 }
-inline ::uint32_t CanDecodedValue::value_id() const {
-  // @@protoc_insertion_point(field_get:ego.v1.CanDecodedValue.value_id)
-  return _internal_value_id();
+inline ::uint32_t CanDecodedValue::signal_id() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanDecodedValue.signal_id)
+  return _internal_signal_id();
 }
-inline void CanDecodedValue::set_value_id(::uint32_t value) {
-  _internal_set_value_id(value);
+inline void CanDecodedValue::set_signal_id(::uint32_t value) {
+  _internal_set_signal_id(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  // @@protoc_insertion_point(field_set:ego.v1.CanDecodedValue.value_id)
+  // @@protoc_insertion_point(field_set:ego.v1.CanDecodedValue.signal_id)
 }
-inline ::uint32_t CanDecodedValue::_internal_value_id() const {
+inline ::uint32_t CanDecodedValue::_internal_signal_id() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.value_id_;
+  return _impl_.signal_id_;
 }
-inline void CanDecodedValue::_internal_set_value_id(::uint32_t value) {
+inline void CanDecodedValue::_internal_set_signal_id(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.value_id_ = value;
+  _impl_.signal_id_ = value;
 }
 
 // uint32 can_id = 3;
@@ -5524,29 +5676,29 @@ inline void CanDecodedValue::_internal_set_value(float value) {
   _impl_.value_ = value;
 }
 
-// uint32 raw_value = 5;
-inline void CanDecodedValue::clear_raw_value() {
+// uint32 quality = 5;
+inline void CanDecodedValue::clear_quality() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_value_ = 0u;
+  _impl_.quality_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000010U);
 }
-inline ::uint32_t CanDecodedValue::raw_value() const {
-  // @@protoc_insertion_point(field_get:ego.v1.CanDecodedValue.raw_value)
-  return _internal_raw_value();
+inline ::uint32_t CanDecodedValue::quality() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanDecodedValue.quality)
+  return _internal_quality();
 }
-inline void CanDecodedValue::set_raw_value(::uint32_t value) {
-  _internal_set_raw_value(value);
+inline void CanDecodedValue::set_quality(::uint32_t value) {
+  _internal_set_quality(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:ego.v1.CanDecodedValue.raw_value)
+  // @@protoc_insertion_point(field_set:ego.v1.CanDecodedValue.quality)
 }
-inline ::uint32_t CanDecodedValue::_internal_raw_value() const {
+inline ::uint32_t CanDecodedValue::_internal_quality() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.raw_value_;
+  return _impl_.quality_;
 }
-inline void CanDecodedValue::_internal_set_raw_value(::uint32_t value) {
+inline void CanDecodedValue::_internal_set_quality(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.raw_value_ = value;
+  _impl_.quality_ = value;
 }
 
 // uint32 flags = 6;
@@ -5572,31 +5724,6 @@ inline ::uint32_t CanDecodedValue::_internal_flags() const {
 inline void CanDecodedValue::_internal_set_flags(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.flags_ = value;
-}
-
-// uint32 dlc = 7;
-inline void CanDecodedValue::clear_dlc() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.dlc_ = 0u;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
-}
-inline ::uint32_t CanDecodedValue::dlc() const {
-  // @@protoc_insertion_point(field_get:ego.v1.CanDecodedValue.dlc)
-  return _internal_dlc();
-}
-inline void CanDecodedValue::set_dlc(::uint32_t value) {
-  _internal_set_dlc(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
-  // @@protoc_insertion_point(field_set:ego.v1.CanDecodedValue.dlc)
-}
-inline ::uint32_t CanDecodedValue::_internal_dlc() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.dlc_;
-}
-inline void CanDecodedValue::_internal_set_dlc(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.dlc_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -5678,62 +5805,37 @@ inline void CanRawFrame::_internal_set_dlc(::uint32_t value) {
   _impl_.dlc_ = value;
 }
 
-// bool is_extended = 4;
-inline void CanRawFrame::clear_is_extended() {
+// uint32 bus = 4;
+inline void CanRawFrame::clear_bus() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.is_extended_ = false;
+  _impl_.bus_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000010U);
 }
-inline bool CanRawFrame::is_extended() const {
-  // @@protoc_insertion_point(field_get:ego.v1.CanRawFrame.is_extended)
-  return _internal_is_extended();
+inline ::uint32_t CanRawFrame::bus() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanRawFrame.bus)
+  return _internal_bus();
 }
-inline void CanRawFrame::set_is_extended(bool value) {
-  _internal_set_is_extended(value);
+inline void CanRawFrame::set_bus(::uint32_t value) {
+  _internal_set_bus(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:ego.v1.CanRawFrame.is_extended)
+  // @@protoc_insertion_point(field_set:ego.v1.CanRawFrame.bus)
 }
-inline bool CanRawFrame::_internal_is_extended() const {
+inline ::uint32_t CanRawFrame::_internal_bus() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.is_extended_;
+  return _impl_.bus_;
 }
-inline void CanRawFrame::_internal_set_is_extended(bool value) {
+inline void CanRawFrame::_internal_set_bus(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.is_extended_ = value;
+  _impl_.bus_ = value;
 }
 
-// uint32 bus_id = 5;
-inline void CanRawFrame::clear_bus_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.bus_id_ = 0u;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
-}
-inline ::uint32_t CanRawFrame::bus_id() const {
-  // @@protoc_insertion_point(field_get:ego.v1.CanRawFrame.bus_id)
-  return _internal_bus_id();
-}
-inline void CanRawFrame::set_bus_id(::uint32_t value) {
-  _internal_set_bus_id(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
-  // @@protoc_insertion_point(field_set:ego.v1.CanRawFrame.bus_id)
-}
-inline ::uint32_t CanRawFrame::_internal_bus_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.bus_id_;
-}
-inline void CanRawFrame::_internal_set_bus_id(::uint32_t value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.bus_id_ = value;
-}
-
-// uint32 flags = 6;
+// uint32 flags = 5;
 inline void CanRawFrame::clear_flags() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.flags_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
+                  0x00000020U);
 }
 inline ::uint32_t CanRawFrame::flags() const {
   // @@protoc_insertion_point(field_get:ego.v1.CanRawFrame.flags)
@@ -5741,7 +5843,7 @@ inline ::uint32_t CanRawFrame::flags() const {
 }
 inline void CanRawFrame::set_flags(::uint32_t value) {
   _internal_set_flags(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:ego.v1.CanRawFrame.flags)
 }
 inline ::uint32_t CanRawFrame::_internal_flags() const {
@@ -5753,7 +5855,7 @@ inline void CanRawFrame::_internal_set_flags(::uint32_t value) {
   _impl_.flags_ = value;
 }
 
-// bytes data = 7;
+// bytes data = 6;
 inline void CanRawFrame::clear_data() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.data_.ClearToEmpty();
@@ -5847,162 +5949,87 @@ inline void TrajectoryPoint::_internal_set_t_ns(::uint64_t value) {
   _impl_.t_ns_ = value;
 }
 
-// float x_m = 2;
-inline void TrajectoryPoint::clear_x_m() {
+// float loc_x_m = 2;
+inline void TrajectoryPoint::clear_loc_x_m() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.x_m_ = 0;
+  _impl_.loc_x_m_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000002U);
 }
-inline float TrajectoryPoint::x_m() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.x_m)
-  return _internal_x_m();
+inline float TrajectoryPoint::loc_x_m() const {
+  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.loc_x_m)
+  return _internal_loc_x_m();
 }
-inline void TrajectoryPoint::set_x_m(float value) {
-  _internal_set_x_m(value);
+inline void TrajectoryPoint::set_loc_x_m(float value) {
+  _internal_set_loc_x_m(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.x_m)
+  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.loc_x_m)
 }
-inline float TrajectoryPoint::_internal_x_m() const {
+inline float TrajectoryPoint::_internal_loc_x_m() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.x_m_;
+  return _impl_.loc_x_m_;
 }
-inline void TrajectoryPoint::_internal_set_x_m(float value) {
+inline void TrajectoryPoint::_internal_set_loc_x_m(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.x_m_ = value;
+  _impl_.loc_x_m_ = value;
 }
 
-// float y_m = 3;
-inline void TrajectoryPoint::clear_y_m() {
+// float loc_y_m = 3;
+inline void TrajectoryPoint::clear_loc_y_m() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.y_m_ = 0;
+  _impl_.loc_y_m_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000004U);
 }
-inline float TrajectoryPoint::y_m() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.y_m)
-  return _internal_y_m();
+inline float TrajectoryPoint::loc_y_m() const {
+  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.loc_y_m)
+  return _internal_loc_y_m();
 }
-inline void TrajectoryPoint::set_y_m(float value) {
-  _internal_set_y_m(value);
+inline void TrajectoryPoint::set_loc_y_m(float value) {
+  _internal_set_loc_y_m(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.y_m)
+  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.loc_y_m)
 }
-inline float TrajectoryPoint::_internal_y_m() const {
+inline float TrajectoryPoint::_internal_loc_y_m() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.y_m_;
+  return _impl_.loc_y_m_;
 }
-inline void TrajectoryPoint::_internal_set_y_m(float value) {
+inline void TrajectoryPoint::_internal_set_loc_y_m(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.y_m_ = value;
+  _impl_.loc_y_m_ = value;
 }
 
-// float z_m = 4;
-inline void TrajectoryPoint::clear_z_m() {
+// float loc_z_m = 4;
+inline void TrajectoryPoint::clear_loc_z_m() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.z_m_ = 0;
+  _impl_.loc_z_m_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000008U);
 }
-inline float TrajectoryPoint::z_m() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.z_m)
-  return _internal_z_m();
+inline float TrajectoryPoint::loc_z_m() const {
+  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.loc_z_m)
+  return _internal_loc_z_m();
 }
-inline void TrajectoryPoint::set_z_m(float value) {
-  _internal_set_z_m(value);
+inline void TrajectoryPoint::set_loc_z_m(float value) {
+  _internal_set_loc_z_m(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.z_m)
+  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.loc_z_m)
 }
-inline float TrajectoryPoint::_internal_z_m() const {
+inline float TrajectoryPoint::_internal_loc_z_m() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.z_m_;
+  return _impl_.loc_z_m_;
 }
-inline void TrajectoryPoint::_internal_set_z_m(float value) {
+inline void TrajectoryPoint::_internal_set_loc_z_m(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.z_m_ = value;
+  _impl_.loc_z_m_ = value;
 }
 
-// float vx_mps = 5;
-inline void TrajectoryPoint::clear_vx_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vx_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
-}
-inline float TrajectoryPoint::vx_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.vx_mps)
-  return _internal_vx_mps();
-}
-inline void TrajectoryPoint::set_vx_mps(float value) {
-  _internal_set_vx_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.vx_mps)
-}
-inline float TrajectoryPoint::_internal_vx_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.vx_mps_;
-}
-inline void TrajectoryPoint::_internal_set_vx_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vx_mps_ = value;
-}
-
-// float vy_mps = 6;
-inline void TrajectoryPoint::clear_vy_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vy_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
-}
-inline float TrajectoryPoint::vy_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.vy_mps)
-  return _internal_vy_mps();
-}
-inline void TrajectoryPoint::set_vy_mps(float value) {
-  _internal_set_vy_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.vy_mps)
-}
-inline float TrajectoryPoint::_internal_vy_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.vy_mps_;
-}
-inline void TrajectoryPoint::_internal_set_vy_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vy_mps_ = value;
-}
-
-// float vz_mps = 7;
-inline void TrajectoryPoint::clear_vz_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vz_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
-}
-inline float TrajectoryPoint::vz_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.vz_mps)
-  return _internal_vz_mps();
-}
-inline void TrajectoryPoint::set_vz_mps(float value) {
-  _internal_set_vz_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.vz_mps)
-}
-inline float TrajectoryPoint::_internal_vz_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.vz_mps_;
-}
-inline void TrajectoryPoint::_internal_set_vz_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vz_mps_ = value;
-}
-
-// float yaw_rad = 8;
+// float yaw_rad = 5;
 inline void TrajectoryPoint::clear_yaw_rad() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.yaw_rad_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000080U);
+                  0x00000010U);
 }
 inline float TrajectoryPoint::yaw_rad() const {
   // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.yaw_rad)
@@ -6010,7 +6037,7 @@ inline float TrajectoryPoint::yaw_rad() const {
 }
 inline void TrajectoryPoint::set_yaw_rad(float value) {
   _internal_set_yaw_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.yaw_rad)
 }
 inline float TrajectoryPoint::_internal_yaw_rad() const {
@@ -6022,12 +6049,12 @@ inline void TrajectoryPoint::_internal_set_yaw_rad(float value) {
   _impl_.yaw_rad_ = value;
 }
 
-// float pitch_rad = 9;
+// float pitch_rad = 6;
 inline void TrajectoryPoint::clear_pitch_rad() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.pitch_rad_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000100U);
+                  0x00000020U);
 }
 inline float TrajectoryPoint::pitch_rad() const {
   // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.pitch_rad)
@@ -6035,7 +6062,7 @@ inline float TrajectoryPoint::pitch_rad() const {
 }
 inline void TrajectoryPoint::set_pitch_rad(float value) {
   _internal_set_pitch_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.pitch_rad)
 }
 inline float TrajectoryPoint::_internal_pitch_rad() const {
@@ -6047,12 +6074,12 @@ inline void TrajectoryPoint::_internal_set_pitch_rad(float value) {
   _impl_.pitch_rad_ = value;
 }
 
-// float roll_rad = 10;
+// float roll_rad = 7;
 inline void TrajectoryPoint::clear_roll_rad() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.roll_rad_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000200U);
+                  0x00000040U);
 }
 inline float TrajectoryPoint::roll_rad() const {
   // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.roll_rad)
@@ -6060,7 +6087,7 @@ inline float TrajectoryPoint::roll_rad() const {
 }
 inline void TrajectoryPoint::set_roll_rad(float value) {
   _internal_set_roll_rad(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.roll_rad)
 }
 inline float TrajectoryPoint::_internal_roll_rad() const {
@@ -6072,12 +6099,37 @@ inline void TrajectoryPoint::_internal_set_roll_rad(float value) {
   _impl_.roll_rad_ = value;
 }
 
-// float yaw_rate_rad_s = 11;
+// float velocity_mps = 8;
+inline void TrajectoryPoint::clear_velocity_mps() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.velocity_mps_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+inline float TrajectoryPoint::velocity_mps() const {
+  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.velocity_mps)
+  return _internal_velocity_mps();
+}
+inline void TrajectoryPoint::set_velocity_mps(float value) {
+  _internal_set_velocity_mps(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.velocity_mps)
+}
+inline float TrajectoryPoint::_internal_velocity_mps() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.velocity_mps_;
+}
+inline void TrajectoryPoint::_internal_set_velocity_mps(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.velocity_mps_ = value;
+}
+
+// float yaw_rate_rad_s = 9;
 inline void TrajectoryPoint::clear_yaw_rate_rad_s() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.yaw_rate_rad_s_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000400U);
+                  0x00000100U);
 }
 inline float TrajectoryPoint::yaw_rate_rad_s() const {
   // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.yaw_rate_rad_s)
@@ -6085,7 +6137,7 @@ inline float TrajectoryPoint::yaw_rate_rad_s() const {
 }
 inline void TrajectoryPoint::set_yaw_rate_rad_s(float value) {
   _internal_set_yaw_rate_rad_s(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
   // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.yaw_rate_rad_s)
 }
 inline float TrajectoryPoint::_internal_yaw_rate_rad_s() const {
@@ -6097,62 +6149,12 @@ inline void TrajectoryPoint::_internal_set_yaw_rate_rad_s(float value) {
   _impl_.yaw_rate_rad_s_ = value;
 }
 
-// float path_s_m = 12;
-inline void TrajectoryPoint::clear_path_s_m() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.path_s_m_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000800U);
-}
-inline float TrajectoryPoint::path_s_m() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.path_s_m)
-  return _internal_path_s_m();
-}
-inline void TrajectoryPoint::set_path_s_m(float value) {
-  _internal_set_path_s_m(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000800U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.path_s_m)
-}
-inline float TrajectoryPoint::_internal_path_s_m() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.path_s_m_;
-}
-inline void TrajectoryPoint::_internal_set_path_s_m(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.path_s_m_ = value;
-}
-
-// float vehicle_speed_mps = 13;
-inline void TrajectoryPoint::clear_vehicle_speed_mps() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vehicle_speed_mps_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00001000U);
-}
-inline float TrajectoryPoint::vehicle_speed_mps() const {
-  // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.vehicle_speed_mps)
-  return _internal_vehicle_speed_mps();
-}
-inline void TrajectoryPoint::set_vehicle_speed_mps(float value) {
-  _internal_set_vehicle_speed_mps(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00001000U);
-  // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.vehicle_speed_mps)
-}
-inline float TrajectoryPoint::_internal_vehicle_speed_mps() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.vehicle_speed_mps_;
-}
-inline void TrajectoryPoint::_internal_set_vehicle_speed_mps(float value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.vehicle_speed_mps_ = value;
-}
-
-// uint32 flags = 14;
+// uint32 flags = 10;
 inline void TrajectoryPoint::clear_flags() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.flags_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00002000U);
+                  0x00000200U);
 }
 inline ::uint32_t TrajectoryPoint::flags() const {
   // @@protoc_insertion_point(field_get:ego.v1.TrajectoryPoint.flags)
@@ -6160,7 +6162,7 @@ inline ::uint32_t TrajectoryPoint::flags() const {
 }
 inline void TrajectoryPoint::set_flags(::uint32_t value) {
   _internal_set_flags(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00002000U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
   // @@protoc_insertion_point(field_set:ego.v1.TrajectoryPoint.flags)
 }
 inline ::uint32_t TrajectoryPoint::_internal_flags() const {

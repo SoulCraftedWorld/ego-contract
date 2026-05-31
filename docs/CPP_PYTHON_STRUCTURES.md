@@ -12,7 +12,8 @@
 - `EgoFrameHeader`
 - `EgoControlMessageHeader`
 - `AudioBlockBinaryHeader`
-- `ImuWindowPacket`
+- `ImuSampleBinary`
+- `ImuWindowBinaryHeader` / `ImuWindowPacket`
 - `CanDecodedValuePacket`
 - `CanRawFramePacket`
 - `TrajectoryPointPacket`
@@ -37,10 +38,11 @@
 | `EgoFrameHeader` | 72 |
 | `EgoControlMessageHeader` | 32 |
 | `AudioBlockBinaryHeader` | 48 |
-| `ImuWindowPacket` | 76 |
-| `CanDecodedValuePacket` | 32 |
-| `CanRawFramePacket` | 24 |
-| `TrajectoryPointPacket` | 64 |
+| `ImuSampleBinary` | 40 |
+| `ImuWindowBinaryHeader` / `ImuWindowPacket` | 40 |
+| `CanDecodedValuePacket` | 28 |
+| `CanRawFramePacket` | 28 |
+| `TrajectoryPointPacket` | 44 |
 | `GpsFixPacket` | 56 |
 | `TimeStatusPacket` | 40 |
 | `SystemStatusPacket` | 56 |
@@ -51,5 +53,12 @@
 - Control/config/session metadata: protobuf.
 - Data TCP outer frame: всегда `EgoFrameHeader`.
 - Audio production: `AudioBlockBinaryHeader + raw PCM`.
+- IMU production: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
 - Малые частые telemetry packets могут передаваться либо protobuf, либо binary packet из этих файлов.
 - `ego.bin` записывает фреймы как есть: `EgoFrameHeader + payload`.
+Current binary wire-format notes:
+
+- `IMU_WINDOW`: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
+- `CAN_DECODED_VALUE`: one 28-byte `CanDecodedValuePacket`.
+- `CAN_RAW_FRAME`: one 28-byte `CanRawFramePacket`.
+- `TRAJECTORY_POINT`: one 44-byte `TrajectoryPointPacket`.
