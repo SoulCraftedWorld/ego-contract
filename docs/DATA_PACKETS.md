@@ -58,8 +58,9 @@ ConfigSnapshotBinaryHeader
 ASCII/UTF-8 текст key=value, text_size байт
 ```
 
-Текстовый блок содержит эффективную конфигурацию из `sd:ego/config/effective.cfg`
-или значения firmware по умолчанию, если SD-файл конфигурации отсутствует.
+Текстовый блок содержит эффективную конфигурацию из `sf:ego/config/effective.cfg`
+или значения firmware по умолчанию, если файл конфигурации в SPI Flash
+отсутствует.
 
 ## AudioBlock
 
