@@ -168,106 +168,72 @@ class AudioBlockBinaryHeader:
 
 
 @dataclass(slots=True)
-class ImuSampleBinary:
-    t_ns: int
-    accel_x_mps2: float
-    accel_y_mps2: float
-    accel_z_mps2: float
-    gyro_x_rad_s: float
-    gyro_y_rad_s: float
-    gyro_z_rad_s: float
-    temperature_c: float
-    flags: int
-
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QfffffffI")
-    SIZE: ClassVar[int] = STRUCT.size
-
-    def to_bytes(self) -> bytes:
-        return self.STRUCT.pack(
-            self.t_ns,
-            self.accel_x_mps2,
-            self.accel_y_mps2,
-            self.accel_z_mps2,
-            self.gyro_x_rad_s,
-            self.gyro_y_rad_s,
-            self.gyro_z_rad_s,
-            self.temperature_c,
-            self.flags,
-        )
-
-    @classmethod
-    def unpack(cls, data: bytes) -> "ImuSampleBinary":
-        return cls(*cls.STRUCT.unpack(data))
-
-
-@dataclass(slots=True)
-class ImuWindowBinaryHeader:
-    imu_window_id: int
+class ImuWindowPacket:
+    window_id: int
     t0_ns: int
     t1_ns: int
-    odr_hz: int
     sample_count: int
-    sample_size: int
     flags: int
-    reserved0: int = 0
+    accel_mean_x_mps2: float
+    accel_mean_y_mps2: float
+    accel_mean_z_mps2: float
+    gyro_mean_x_rad_s: float
+    gyro_mean_y_rad_s: float
+    gyro_mean_z_rad_s: float
+    delta_velocity_x_mps: float
+    delta_velocity_y_mps: float
+    delta_velocity_z_mps: float
+    delta_angle_x_rad: float
+    delta_angle_y_rad: float
+    delta_angle_z_rad: float
 
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QQQIHHII")
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QQQHHffffffffffff")
     SIZE: ClassVar[int] = STRUCT.size
 
     def pack(self) -> bytes:
         return self.to_bytes()
 
     @classmethod
-    def unpack(cls, data: bytes) -> "ImuWindowBinaryHeader":
+    def unpack(cls, data: bytes) -> "ImuWindowPacket":
         return cls(*cls.STRUCT.unpack(data))
 
     def as_tuple(self) -> Tuple[object, ...]:
         return (
-            self.imu_window_id,
+            self.window_id,
             self.t0_ns,
             self.t1_ns,
-            self.odr_hz,
             self.sample_count,
-            self.sample_size,
             self.flags,
-            self.reserved0,
+            self.accel_mean_x_mps2,
+            self.accel_mean_y_mps2,
+            self.accel_mean_z_mps2,
+            self.gyro_mean_x_rad_s,
+            self.gyro_mean_y_rad_s,
+            self.gyro_mean_z_rad_s,
+            self.delta_velocity_x_mps,
+            self.delta_velocity_y_mps,
+            self.delta_velocity_z_mps,
+            self.delta_angle_x_rad,
+            self.delta_angle_y_rad,
+            self.delta_angle_z_rad,
         )
 
     def to_bytes(self) -> bytes:
         return self.STRUCT.pack(*self.as_tuple())
 
 
-ImuWindowPacket = ImuWindowBinaryHeader
-
-
-def unpack_imu_window_payload(data: bytes) -> tuple[ImuWindowBinaryHeader, list[ImuSampleBinary]]:
-    header = ImuWindowBinaryHeader.unpack(data[:ImuWindowBinaryHeader.SIZE])
-    if header.sample_size != ImuSampleBinary.SIZE:
-        raise ValueError(f"bad IMU sample size: {header.sample_size}")
-    expected = ImuWindowBinaryHeader.SIZE + header.sample_count * header.sample_size
-    if len(data) < expected:
-        raise ValueError(f"short IMU window payload: {len(data)} < {expected}")
-    samples = [
-        ImuSampleBinary.unpack(data[offset:offset + ImuSampleBinary.SIZE])
-        for offset in range(ImuWindowBinaryHeader.SIZE, expected, ImuSampleBinary.SIZE)
-    ]
-    return header, samples
-
-
 @dataclass(slots=True)
 class CanDecodedValuePacket:
     t_ns: int
-    signal_id: int
+    value_id: int
     can_id: int
     value: float
-    quality: int
-    flags: int
 
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QIIfII")
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QIIf")
     SIZE: ClassVar[int] = STRUCT.size
 
     def to_bytes(self) -> bytes:
-        return self.STRUCT.pack(self.t_ns, self.signal_id, self.can_id, self.value, self.quality, self.flags)
+        return self.STRUCT.pack(self.t_ns, self.value_id, self.can_id, self.value)
 
     @classmethod
     def unpack(cls, data: bytes) -> "CanDecodedValuePacket":
@@ -279,52 +245,56 @@ class CanRawFramePacket:
     t_ns: int
     can_id: int
     dlc: int
+    is_extended: int
+    bus_id: int
     flags: int
     data: bytes
-    bus: int = 0
-    reserved0: int = 0
 
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QIBBH8sI")
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QIBBBB8s")
     SIZE: ClassVar[int] = STRUCT.size
 
     def to_bytes(self) -> bytes:
         data8 = self.data[:8].ljust(8, b"\x00")
-        return self.STRUCT.pack(self.t_ns, self.can_id, self.dlc, self.bus, self.flags, data8, self.reserved0)
+        return self.STRUCT.pack(self.t_ns, self.can_id, self.dlc, self.is_extended, self.bus_id, self.flags, data8)
 
     @classmethod
     def unpack(cls, data: bytes) -> "CanRawFramePacket":
-        t_ns, can_id, dlc, bus, flags, data8, reserved0 = cls.STRUCT.unpack(data)
-        return cls(t_ns=t_ns, can_id=can_id, dlc=dlc, flags=flags, data=data8, bus=bus, reserved0=reserved0)
+        t_ns, can_id, dlc, is_extended, bus_id, flags, data8 = cls.STRUCT.unpack(data)
+        return cls(t_ns=t_ns, can_id=can_id, dlc=dlc, is_extended=is_extended, bus_id=bus_id, flags=flags, data=data8)
 
 
 @dataclass(slots=True)
 class TrajectoryPointPacket:
     t_ns: int
-    loc_x_m: float
-    loc_y_m: float
-    loc_z_m: float
+    x_m: float
+    y_m: float
+    z_m: float
     yaw_rad: float
     pitch_rad: float
     roll_rad: float
-    velocity_mps: float
     yaw_rate_rad_s: float
+    path_s_m: float
+    vehicle_speed_mps: float
     flags: int
+    reserved0: int = 0
 
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QffffffffI")
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QfffffffffII")
     SIZE: ClassVar[int] = STRUCT.size
 
     def to_bytes(self) -> bytes:
         return self.STRUCT.pack(
             self.t_ns,
-            self.loc_x_m,
-            self.loc_y_m,
-            self.loc_z_m,
+            self.x_m,
+            self.y_m,
+            self.z_m,
             self.yaw_rad,
             self.pitch_rad,
             self.roll_rad,
-            self.velocity_mps,
             self.yaw_rate_rad_s,
+            self.path_s_m,
+            self.vehicle_speed_mps,
             self.flags,
+            self.reserved0,
         )
 
     @classmethod

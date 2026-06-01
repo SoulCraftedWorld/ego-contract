@@ -54,7 +54,7 @@ ADSP-SC589 работает как TCP-сервер.
 
 Перед запуском плата проверяет наличие и валидность сохранённых конфигураций. Если required-конфигурация отсутствует или невалидна, старт отклоняется, а ответ содержит `missing_configs` и `invalid_configs`.
 
-## Data stream
+## Поток данных
 
 После успешного старта плата передаёт по Data TCP:
 
@@ -81,9 +81,9 @@ make python
 ./scripts/gen_python.sh
 ```
 
-## Integration helpers
+## Интеграционные helper-файлы
 
-The package also contains language-level packet descriptions and module extension examples:
+Пакет также содержит описания пакетов на уровне языков и примеры расширения модулей:
 
 ```text
 include/ego_protocol_packets.hpp
@@ -94,4 +94,5 @@ examples/cpp/module_extensions.hpp
 examples/python/module_extensions.py
 ```
 
-Use them for integration when a module needs to write or read production binary data frames without protobuf overhead.
+Используйте их для интеграции, когда модулю нужно писать или читать бинарные
+фреймы данных production-режима без protobuf overhead.

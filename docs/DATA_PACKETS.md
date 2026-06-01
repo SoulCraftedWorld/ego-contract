@@ -76,45 +76,44 @@ ASCII/UTF-8 текст key=value, text_size байт
 
 ## ImuWindow
 
-Бинарный payload в production-режиме:
+Бинарный payload в production-режиме: один 76-байтный `ImuWindowPacket`.
 
-- `ImuWindowBinaryHeader` (40 байт): `imu_window_id`, `t0_ns`, `t1_ns`, `odr_hz`, `sample_count`, `sample_size`, `flags`, `reserved0`.
-- Далее идут `sample_count` записей `ImuSampleBinary` по 40 байт каждая: `t_ns`, `accel_mps2[3]`, `gyro_rad_s[3]`, `temperature_c`, `flags`.
-
-Содержит окно timestamped IMU-сэмплов от LSM6DS3, привязанное к аудио-блоку.
+Содержит агрегированное окно IMU от LSM6DS3, привязанное к аудио-блоку.
+Отдельные IMU-сэмплы в поток не передаются, чтобы не расходовать место на
+второстепенные данные.
 
 Поля:
 
-- `imu_window_id`;
+- `window_id`;
 - `time.t0_ns`;
 - `time.t1_ns`;
-- `odr_hz`;
 - `sample_count`;
-- `sample_size`;
 - `flags`;
+- среднее ускорение XYZ;
+- средняя угловая скорость XYZ;
+- интегральное приращение скорости XYZ;
+- интегральное приращение угла XYZ.
 
 Назначение: вход для локальной траектории и последующей записи в MDF4.
 
 ## CanDecodedValue
 
-Бинарный payload в production-режиме: один 28-байтный `CanDecodedValuePacket` с полями `t_ns`, `signal_id`, `can_id`, `value`, `quality`, `flags`.
+Бинарный payload в production-режиме: один 20-байтный `CanDecodedValuePacket` с полями `t_ns`, `value_id`, `can_id`, `value`.
 
 Декодированное значение CAN-сигнала.
 
 Поля:
 
 - `t_ns`;
-- `signal_id`;
+- `value_id`;
 - `can_id`;
-- `value`;
-- `quality`;
-- `flags`;
+- `value`.
 
 Используется для скорости автомобиля, режима АКПП и опционально угла руля.
 
 ## CanRawFrame
 
-Бинарный payload в production-режиме: один 28-байтный `CanRawFramePacket` с полями `t_ns`, `can_id`, `dlc`, `bus`, `flags`, `data[8]`, `reserved0`.
+Бинарный payload в production-режиме: один 24-байтный `CanRawFramePacket` с полями `t_ns`, `can_id`, `dlc`, `is_extended`, `bus_id`, `flags`, `data[8]`.
 
 Сырой CAN-фрейм.
 
@@ -123,26 +122,27 @@ ASCII/UTF-8 текст key=value, text_size байт
 - `t_ns`;
 - `can_id`;
 - `dlc`;
-- `bus`;
+- `is_extended`;
+- `bus_id`;
 - `flags`;
-- `data[8]`;
-- `reserved0`.
+- `data[8]`.
 
 Назначение: отладка, проверка декодера, возможный offline-пересчёт.
 
 ## TrajectoryPoint
 
-Бинарный payload в production-режиме: один 44-байтный `TrajectoryPointPacket` с полями `t_ns`, `loc_x_m`, `loc_y_m`, `loc_z_m`, `yaw_rad`, `pitch_rad`, `roll_rad`, `velocity_mps`, `yaw_rate_rad_s`, `flags`.
+Бинарный payload в production-режиме: один 52-байтный `TrajectoryPointPacket` с полями `t_ns`, `x_m`, `y_m`, `z_m`, `yaw_rad`, `pitch_rad`, `roll_rad`, `yaw_rate_rad_s`, `path_s_m`, `vehicle_speed_mps`, `flags`, `reserved0`.
 
 Точка локальной траектории.
 
 Поля:
 
 - `t_ns`;
-- `loc_x_m`, `loc_y_m`, `loc_z_m`;
+- `x_m`, `y_m`, `z_m`;
 - `yaw_rad`, `pitch_rad`, `roll_rad`;
-- `velocity_mps`;
 - `yaw_rate_rad_s`;
+- `path_s_m`;
+- `vehicle_speed_mps`;
 - `flags`.
 
 Строится на SHARC1 по скорости CAN и гироскопу.

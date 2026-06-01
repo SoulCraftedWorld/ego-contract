@@ -68,7 +68,7 @@ typedef struct {
 | 1 | `SessionStarted` protobuf или маркер сессии без payload в минимальном режиме firmware |
 | 2 | `ConfigSnapshotFrame` protobuf или бинарный снимок text-kv в минимальном режиме firmware |
 | 100 | `AudioBlockBinaryHeader + raw PCM` в production-режиме |
-| 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` в production-режиме |
+| 101 | `ImuWindowPacket` в бинарном формате production-режима |
 | 102 | `CanDecodedValuePacket` в бинарном формате production-режима |
 | 103 | `CanRawFramePacket` в бинарном формате production-режима |
 | 104 | `TrajectoryPointPacket` в бинарном формате production-режима |

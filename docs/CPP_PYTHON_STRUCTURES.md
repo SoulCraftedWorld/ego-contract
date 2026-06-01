@@ -12,8 +12,7 @@
 - `EgoFrameHeader`
 - `EgoControlMessageHeader`
 - `AudioBlockBinaryHeader`
-- `ImuSampleBinary`
-- `ImuWindowBinaryHeader` / `ImuWindowPacket`
+- `ImuWindowPacket`
 - `CanDecodedValuePacket`
 - `CanRawFramePacket`
 - `TrajectoryPointPacket`
@@ -38,11 +37,10 @@
 | `EgoFrameHeader` | 72 |
 | `EgoControlMessageHeader` | 32 |
 | `AudioBlockBinaryHeader` | 48 |
-| `ImuSampleBinary` | 40 |
-| `ImuWindowBinaryHeader` / `ImuWindowPacket` | 40 |
-| `CanDecodedValuePacket` | 28 |
-| `CanRawFramePacket` | 28 |
-| `TrajectoryPointPacket` | 44 |
+| `ImuWindowPacket` | 76 |
+| `CanDecodedValuePacket` | 20 |
+| `CanRawFramePacket` | 24 |
+| `TrajectoryPointPacket` | 52 |
 | `GpsFixPacket` | 56 |
 | `TimeStatusPacket` | 40 |
 | `SystemStatusPacket` | 56 |
@@ -53,14 +51,14 @@
 - Метаданные управления, конфигурации и сессии: protobuf.
 - Внешний фрейм Data TCP: всегда `EgoFrameHeader`.
 - Audio в production-режиме: `AudioBlockBinaryHeader + raw PCM`.
-- IMU в production-режиме: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
+- IMU в production-режиме: один агрегированный `ImuWindowPacket` с дельтами.
 - Малые частые telemetry-пакеты могут передаваться либо protobuf, либо бинарным пакетом из этих файлов.
 - `ego.bin` записывает фреймы как есть: `EgoFrameHeader + payload`.
 Текущие примечания по бинарному wire-format:
 
 - `CONFIG_SNAPSHOT` в текущем минимальном режиме firmware:
   `ConfigSnapshotBinaryHeader + text_size байт` конфигурации в формате `key=value`.
-- `IMU_WINDOW`: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
-- `CAN_DECODED_VALUE`: один 28-байтный `CanDecodedValuePacket`.
-- `CAN_RAW_FRAME`: один 28-байтный `CanRawFramePacket`.
-- `TRAJECTORY_POINT`: один 44-байтный `TrajectoryPointPacket`.
+- `IMU_WINDOW`: один 76-байтный `ImuWindowPacket` с mean/delta полями, без отдельных IMU-сэмплов.
+- `CAN_DECODED_VALUE`: один 20-байтный `CanDecodedValuePacket` без `raw_value`, `dlc` и `flags`.
+- `CAN_RAW_FRAME`: один 24-байтный `CanRawFramePacket` в формате v1.3.
+- `TRAJECTORY_POINT`: один 52-байтный `TrajectoryPointPacket` в формате v1.3, но без `vx/vy/vz`.
