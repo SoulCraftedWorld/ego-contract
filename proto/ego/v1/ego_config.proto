@@ -61,6 +61,7 @@ message CanConfig {
   uint32 bitrate = 3;
   repeated CanSignalConfig signals = 4;
   bool save_raw_frames = 5;
+  optional string dbc_text = 6;
 }
 
 message GpsConfig {

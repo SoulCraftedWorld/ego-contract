@@ -38,6 +38,18 @@ ControlRequest.update_config
 
 Устройство валидирует только переданные поля.
 
+Для CAN доступны два способа описать декодер:
+
+- передать готовый список `CanConfig.signals`;
+- передать DBC как строку в `CanConfig.dbc_text`.
+
+Если задан `dbc_text`, ARM валидирует DBC и преобразует его в runtime-структуру
+декодера. Каталог `value_id -> name/описание` не хранится внутри `CanConfig`:
+ARM формирует записи `CanValueDescription` из `CanSignalConfig.name/value_id`
+или из результата разбора DBC и передаёт их в метаданных сессии, чтобы клиент
+мог сопоставить `CAN_DECODED_VALUE.value_id` с человекочитаемым описанием при
+offline-разборе `ego.bin`.
+
 ## Сохранение
 
 При `save_to_sd=true` принятые конфигурации сохраняются на SD-карту.

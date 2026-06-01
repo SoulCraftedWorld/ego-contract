@@ -135,6 +135,16 @@ message KeyValue {
   string value = 2;
 }
 
+message CanValueDescription {
+  uint32 value_id = 1;
+  string name = 2;
+  string description = 3;
+  string unit = 4;
+  CanSignalRole role = 5;
+  uint32 can_id = 6;
+  bool is_extended = 7;
+}
+
 message ErrorInfo {
   ResultCode code = 1;
   string message = 2;

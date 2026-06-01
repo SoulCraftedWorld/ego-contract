@@ -101,6 +101,9 @@ ASCII/UTF-8 текст key=value, text_size байт
 Бинарный payload в production-режиме: один 20-байтный `CanDecodedValuePacket` с полями `t_ns`, `value_id`, `can_id`, `value`.
 
 Декодированное значение CAN-сигнала.
+Сопоставление `value_id` с названием, единицами измерения и описанием находится
+в `SessionMetadata.can_value_descriptions`. ARM заполняет этот каталог из
+ручного списка `CanConfig.signals` или из разобранного `CanConfig.dbc_text`.
 
 Поля:
 

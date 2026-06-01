@@ -31,14 +31,15 @@ inline constexpr TrajectoryPoint::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         t_ns_{::uint64_t{0u}},
-        loc_x_m_{0},
-        loc_y_m_{0},
-        loc_z_m_{0},
+        x_m_{0},
+        y_m_{0},
+        z_m_{0},
         yaw_rad_{0},
         pitch_rad_{0},
         roll_rad_{0},
-        velocity_mps_{0},
         yaw_rate_rad_s_{0},
+        path_s_m_{0},
+        vehicle_speed_mps_{0},
         flags_{0u} {}
 
 template <typename>
@@ -162,39 +163,6 @@ struct SessionEndedDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SessionEndedDefaultTypeInternal _SessionEnded_default_instance_;
 
-inline constexpr ImuSample::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        t_ns_{::uint64_t{0u}},
-        accel_x_mps2_{0},
-        accel_y_mps2_{0},
-        accel_z_mps2_{0},
-        gyro_x_rad_s_{0},
-        gyro_y_rad_s_{0},
-        gyro_z_rad_s_{0},
-        temperature_c_{0},
-        flags_{0u} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR ImuSample::ImuSample(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(ImuSample_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct ImuSampleDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ImuSampleDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ImuSampleDefaultTypeInternal() {}
-  union {
-    ImuSample _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ImuSampleDefaultTypeInternal _ImuSample_default_instance_;
-
 inline constexpr ImuCalibrationEvent::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -274,7 +242,8 @@ inline constexpr CanRawFrame::Impl_::Impl_(
         t_ns_{::uint64_t{0u}},
         can_id_{0u},
         dlc_{0u},
-        bus_{0u},
+        is_extended_{false},
+        bus_id_{0u},
         flags_{0u} {}
 
 template <typename>
@@ -301,11 +270,9 @@ inline constexpr CanDecodedValue::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         t_ns_{::uint64_t{0u}},
-        signal_id_{0u},
+        value_id_{0u},
         can_id_{0u},
-        value_{0},
-        quality_{0u},
-        flags_{0u} {}
+        value_{0} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR CanDecodedValue::CanDecodedValue(::_pbi::ConstantInitialized)
@@ -362,13 +329,22 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr ImuWindow::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        samples_{},
         time_{nullptr},
-        imu_window_id_{::uint64_t{0u}},
-        odr_hz_{0u},
+        window_id_{::uint64_t{0u}},
         sample_count_{0u},
-        sample_size_{0u},
-        flags_{0u} {}
+        flags_{0u},
+        accel_mean_x_mps2_{0},
+        accel_mean_y_mps2_{0},
+        accel_mean_z_mps2_{0},
+        gyro_mean_x_rad_s_{0},
+        gyro_mean_y_rad_s_{0},
+        gyro_mean_z_rad_s_{0},
+        delta_velocity_x_mps_{0},
+        delta_velocity_y_mps_{0},
+        delta_velocity_z_mps_{0},
+        delta_angle_x_rad_{0},
+        delta_angle_y_rad_{0},
+        delta_angle_z_rad_{0} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR ImuWindow::ImuWindow(::_pbi::ConstantInitialized)
@@ -547,19 +523,26 @@ const ::uint32_t
         7,
         0,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_._has_bits_),
-        12, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.t_ns_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.accel_x_mps2_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.accel_y_mps2_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.accel_z_mps2_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.gyro_x_rad_s_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.gyro_y_rad_s_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.gyro_z_rad_s_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.temperature_c_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuSample, _impl_.flags_),
-        0,
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_._has_bits_),
+        19, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.window_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.time_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.sample_count_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.flags_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.accel_mean_x_mps2_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.accel_mean_y_mps2_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.accel_mean_z_mps2_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.gyro_mean_x_rad_s_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.gyro_mean_y_rad_s_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.gyro_mean_z_rad_s_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_velocity_x_mps_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_velocity_y_mps_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_velocity_z_mps_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_angle_x_rad_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_angle_y_rad_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.delta_angle_z_rad_),
         1,
+        0,
         2,
         3,
         4,
@@ -567,45 +550,32 @@ const ::uint32_t
         6,
         7,
         8,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_._has_bits_),
-        10, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.imu_window_id_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.time_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.odr_hz_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.sample_count_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.sample_size_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.flags_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::ImuWindow, _impl_.samples_),
-        2,
-        1,
-        3,
-        4,
-        5,
-        6,
-        0,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_._has_bits_),
-        9, // hasbit index offset
+        7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.t_ns_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.signal_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.value_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.can_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.value_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.quality_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::CanDecodedValue, _impl_.flags_),
         0,
         1,
         2,
         3,
-        4,
-        5,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_._has_bits_),
-        9, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.t_ns_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.can_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.dlc_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.bus_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.is_extended_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.bus_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.flags_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanRawFrame, _impl_.data_),
         1,
@@ -613,19 +583,21 @@ const ::uint32_t
         3,
         4,
         5,
+        6,
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_._has_bits_),
-        13, // hasbit index offset
+        14, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.t_ns_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.loc_x_m_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.loc_y_m_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.loc_z_m_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.x_m_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.y_m_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.z_m_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.yaw_rad_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.pitch_rad_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.roll_rad_),
-        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.velocity_mps_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.yaw_rate_rad_s_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.path_s_m_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.vehicle_speed_mps_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::TrajectoryPoint, _impl_.flags_),
         0,
         1,
@@ -637,6 +609,7 @@ const ::uint32_t
         7,
         8,
         9,
+        10,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsFix, _impl_._has_bits_),
         15, // hasbit index offset
@@ -780,24 +753,22 @@ static const ::_pbi::MigrationSchema
         {0, sizeof(::ego::v1::SessionStarted)},
         {9, sizeof(::ego::v1::ConfigSnapshotFrame)},
         {16, sizeof(::ego::v1::AudioBlock)},
-        {35, sizeof(::ego::v1::ImuSample)},
-        {56, sizeof(::ego::v1::ImuWindow)},
-        {73, sizeof(::ego::v1::CanDecodedValue)},
-        {88, sizeof(::ego::v1::CanRawFrame)},
-        {103, sizeof(::ego::v1::TrajectoryPoint)},
-        {126, sizeof(::ego::v1::GpsFix)},
-        {153, sizeof(::ego::v1::TimeStatus)},
-        {170, sizeof(::ego::v1::SystemStatus)},
-        {199, sizeof(::ego::v1::ImuCalibrationEvent)},
-        {222, sizeof(::ego::v1::MarkerEvent)},
-        {233, sizeof(::ego::v1::SessionEnded)},
-        {246, sizeof(::ego::v1::DataPayload)},
+        {35, sizeof(::ego::v1::ImuWindow)},
+        {70, sizeof(::ego::v1::CanDecodedValue)},
+        {81, sizeof(::ego::v1::CanRawFrame)},
+        {98, sizeof(::ego::v1::TrajectoryPoint)},
+        {123, sizeof(::ego::v1::GpsFix)},
+        {150, sizeof(::ego::v1::TimeStatus)},
+        {167, sizeof(::ego::v1::SystemStatus)},
+        {196, sizeof(::ego::v1::ImuCalibrationEvent)},
+        {219, sizeof(::ego::v1::MarkerEvent)},
+        {230, sizeof(::ego::v1::SessionEnded)},
+        {243, sizeof(::ego::v1::DataPayload)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::ego::v1::_SessionStarted_default_instance_._instance,
     &::ego::v1::_ConfigSnapshotFrame_default_instance_._instance,
     &::ego::v1::_AudioBlock_default_instance_._instance,
-    &::ego::v1::_ImuSample_default_instance_._instance,
     &::ego::v1::_ImuWindow_default_instance_._instance,
     &::ego::v1::_CanDecodedValue_default_instance_._instance,
     &::ego::v1::_CanRawFrame_default_instance_._instance,
@@ -825,74 +796,76 @@ const char descriptor_table_protodef_ego_2fv1_2fego_5fdata_2eproto[] ABSL_ATTRIB
     "e_rate_hz\030\003 \001(\r\022\026\n\016channels_count\030\004 \001(\r\022"
     "\030\n\020bytes_per_sample\030\005 \001(\r\022\024\n\014frames_coun"
     "t\030\006 \001(\r\022#\n\006layout\030\007 \001(\0162\023.ego.v1.AudioLa"
-    "yout\022\020\n\010pcm_data\030\010 \001(\014\"\303\001\n\tImuSample\022\014\n\004"
-    "t_ns\030\001 \001(\006\022\024\n\014accel_x_mps2\030\002 \001(\002\022\024\n\014acce"
-    "l_y_mps2\030\003 \001(\002\022\024\n\014accel_z_mps2\030\004 \001(\002\022\024\n\014"
-    "gyro_x_rad_s\030\005 \001(\002\022\024\n\014gyro_y_rad_s\030\006 \001(\002"
-    "\022\024\n\014gyro_z_rad_s\030\007 \001(\002\022\025\n\rtemperature_c\030"
-    "\010 \001(\002\022\r\n\005flags\030\t \001(\r\"\263\001\n\tImuWindow\022\025\n\rim"
-    "u_window_id\030\001 \001(\006\022!\n\004time\030\002 \001(\0132\023.ego.v1"
-    ".TimeRangeNs\022\016\n\006odr_hz\030\003 \001(\r\022\024\n\014sample_c"
-    "ount\030\004 \001(\r\022\023\n\013sample_size\030\005 \001(\r\022\r\n\005flags"
-    "\030\006 \001(\r\022\"\n\007samples\030\007 \003(\0132\021.ego.v1.ImuSamp"
-    "le\"q\n\017CanDecodedValue\022\014\n\004t_ns\030\001 \001(\006\022\021\n\ts"
-    "ignal_id\030\002 \001(\r\022\016\n\006can_id\030\003 \001(\r\022\r\n\005value\030"
-    "\004 \001(\002\022\017\n\007quality\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\"b\n"
-    "\013CanRawFrame\022\014\n\004t_ns\030\001 \001(\006\022\016\n\006can_id\030\002 \001"
-    "(\r\022\013\n\003dlc\030\003 \001(\r\022\013\n\003bus\030\004 \001(\r\022\r\n\005flags\030\005 "
-    "\001(\r\022\014\n\004data\030\006 \001(\014\"\305\001\n\017TrajectoryPoint\022\014\n"
-    "\004t_ns\030\001 \001(\006\022\017\n\007loc_x_m\030\002 \001(\002\022\017\n\007loc_y_m\030"
-    "\003 \001(\002\022\017\n\007loc_z_m\030\004 \001(\002\022\017\n\007yaw_rad\030\005 \001(\002\022"
-    "\021\n\tpitch_rad\030\006 \001(\002\022\020\n\010roll_rad\030\007 \001(\002\022\024\n\014"
-    "velocity_mps\030\010 \001(\002\022\026\n\016yaw_rate_rad_s\030\t \001"
-    "(\002\022\r\n\005flags\030\n \001(\r\"\356\001\n\006GpsFix\022\014\n\004t_ns\030\001 \001"
-    "(\006\022\017\n\007lat_deg\030\002 \001(\001\022\017\n\007lon_deg\030\003 \001(\001\022\r\n\005"
-    "alt_m\030\004 \001(\001\022\021\n\tspeed_mps\030\005 \001(\002\022\023\n\013headin"
-    "g_rad\030\006 \001(\002\022\017\n\007h_acc_m\030\007 \001(\002\022\017\n\007v_acc_m\030"
-    "\010 \001(\002\022$\n\010fix_type\030\t \001(\0162\022.ego.v1.GpsFixT"
-    "ype\022\022\n\nsatellites\030\n \001(\r\022\022\n\nrtk_status\030\013 "
-    "\001(\r\022\r\n\005flags\030\014 \001(\r\"\271\001\n\nTimeStatus\022\014\n\004t_n"
-    "s\030\001 \001(\006\022\024\n\014monotonic_ns\030\002 \001(\006\022\025\n\rutc_off"
-    "set_ns\030\003 \001(\020\022\'\n\013time_source\030\004 \001(\0162\022.ego."
-    "v1.TimeSource\022\023\n\013sync_status\030\005 \001(\r\022\033\n\023es"
-    "timated_drift_ppm\030\006 \001(\002\022\025\n\rsync_error_us"
-    "\030\007 \001(\002\"\260\002\n\014SystemStatus\022\014\n\004t_ns\030\001 \001(\006\022\024\n"
-    "\014audio_status\030\002 \001(\r\022\022\n\ncan_status\030\003 \001(\r\022"
-    "\022\n\nimu_status\030\004 \001(\r\022\022\n\ngps_status\030\005 \001(\r\022"
-    "\026\n\016network_status\030\006 \001(\r\022\026\n\016audio_overrun"
-    "s\030\n \001(\r\022\031\n\021imu_fifo_overruns\030\013 \001(\r\022\025\n\rca"
-    "n_rx_errors\030\014 \001(\r\022\026\n\016dropped_frames\030\r \001("
-    "\r\022\024\n\014cpu_load_arm\030\024 \001(\002\022\027\n\017cpu_load_shar"
-    "c0\030\025 \001(\002\022\027\n\017cpu_load_sharc1\030\026 \001(\002\"\207\002\n\023Im"
-    "uCalibrationEvent\022\014\n\004t_ns\030\001 \001(\006\022\031\n\021gyro_"
-    "bias_x_rad_s\030\002 \001(\002\022\031\n\021gyro_bias_y_rad_s\030"
-    "\003 \001(\002\022\031\n\021gyro_bias_z_rad_s\030\004 \001(\002\022\030\n\020acce"
-    "l_ref_x_mps2\030\005 \001(\002\022\030\n\020accel_ref_y_mps2\030\006"
-    " \001(\002\022\030\n\020accel_ref_z_mps2\030\007 \001(\002\022\026\n\016collec"
-    "t_time_s\030\010 \001(\002\022\024\n\014sample_count\030\t \001(\r\022\025\n\r"
-    "quality_flags\030\n \001(\r\"c\n\013MarkerEvent\022\014\n\004t_"
-    "ns\030\001 \001(\006\022\021\n\tmarker_id\030\002 \001(\t\022\023\n\013descripti"
-    "on\030\003 \001(\t\022\036\n\004tags\030\004 \003(\0132\020.ego.v1.KeyValue"
-    "\"k\n\014SessionEnded\022\014\n\004t_ns\030\001 \001(\006\022\022\n\nsessio"
-    "n_id\030\002 \001(\t\022\016\n\006reason\030\003 \001(\t\022\024\n\014total_fram"
-    "es\030\004 \001(\004\022\023\n\013total_bytes\030\005 \001(\004\"\206\005\n\013DataPa"
-    "yload\0221\n\017session_started\030\001 \001(\0132\026.ego.v1."
-    "SessionStartedH\000\0226\n\017config_snapshot\030\002 \001("
-    "\0132\033.ego.v1.ConfigSnapshotFrameH\000\022)\n\013audi"
-    "o_block\030d \001(\0132\022.ego.v1.AudioBlockH\000\022\'\n\ni"
-    "mu_window\030e \001(\0132\021.ego.v1.ImuWindowH\000\0224\n\021"
-    "can_decoded_value\030f \001(\0132\027.ego.v1.CanDeco"
-    "dedValueH\000\022,\n\rcan_raw_frame\030g \001(\0132\023.ego."
-    "v1.CanRawFrameH\000\0223\n\020trajectory_point\030h \001"
-    "(\0132\027.ego.v1.TrajectoryPointH\000\022!\n\007gps_fix"
-    "\030i \001(\0132\016.ego.v1.GpsFixH\000\022*\n\013time_status\030"
-    "\310\001 \001(\0132\022.ego.v1.TimeStatusH\000\022.\n\rsystem_s"
-    "tatus\030\311\001 \001(\0132\024.ego.v1.SystemStatusH\000\0227\n\017"
-    "imu_calib_event\030\312\001 \001(\0132\033.ego.v1.ImuCalib"
-    "rationEventH\000\022,\n\014marker_event\030\313\001 \001(\0132\023.e"
-    "go.v1.MarkerEventH\000\022.\n\rsession_ended\030\204\007 "
-    "\001(\0132\024.ego.v1.SessionEndedH\000B\t\n\007payloadb\006"
-    "proto3"
+    "yout\022\020\n\010pcm_data\030\010 \001(\014\"\263\003\n\tImuWindow\022\021\n\t"
+    "window_id\030\001 \001(\006\022!\n\004time\030\002 \001(\0132\023.ego.v1.T"
+    "imeRangeNs\022\024\n\014sample_count\030\003 \001(\r\022\r\n\005flag"
+    "s\030\004 \001(\r\022\031\n\021accel_mean_x_mps2\030\005 \001(\002\022\031\n\021ac"
+    "cel_mean_y_mps2\030\006 \001(\002\022\031\n\021accel_mean_z_mp"
+    "s2\030\007 \001(\002\022\031\n\021gyro_mean_x_rad_s\030\010 \001(\002\022\031\n\021g"
+    "yro_mean_y_rad_s\030\t \001(\002\022\031\n\021gyro_mean_z_ra"
+    "d_s\030\n \001(\002\022\034\n\024delta_velocity_x_mps\030\013 \001(\002\022"
+    "\034\n\024delta_velocity_y_mps\030\014 \001(\002\022\034\n\024delta_v"
+    "elocity_z_mps\030\r \001(\002\022\031\n\021delta_angle_x_rad"
+    "\030\016 \001(\002\022\031\n\021delta_angle_y_rad\030\017 \001(\002\022\031\n\021del"
+    "ta_angle_z_rad\030\020 \001(\002\"b\n\017CanDecodedValue\022"
+    "\014\n\004t_ns\030\001 \001(\006\022\020\n\010value_id\030\002 \001(\r\022\016\n\006can_i"
+    "d\030\003 \001(\r\022\r\n\005value\030\004 \001(\002J\004\010\005\020\006J\004\010\006\020\007J\004\010\007\020\010"
+    "\"z\n\013CanRawFrame\022\014\n\004t_ns\030\001 \001(\006\022\016\n\006can_id\030"
+    "\002 \001(\r\022\013\n\003dlc\030\003 \001(\r\022\023\n\013is_extended\030\004 \001(\010\022"
+    "\016\n\006bus_id\030\005 \001(\r\022\r\n\005flags\030\006 \001(\r\022\014\n\004data\030\007"
+    " \001(\014\"\342\001\n\017TrajectoryPoint\022\014\n\004t_ns\030\001 \001(\006\022\013"
+    "\n\003x_m\030\002 \001(\002\022\013\n\003y_m\030\003 \001(\002\022\013\n\003z_m\030\004 \001(\002\022\017\n"
+    "\007yaw_rad\030\010 \001(\002\022\021\n\tpitch_rad\030\t \001(\002\022\020\n\010rol"
+    "l_rad\030\n \001(\002\022\026\n\016yaw_rate_rad_s\030\013 \001(\002\022\020\n\010p"
+    "ath_s_m\030\014 \001(\002\022\031\n\021vehicle_speed_mps\030\r \001(\002"
+    "\022\r\n\005flags\030\016 \001(\rJ\004\010\005\020\006J\004\010\006\020\007J\004\010\007\020\010\"\356\001\n\006Gp"
+    "sFix\022\014\n\004t_ns\030\001 \001(\006\022\017\n\007lat_deg\030\002 \001(\001\022\017\n\007l"
+    "on_deg\030\003 \001(\001\022\r\n\005alt_m\030\004 \001(\001\022\021\n\tspeed_mps"
+    "\030\005 \001(\002\022\023\n\013heading_rad\030\006 \001(\002\022\017\n\007h_acc_m\030\007"
+    " \001(\002\022\017\n\007v_acc_m\030\010 \001(\002\022$\n\010fix_type\030\t \001(\0162"
+    "\022.ego.v1.GpsFixType\022\022\n\nsatellites\030\n \001(\r\022"
+    "\022\n\nrtk_status\030\013 \001(\r\022\r\n\005flags\030\014 \001(\r\"\271\001\n\nT"
+    "imeStatus\022\014\n\004t_ns\030\001 \001(\006\022\024\n\014monotonic_ns\030"
+    "\002 \001(\006\022\025\n\rutc_offset_ns\030\003 \001(\020\022\'\n\013time_sou"
+    "rce\030\004 \001(\0162\022.ego.v1.TimeSource\022\023\n\013sync_st"
+    "atus\030\005 \001(\r\022\033\n\023estimated_drift_ppm\030\006 \001(\002\022"
+    "\025\n\rsync_error_us\030\007 \001(\002\"\260\002\n\014SystemStatus\022"
+    "\014\n\004t_ns\030\001 \001(\006\022\024\n\014audio_status\030\002 \001(\r\022\022\n\nc"
+    "an_status\030\003 \001(\r\022\022\n\nimu_status\030\004 \001(\r\022\022\n\ng"
+    "ps_status\030\005 \001(\r\022\026\n\016network_status\030\006 \001(\r\022"
+    "\026\n\016audio_overruns\030\n \001(\r\022\031\n\021imu_fifo_over"
+    "runs\030\013 \001(\r\022\025\n\rcan_rx_errors\030\014 \001(\r\022\026\n\016dro"
+    "pped_frames\030\r \001(\r\022\024\n\014cpu_load_arm\030\024 \001(\002\022"
+    "\027\n\017cpu_load_sharc0\030\025 \001(\002\022\027\n\017cpu_load_sha"
+    "rc1\030\026 \001(\002\"\207\002\n\023ImuCalibrationEvent\022\014\n\004t_n"
+    "s\030\001 \001(\006\022\031\n\021gyro_bias_x_rad_s\030\002 \001(\002\022\031\n\021gy"
+    "ro_bias_y_rad_s\030\003 \001(\002\022\031\n\021gyro_bias_z_rad"
+    "_s\030\004 \001(\002\022\030\n\020accel_ref_x_mps2\030\005 \001(\002\022\030\n\020ac"
+    "cel_ref_y_mps2\030\006 \001(\002\022\030\n\020accel_ref_z_mps2"
+    "\030\007 \001(\002\022\026\n\016collect_time_s\030\010 \001(\002\022\024\n\014sample"
+    "_count\030\t \001(\r\022\025\n\rquality_flags\030\n \001(\r\"c\n\013M"
+    "arkerEvent\022\014\n\004t_ns\030\001 \001(\006\022\021\n\tmarker_id\030\002 "
+    "\001(\t\022\023\n\013description\030\003 \001(\t\022\036\n\004tags\030\004 \003(\0132\020"
+    ".ego.v1.KeyValue\"k\n\014SessionEnded\022\014\n\004t_ns"
+    "\030\001 \001(\006\022\022\n\nsession_id\030\002 \001(\t\022\016\n\006reason\030\003 \001"
+    "(\t\022\024\n\014total_frames\030\004 \001(\004\022\023\n\013total_bytes\030"
+    "\005 \001(\004\"\206\005\n\013DataPayload\0221\n\017session_started"
+    "\030\001 \001(\0132\026.ego.v1.SessionStartedH\000\0226\n\017conf"
+    "ig_snapshot\030\002 \001(\0132\033.ego.v1.ConfigSnapsho"
+    "tFrameH\000\022)\n\013audio_block\030d \001(\0132\022.ego.v1.A"
+    "udioBlockH\000\022\'\n\nimu_window\030e \001(\0132\021.ego.v1"
+    ".ImuWindowH\000\0224\n\021can_decoded_value\030f \001(\0132"
+    "\027.ego.v1.CanDecodedValueH\000\022,\n\rcan_raw_fr"
+    "ame\030g \001(\0132\023.ego.v1.CanRawFrameH\000\0223\n\020traj"
+    "ectory_point\030h \001(\0132\027.ego.v1.TrajectoryPo"
+    "intH\000\022!\n\007gps_fix\030i \001(\0132\016.ego.v1.GpsFixH\000"
+    "\022*\n\013time_status\030\310\001 \001(\0132\022.ego.v1.TimeStat"
+    "usH\000\022.\n\rsystem_status\030\311\001 \001(\0132\024.ego.v1.Sy"
+    "stemStatusH\000\0227\n\017imu_calib_event\030\312\001 \001(\0132\033"
+    ".ego.v1.ImuCalibrationEventH\000\022,\n\014marker_"
+    "event\030\313\001 \001(\0132\023.ego.v1.MarkerEventH\000\022.\n\rs"
+    "ession_ended\030\204\007 \001(\0132\024.ego.v1.SessionEnde"
+    "dH\000B\t\n\007payloadb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_ego_2fv1_2fego_5fdata_2eproto_deps[3] = {
@@ -904,13 +877,13 @@ static ::absl::once_flag descriptor_table_ego_2fv1_2fego_5fdata_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego_5fdata_2eproto = {
     false,
     false,
-    3206,
+    3302,
     descriptor_table_protodef_ego_2fv1_2fego_5fdata_2eproto,
     "ego/v1/ego_data.proto",
     &descriptor_table_ego_2fv1_2fego_5fdata_2eproto_once,
     descriptor_table_ego_2fv1_2fego_5fdata_2eproto_deps,
     3,
-    15,
+    14,
     schemas,
     file_default_instances,
     TableStruct_ego_2fv1_2fego_5fdata_2eproto::offsets,
@@ -2105,490 +2078,6 @@ void AudioBlock::InternalSwap(AudioBlock* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
 }
 // ===================================================================
 
-class ImuSample::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<ImuSample>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(ImuSample, _impl_._has_bits_);
-};
-
-ImuSample::ImuSample(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ImuSample_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:ego.v1.ImuSample)
-}
-ImuSample::ImuSample(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ImuSample& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ImuSample_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(from._impl_) {
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-PROTOBUF_NDEBUG_INLINE ImuSample::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0} {}
-
-inline void ImuSample::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  ::memset(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, t_ns_),
-           0,
-           offsetof(Impl_, flags_) -
-               offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::flags_));
-}
-ImuSample::~ImuSample() {
-  // @@protoc_insertion_point(destructor:ego.v1.ImuSample)
-  SharedDtor(*this);
-}
-inline void ImuSample::SharedDtor(MessageLite& self) {
-  ImuSample& this_ = static_cast<ImuSample&>(self);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL ImuSample::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) ImuSample(arena);
-}
-constexpr auto ImuSample::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(ImuSample),
-                                            alignof(ImuSample));
-}
-constexpr auto ImuSample::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_ImuSample_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &ImuSample::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<ImuSample>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &ImuSample::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<ImuSample>(), &ImuSample::ByteSizeLong,
-              &ImuSample::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(ImuSample, _impl_._cached_size_),
-          false,
-      },
-      &ImuSample::kDescriptorMethods,
-      &descriptor_table_ego_2fv1_2fego_5fdata_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull ImuSample_class_data_ =
-        ImuSample::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-ImuSample::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&ImuSample_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(ImuSample_class_data_.tc_table);
-  return ImuSample_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 9, 0, 0, 2>
-ImuSample::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(ImuSample, _impl_._has_bits_),
-    0, // no _extensions_
-    9, 120,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294966784,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    9,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    ImuSample_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::ego::v1::ImuSample>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // fixed64 t_ns = 1;
-    {::_pbi::TcParser::FastF64S1,
-     {9, 0, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.t_ns_)}},
-    // float accel_x_mps2 = 2;
-    {::_pbi::TcParser::FastF32S1,
-     {21, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_x_mps2_)}},
-    // float accel_y_mps2 = 3;
-    {::_pbi::TcParser::FastF32S1,
-     {29, 2, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_y_mps2_)}},
-    // float accel_z_mps2 = 4;
-    {::_pbi::TcParser::FastF32S1,
-     {37, 3, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_z_mps2_)}},
-    // float gyro_x_rad_s = 5;
-    {::_pbi::TcParser::FastF32S1,
-     {45, 4, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_x_rad_s_)}},
-    // float gyro_y_rad_s = 6;
-    {::_pbi::TcParser::FastF32S1,
-     {53, 5, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_y_rad_s_)}},
-    // float gyro_z_rad_s = 7;
-    {::_pbi::TcParser::FastF32S1,
-     {61, 6, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_z_rad_s_)}},
-    // float temperature_c = 8;
-    {::_pbi::TcParser::FastF32S1,
-     {69, 7, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.temperature_c_)}},
-    // uint32 flags = 9;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuSample, _impl_.flags_), 8>(),
-     {72, 8, 0,
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.flags_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // fixed64 t_ns = 1;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.t_ns_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // float accel_x_mps2 = 2;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_x_mps2_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float accel_y_mps2 = 3;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_y_mps2_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float accel_z_mps2 = 4;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.accel_z_mps2_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float gyro_x_rad_s = 5;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_x_rad_s_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float gyro_y_rad_s = 6;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_y_rad_s_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float gyro_z_rad_s = 7;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.gyro_z_rad_s_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float temperature_c = 8;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.temperature_c_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // uint32 flags = 9;
-    {PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.flags_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-PROTOBUF_NOINLINE void ImuSample::Clear() {
-// @@protoc_insertion_point(message_clear_start:ego.v1.ImuSample)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
-    ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.temperature_c_) -
-        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.temperature_c_));
-  }
-  _impl_.flags_ = 0u;
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL ImuSample::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const ImuSample& this_ = static_cast<const ImuSample&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL ImuSample::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const ImuSample& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.ImuSample)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = this_._impl_._has_bits_[0];
-  // fixed64 t_ns = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    if (this_._internal_t_ns() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
-          1, this_._internal_t_ns(), target);
-    }
-  }
-
-  // float accel_x_mps2 = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_x_mps2()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          2, this_._internal_accel_x_mps2(), target);
-    }
-  }
-
-  // float accel_y_mps2 = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_y_mps2()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          3, this_._internal_accel_y_mps2(), target);
-    }
-  }
-
-  // float accel_z_mps2 = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_z_mps2()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          4, this_._internal_accel_z_mps2(), target);
-    }
-  }
-
-  // float gyro_x_rad_s = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_x_rad_s()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          5, this_._internal_gyro_x_rad_s(), target);
-    }
-  }
-
-  // float gyro_y_rad_s = 6;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_y_rad_s()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          6, this_._internal_gyro_y_rad_s(), target);
-    }
-  }
-
-  // float gyro_z_rad_s = 7;
-  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_z_rad_s()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          7, this_._internal_gyro_z_rad_s(), target);
-    }
-  }
-
-  // float temperature_c = 8;
-  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_temperature_c()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          8, this_._internal_temperature_c(), target);
-    }
-  }
-
-  // uint32 flags = 9;
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
-    if (this_._internal_flags() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          9, this_._internal_flags(), target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.ImuSample)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t ImuSample::ByteSizeLong(const MessageLite& base) {
-  const ImuSample& this_ = static_cast<const ImuSample&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t ImuSample::ByteSizeLong() const {
-  const ImuSample& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:ego.v1.ImuSample)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
-    // fixed64 t_ns = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (this_._internal_t_ns() != 0) {
-        total_size += 9;
-      }
-    }
-    // float accel_x_mps2 = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_x_mps2()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float accel_y_mps2 = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_y_mps2()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float accel_z_mps2 = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_z_mps2()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float gyro_x_rad_s = 5;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_x_rad_s()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float gyro_y_rad_s = 6;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_y_rad_s()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float gyro_z_rad_s = 7;
-    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_z_rad_s()) != 0) {
-        total_size += 5;
-      }
-    }
-    // float temperature_c = 8;
-    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_temperature_c()) != 0) {
-        total_size += 5;
-      }
-    }
-  }
-   {
-    // uint32 flags = 9;
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
-      if (this_._internal_flags() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_flags());
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void ImuSample::MergeImpl(::google::protobuf::MessageLite& to_msg,
-                            const ::google::protobuf::MessageLite& from_msg) {
-   auto* const _this =
-      static_cast<ImuSample*>(&to_msg);
-  auto& from = static_cast<const ImuSample&>(from_msg);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    from.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.ImuSample)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (from._internal_t_ns() != 0) {
-        _this->_impl_.t_ns_ = from._impl_.t_ns_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_accel_x_mps2()) != 0) {
-        _this->_impl_.accel_x_mps2_ = from._impl_.accel_x_mps2_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_accel_y_mps2()) != 0) {
-        _this->_impl_.accel_y_mps2_ = from._impl_.accel_y_mps2_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_accel_z_mps2()) != 0) {
-        _this->_impl_.accel_z_mps2_ = from._impl_.accel_z_mps2_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_x_rad_s()) != 0) {
-        _this->_impl_.gyro_x_rad_s_ = from._impl_.gyro_x_rad_s_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_y_rad_s()) != 0) {
-        _this->_impl_.gyro_y_rad_s_ = from._impl_.gyro_y_rad_s_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_z_rad_s()) != 0) {
-        _this->_impl_.gyro_z_rad_s_ = from._impl_.gyro_z_rad_s_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_temperature_c()) != 0) {
-        _this->_impl_.temperature_c_ = from._impl_.temperature_c_;
-      }
-    }
-  }
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
-    if (from._internal_flags() != 0) {
-      _this->_impl_.flags_ = from._impl_.flags_;
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-
-void ImuSample::CopyFrom(const ImuSample& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.ImuSample)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void ImuSample::InternalSwap(ImuSample* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.flags_)
-      + sizeof(ImuSample::_impl_.flags_)
-      - PROTOBUF_FIELD_OFFSET(ImuSample, _impl_.t_ns_)>(
-          reinterpret_cast<char*>(&_impl_.t_ns_),
-          reinterpret_cast<char*>(&other->_impl_.t_ns_));
-}
-
-::google::protobuf::Metadata ImuSample::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
 class ImuWindow::_Internal {
  public:
   using HasBits =
@@ -2601,7 +2090,7 @@ void ImuWindow::clear_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.time_ != nullptr) _impl_.time_->Clear();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
+                  0x00000001U);
 }
 ImuWindow::ImuWindow(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -2617,8 +2106,7 @@ PROTOBUF_NDEBUG_INLINE ImuWindow::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
     [[maybe_unused]] const ::ego::v1::ImuWindow& from_msg)
       : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        samples_{visibility, arena, from.samples_} {}
+        _cached_size_{0} {}
 
 ImuWindow::ImuWindow(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -2634,33 +2122,32 @@ ImuWindow::ImuWindow(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.time_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+  _impl_.time_ = (CheckHasBit(cached_has_bits, 0x00000001U))
                 ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.time_)
                 : nullptr;
   ::memcpy(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, imu_window_id_),
+               offsetof(Impl_, window_id_),
            reinterpret_cast<const char*>(&from._impl_) +
-               offsetof(Impl_, imu_window_id_),
-           offsetof(Impl_, flags_) -
-               offsetof(Impl_, imu_window_id_) +
-               sizeof(Impl_::flags_));
+               offsetof(Impl_, window_id_),
+           offsetof(Impl_, delta_angle_z_rad_) -
+               offsetof(Impl_, window_id_) +
+               sizeof(Impl_::delta_angle_z_rad_));
 
   // @@protoc_insertion_point(copy_constructor:ego.v1.ImuWindow)
 }
 PROTOBUF_NDEBUG_INLINE ImuWindow::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        samples_{visibility, arena} {}
+      : _cached_size_{0} {}
 
 inline void ImuWindow::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, time_),
            0,
-           offsetof(Impl_, flags_) -
+           offsetof(Impl_, delta_angle_z_rad_) -
                offsetof(Impl_, time_) +
-               sizeof(Impl_::flags_));
+               sizeof(Impl_::delta_angle_z_rad_));
 }
 ImuWindow::~ImuWindow() {
   // @@protoc_insertion_point(destructor:ego.v1.ImuWindow)
@@ -2683,20 +2170,8 @@ inline void* PROTOBUF_NONNULL ImuWindow::PlacementNew_(
   return ::new (mem) ImuWindow(arena);
 }
 constexpr auto ImuWindow::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.samples_) +
-          decltype(ImuWindow::_impl_.samples_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::ZeroInit(
-        sizeof(ImuWindow), alignof(ImuWindow), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&ImuWindow::PlacementNew_,
-                                 sizeof(ImuWindow),
-                                 alignof(ImuWindow));
-  }
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(ImuWindow),
+                                            alignof(ImuWindow));
 }
 constexpr auto ImuWindow::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
@@ -2732,17 +2207,17 @@ ImuWindow::GetClassData() const {
   return ImuWindow_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 7, 2, 0, 2>
+const ::_pbi::TcParseTable<4, 16, 1, 0, 2>
 ImuWindow::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_._has_bits_),
     0, // no _extensions_
-    7, 56,  // max_field_number, fast_idx_mask
+    16, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967168,  // skipmap
+    4294901760,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
-    2,  // num_aux_entries
+    16,  // num_field_entries
+    1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     ImuWindow_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -2751,56 +2226,108 @@ ImuWindow::_table_ = {
     ::_pbi::TcParser::GetTable<::ego::v1::ImuWindow>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // fixed64 imu_window_id = 1;
+    // float delta_angle_z_rad = 16;
+    {::_pbi::TcParser::FastF32S2,
+     {389, 15, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_z_rad_)}},
+    // fixed64 window_id = 1;
     {::_pbi::TcParser::FastF64S1,
-     {9, 2, 0,
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.imu_window_id_)}},
+     {9, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.window_id_)}},
     // .ego.v1.TimeRangeNs time = 2;
     {::_pbi::TcParser::FastMtS1,
-     {18, 1, 0,
+     {18, 0, 0,
       PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.time_)}},
-    // uint32 odr_hz = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.odr_hz_), 3>(),
-     {24, 3, 0,
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.odr_hz_)}},
-    // uint32 sample_count = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.sample_count_), 4>(),
-     {32, 4, 0,
+    // uint32 sample_count = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.sample_count_), 2>(),
+     {24, 2, 0,
       PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.sample_count_)}},
-    // uint32 sample_size = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.sample_size_), 5>(),
-     {40, 5, 0,
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.sample_size_)}},
-    // uint32 flags = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.flags_), 6>(),
-     {48, 6, 0,
+    // uint32 flags = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ImuWindow, _impl_.flags_), 3>(),
+     {32, 3, 0,
       PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.flags_)}},
-    // repeated .ego.v1.ImuSample samples = 7;
-    {::_pbi::TcParser::FastMtR1,
-     {58, 0, 1,
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.samples_)}},
+    // float accel_mean_x_mps2 = 5;
+    {::_pbi::TcParser::FastF32S1,
+     {45, 4, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_x_mps2_)}},
+    // float accel_mean_y_mps2 = 6;
+    {::_pbi::TcParser::FastF32S1,
+     {53, 5, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_y_mps2_)}},
+    // float accel_mean_z_mps2 = 7;
+    {::_pbi::TcParser::FastF32S1,
+     {61, 6, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_z_mps2_)}},
+    // float gyro_mean_x_rad_s = 8;
+    {::_pbi::TcParser::FastF32S1,
+     {69, 7, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_x_rad_s_)}},
+    // float gyro_mean_y_rad_s = 9;
+    {::_pbi::TcParser::FastF32S1,
+     {77, 8, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_y_rad_s_)}},
+    // float gyro_mean_z_rad_s = 10;
+    {::_pbi::TcParser::FastF32S1,
+     {85, 9, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_z_rad_s_)}},
+    // float delta_velocity_x_mps = 11;
+    {::_pbi::TcParser::FastF32S1,
+     {93, 10, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_x_mps_)}},
+    // float delta_velocity_y_mps = 12;
+    {::_pbi::TcParser::FastF32S1,
+     {101, 11, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_y_mps_)}},
+    // float delta_velocity_z_mps = 13;
+    {::_pbi::TcParser::FastF32S1,
+     {109, 12, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_z_mps_)}},
+    // float delta_angle_x_rad = 14;
+    {::_pbi::TcParser::FastF32S1,
+     {117, 13, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_x_rad_)}},
+    // float delta_angle_y_rad = 15;
+    {::_pbi::TcParser::FastF32S1,
+     {125, 14, 0,
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_y_rad_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // fixed64 imu_window_id = 1;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.imu_window_id_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
+    // fixed64 window_id = 1;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.window_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
     // .ego.v1.TimeRangeNs time = 2;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.time_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // uint32 odr_hz = 3;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.odr_hz_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 sample_count = 4;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.sample_count_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 sample_size = 5;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.sample_size_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 flags = 6;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.flags_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // repeated .ego.v1.ImuSample samples = 7;
-    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.samples_), _Internal::kHasBitsOffset + 0, 1, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.time_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // uint32 sample_count = 3;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.sample_count_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 flags = 4;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.flags_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // float accel_mean_x_mps2 = 5;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_x_mps2_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float accel_mean_y_mps2 = 6;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_y_mps2_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float accel_mean_z_mps2 = 7;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.accel_mean_z_mps2_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float gyro_mean_x_rad_s = 8;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_x_rad_s_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float gyro_mean_y_rad_s = 9;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_y_rad_s_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float gyro_mean_z_rad_s = 10;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.gyro_mean_z_rad_s_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_velocity_x_mps = 11;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_x_mps_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_velocity_y_mps = 12;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_y_mps_), _Internal::kHasBitsOffset + 11, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_velocity_z_mps = 13;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_velocity_z_mps_), _Internal::kHasBitsOffset + 12, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_angle_x_rad = 14;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_x_rad_), _Internal::kHasBitsOffset + 13, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_angle_y_rad = 15;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_y_rad_), _Internal::kHasBitsOffset + 14, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float delta_angle_z_rad = 16;
+    {PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_z_rad_), _Internal::kHasBitsOffset + 15, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::ego::v1::TimeRangeNs>()},
-      {::_pbi::TcParser::GetTable<::ego::v1::ImuSample>()},
   }},
   {{
   }},
@@ -2813,19 +2340,19 @@ PROTOBUF_NOINLINE void ImuWindow::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
-      _impl_.samples_.Clear();
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      ABSL_DCHECK(_impl_.time_ != nullptr);
-      _impl_.time_->Clear();
-    }
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    ABSL_DCHECK(_impl_.time_ != nullptr);
+    _impl_.time_->Clear();
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007cU)) {
-    ::memset(&_impl_.imu_window_id_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.flags_) -
-        reinterpret_cast<char*>(&_impl_.imu_window_id_)) + sizeof(_impl_.flags_));
+  if (BatchCheckHasBit(cached_has_bits, 0x000000feU)) {
+    ::memset(&_impl_.window_id_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.gyro_mean_x_rad_s_) -
+        reinterpret_cast<char*>(&_impl_.window_id_)) + sizeof(_impl_.gyro_mean_x_rad_s_));
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    ::memset(&_impl_.gyro_mean_y_rad_s_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.delta_angle_z_rad_) -
+        reinterpret_cast<char*>(&_impl_.gyro_mean_y_rad_s_)) + sizeof(_impl_.delta_angle_z_rad_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -2850,68 +2377,145 @@ PROTOBUF_NOINLINE void ImuWindow::Clear() {
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
-  // fixed64 imu_window_id = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    if (this_._internal_imu_window_id() != 0) {
+  // fixed64 window_id = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (this_._internal_window_id() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFixed64ToArray(
-          1, this_._internal_imu_window_id(), target);
+          1, this_._internal_window_id(), target);
     }
   }
 
   // .ego.v1.TimeRangeNs time = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         2, *this_._impl_.time_, this_._impl_.time_->GetCachedSize(), target,
         stream);
   }
 
-  // uint32 odr_hz = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (this_._internal_odr_hz() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          3, this_._internal_odr_hz(), target);
-    }
-  }
-
-  // uint32 sample_count = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  // uint32 sample_count = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     if (this_._internal_sample_count() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          4, this_._internal_sample_count(), target);
+          3, this_._internal_sample_count(), target);
     }
   }
 
-  // uint32 sample_size = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-    if (this_._internal_sample_size() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          5, this_._internal_sample_size(), target);
-    }
-  }
-
-  // uint32 flags = 6;
-  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+  // uint32 flags = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (this_._internal_flags() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          6, this_._internal_flags(), target);
+          4, this_._internal_flags(), target);
     }
   }
 
-  // repeated .ego.v1.ImuSample samples = 7;
-  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
-    for (unsigned i = 0, n = static_cast<unsigned>(
-                             this_._internal_samples_size());
-         i < n; i++) {
-      const auto& repfield = this_._internal_samples().Get(i);
-      target =
-          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-              7, repfield, repfield.GetCachedSize(),
-              target, stream);
+  // float accel_mean_x_mps2 = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_x_mps2()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          5, this_._internal_accel_mean_x_mps2(), target);
+    }
+  }
+
+  // float accel_mean_y_mps2 = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_y_mps2()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          6, this_._internal_accel_mean_y_mps2(), target);
+    }
+  }
+
+  // float accel_mean_z_mps2 = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_z_mps2()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          7, this_._internal_accel_mean_z_mps2(), target);
+    }
+  }
+
+  // float gyro_mean_x_rad_s = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_x_rad_s()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          8, this_._internal_gyro_mean_x_rad_s(), target);
+    }
+  }
+
+  // float gyro_mean_y_rad_s = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_y_rad_s()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          9, this_._internal_gyro_mean_y_rad_s(), target);
+    }
+  }
+
+  // float gyro_mean_z_rad_s = 10;
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_z_rad_s()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          10, this_._internal_gyro_mean_z_rad_s(), target);
+    }
+  }
+
+  // float delta_velocity_x_mps = 11;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_x_mps()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          11, this_._internal_delta_velocity_x_mps(), target);
+    }
+  }
+
+  // float delta_velocity_y_mps = 12;
+  if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_y_mps()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          12, this_._internal_delta_velocity_y_mps(), target);
+    }
+  }
+
+  // float delta_velocity_z_mps = 13;
+  if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_z_mps()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          13, this_._internal_delta_velocity_z_mps(), target);
+    }
+  }
+
+  // float delta_angle_x_rad = 14;
+  if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_x_rad()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          14, this_._internal_delta_angle_x_rad(), target);
+    }
+  }
+
+  // float delta_angle_y_rad = 15;
+  if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_y_rad()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          15, this_._internal_delta_angle_y_rad(), target);
+    }
+  }
+
+  // float delta_angle_z_rad = 16;
+  if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_z_rad()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          16, this_._internal_delta_angle_z_rad(), target);
     }
   }
 
@@ -2940,51 +2544,104 @@ PROTOBUF_NOINLINE void ImuWindow::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
-    // repeated .ego.v1.ImuSample samples = 7;
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
-      total_size += 1UL * this_._internal_samples_size();
-      for (const auto& msg : this_._internal_samples()) {
-        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
-      }
-    }
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     // .ego.v1.TimeRangeNs time = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.time_);
     }
-    // fixed64 imu_window_id = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (this_._internal_imu_window_id() != 0) {
+    // fixed64 window_id = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (this_._internal_window_id() != 0) {
         total_size += 9;
       }
     }
-    // uint32 odr_hz = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (this_._internal_odr_hz() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_odr_hz());
-      }
-    }
-    // uint32 sample_count = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    // uint32 sample_count = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (this_._internal_sample_count() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_sample_count());
       }
     }
-    // uint32 sample_size = 5;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (this_._internal_sample_size() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_sample_size());
-      }
-    }
-    // uint32 flags = 6;
-    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    // uint32 flags = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_flags() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_flags());
+      }
+    }
+    // float accel_mean_x_mps2 = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_x_mps2()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float accel_mean_y_mps2 = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_y_mps2()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float accel_mean_z_mps2 = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_accel_mean_z_mps2()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float gyro_mean_x_rad_s = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_x_rad_s()) != 0) {
+        total_size += 5;
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    // float gyro_mean_y_rad_s = 9;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_y_rad_s()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float gyro_mean_z_rad_s = 10;
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_gyro_mean_z_rad_s()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_velocity_x_mps = 11;
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_x_mps()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_velocity_y_mps = 12;
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_y_mps()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_velocity_z_mps = 13;
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_velocity_z_mps()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_angle_x_rad = 14;
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_x_rad()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_angle_y_rad = 15;
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_y_rad()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float delta_angle_z_rad = 16;
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_delta_angle_z_rad()) != 0) {
+        total_size += 6;
       }
     }
   }
@@ -3007,13 +2664,8 @@ void ImuWindow::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
-      _this->_internal_mutable_samples()->InternalMergeFromWithArena(
-          ::google::protobuf::MessageLite::internal_visibility(), arena,
-          from._internal_samples());
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       ABSL_DCHECK(from._impl_.time_ != nullptr);
       if (_this->_impl_.time_ == nullptr) {
         _this->_impl_.time_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.time_);
@@ -3021,29 +2673,81 @@ void ImuWindow::MergeImpl(::google::protobuf::MessageLite& to_msg,
         _this->_impl_.time_->MergeFrom(*from._impl_.time_);
       }
     }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (from._internal_window_id() != 0) {
+        _this->_impl_.window_id_ = from._impl_.window_id_;
+      }
+    }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (from._internal_imu_window_id() != 0) {
-        _this->_impl_.imu_window_id_ = from._impl_.imu_window_id_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (from._internal_odr_hz() != 0) {
-        _this->_impl_.odr_hz_ = from._impl_.odr_hz_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (from._internal_sample_count() != 0) {
         _this->_impl_.sample_count_ = from._impl_.sample_count_;
       }
     }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (from._internal_flags() != 0) {
+        _this->_impl_.flags_ = from._impl_.flags_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_accel_mean_x_mps2()) != 0) {
+        _this->_impl_.accel_mean_x_mps2_ = from._impl_.accel_mean_x_mps2_;
+      }
+    }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (from._internal_sample_size() != 0) {
-        _this->_impl_.sample_size_ = from._impl_.sample_size_;
+      if (::absl::bit_cast<::uint32_t>(from._internal_accel_mean_y_mps2()) != 0) {
+        _this->_impl_.accel_mean_y_mps2_ = from._impl_.accel_mean_y_mps2_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
-      if (from._internal_flags() != 0) {
-        _this->_impl_.flags_ = from._impl_.flags_;
+      if (::absl::bit_cast<::uint32_t>(from._internal_accel_mean_z_mps2()) != 0) {
+        _this->_impl_.accel_mean_z_mps2_ = from._impl_.accel_mean_z_mps2_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_mean_x_rad_s()) != 0) {
+        _this->_impl_.gyro_mean_x_rad_s_ = from._impl_.gyro_mean_x_rad_s_;
+      }
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000ff00U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_mean_y_rad_s()) != 0) {
+        _this->_impl_.gyro_mean_y_rad_s_ = from._impl_.gyro_mean_y_rad_s_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_gyro_mean_z_rad_s()) != 0) {
+        _this->_impl_.gyro_mean_z_rad_s_ = from._impl_.gyro_mean_z_rad_s_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_velocity_x_mps()) != 0) {
+        _this->_impl_.delta_velocity_x_mps_ = from._impl_.delta_velocity_x_mps_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000800U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_velocity_y_mps()) != 0) {
+        _this->_impl_.delta_velocity_y_mps_ = from._impl_.delta_velocity_y_mps_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00001000U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_velocity_z_mps()) != 0) {
+        _this->_impl_.delta_velocity_z_mps_ = from._impl_.delta_velocity_z_mps_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00002000U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_angle_x_rad()) != 0) {
+        _this->_impl_.delta_angle_x_rad_ = from._impl_.delta_angle_x_rad_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00004000U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_angle_y_rad()) != 0) {
+        _this->_impl_.delta_angle_y_rad_ = from._impl_.delta_angle_y_rad_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00008000U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_delta_angle_z_rad()) != 0) {
+        _this->_impl_.delta_angle_z_rad_ = from._impl_.delta_angle_z_rad_;
       }
     }
   }
@@ -3064,10 +2768,9 @@ void ImuWindow::InternalSwap(ImuWindow* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
   using ::std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  _impl_.samples_.InternalSwap(&other->_impl_.samples_);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.flags_)
-      + sizeof(ImuWindow::_impl_.flags_)
+      PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.delta_angle_z_rad_)
+      + sizeof(ImuWindow::_impl_.delta_angle_z_rad_)
       - PROTOBUF_FIELD_OFFSET(ImuWindow, _impl_.time_)>(
           reinterpret_cast<char*>(&_impl_.time_),
           reinterpret_cast<char*>(&other->_impl_.time_));
@@ -3116,9 +2819,9 @@ inline void CanDecodedValue::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, t_ns_),
            0,
-           offsetof(Impl_, flags_) -
+           offsetof(Impl_, value_) -
                offsetof(Impl_, t_ns_) +
-               sizeof(Impl_::flags_));
+               sizeof(Impl_::value_));
 }
 CanDecodedValue::~CanDecodedValue() {
   // @@protoc_insertion_point(destructor:ego.v1.CanDecodedValue)
@@ -3177,16 +2880,16 @@ CanDecodedValue::GetClassData() const {
   return CanDecodedValue_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 6, 0, 0, 2>
+const ::_pbi::TcParseTable<2, 4, 0, 0, 2>
 CanDecodedValue::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_._has_bits_),
     0, // no _extensions_
-    6, 56,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967232,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    6,  // num_field_entries
+    4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     CanDecodedValue_class_data_.base(),
@@ -3196,47 +2899,33 @@ CanDecodedValue::_table_ = {
     ::_pbi::TcParser::GetTable<::ego::v1::CanDecodedValue>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // fixed64 t_ns = 1;
-    {::_pbi::TcParser::FastF64S1,
-     {9, 0, 0,
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.t_ns_)}},
-    // uint32 signal_id = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.signal_id_), 1>(),
-     {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.signal_id_)}},
-    // uint32 can_id = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.can_id_), 2>(),
-     {24, 2, 0,
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.can_id_)}},
     // float value = 4;
     {::_pbi::TcParser::FastF32S1,
      {37, 3, 0,
       PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.value_)}},
-    // uint32 quality = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.quality_), 4>(),
-     {40, 4, 0,
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.quality_)}},
-    // uint32 flags = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.flags_), 5>(),
-     {48, 5, 0,
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.flags_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // fixed64 t_ns = 1;
+    {::_pbi::TcParser::FastF64S1,
+     {9, 0, 0,
+      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.t_ns_)}},
+    // uint32 value_id = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.value_id_), 1>(),
+     {16, 1, 0,
+      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.value_id_)}},
+    // uint32 can_id = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanDecodedValue, _impl_.can_id_), 2>(),
+     {24, 2, 0,
+      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.can_id_)}},
   }}, {{
     65535, 65535
   }}, {{
     // fixed64 t_ns = 1;
     {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.t_ns_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // uint32 signal_id = 2;
-    {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.signal_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 value_id = 2;
+    {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.value_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // uint32 can_id = 3;
     {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.can_id_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // float value = 4;
     {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.value_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // uint32 quality = 5;
-    {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.quality_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 flags = 6;
-    {PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.flags_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
@@ -3250,10 +2939,10 @@ PROTOBUF_NOINLINE void CanDecodedValue::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
     ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.flags_) -
-        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.flags_));
+        reinterpret_cast<char*>(&_impl_.value_) -
+        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.value_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -3287,12 +2976,12 @@ PROTOBUF_NOINLINE void CanDecodedValue::Clear() {
     }
   }
 
-  // uint32 signal_id = 2;
+  // uint32 value_id = 2;
   if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (this_._internal_signal_id() != 0) {
+    if (this_._internal_value_id() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          2, this_._internal_signal_id(), target);
+          2, this_._internal_value_id(), target);
     }
   }
 
@@ -3311,24 +3000,6 @@ PROTOBUF_NOINLINE void CanDecodedValue::Clear() {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
           4, this_._internal_value(), target);
-    }
-  }
-
-  // uint32 quality = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-    if (this_._internal_quality() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          5, this_._internal_quality(), target);
-    }
-  }
-
-  // uint32 flags = 6;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-    if (this_._internal_flags() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          6, this_._internal_flags(), target);
     }
   }
 
@@ -3357,18 +3028,18 @@ PROTOBUF_NOINLINE void CanDecodedValue::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
     // fixed64 t_ns = 1;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (this_._internal_t_ns() != 0) {
         total_size += 9;
       }
     }
-    // uint32 signal_id = 2;
+    // uint32 value_id = 2;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (this_._internal_signal_id() != 0) {
+      if (this_._internal_value_id() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_signal_id());
+            this_._internal_value_id());
       }
     }
     // uint32 can_id = 3;
@@ -3382,20 +3053,6 @@ PROTOBUF_NOINLINE void CanDecodedValue::Clear() {
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_value()) != 0) {
         total_size += 5;
-      }
-    }
-    // uint32 quality = 5;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (this_._internal_quality() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_quality());
-      }
-    }
-    // uint32 flags = 6;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (this_._internal_flags() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_flags());
       }
     }
   }
@@ -3417,15 +3074,15 @@ void CanDecodedValue::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (from._internal_t_ns() != 0) {
         _this->_impl_.t_ns_ = from._impl_.t_ns_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (from._internal_signal_id() != 0) {
-        _this->_impl_.signal_id_ = from._impl_.signal_id_;
+      if (from._internal_value_id() != 0) {
+        _this->_impl_.value_id_ = from._impl_.value_id_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
@@ -3436,16 +3093,6 @@ void CanDecodedValue::MergeImpl(::google::protobuf::MessageLite& to_msg,
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (::absl::bit_cast<::uint32_t>(from._internal_value()) != 0) {
         _this->_impl_.value_ = from._impl_.value_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (from._internal_quality() != 0) {
-        _this->_impl_.quality_ = from._impl_.quality_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
-      if (from._internal_flags() != 0) {
-        _this->_impl_.flags_ = from._impl_.flags_;
       }
     }
   }
@@ -3467,8 +3114,8 @@ void CanDecodedValue::InternalSwap(CanDecodedValue* PROTOBUF_RESTRICT PROTOBUF_N
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.flags_)
-      + sizeof(CanDecodedValue::_impl_.flags_)
+      PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.value_)
+      + sizeof(CanDecodedValue::_impl_.value_)
       - PROTOBUF_FIELD_OFFSET(CanDecodedValue, _impl_.t_ns_)>(
           reinterpret_cast<char*>(&_impl_.t_ns_),
           reinterpret_cast<char*>(&other->_impl_.t_ns_));
@@ -3600,16 +3247,16 @@ CanRawFrame::GetClassData() const {
   return CanRawFrame_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 6, 0, 0, 2>
+const ::_pbi::TcParseTable<3, 7, 0, 0, 2>
 CanRawFrame::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_._has_bits_),
     0, // no _extensions_
-    6, 56,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967232,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    6,  // num_field_entries
+    7,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     CanRawFrame_class_data_.base(),
@@ -3632,19 +3279,22 @@ CanRawFrame::_table_ = {
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanRawFrame, _impl_.dlc_), 3>(),
      {24, 3, 0,
       PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.dlc_)}},
-    // uint32 bus = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanRawFrame, _impl_.bus_), 4>(),
+    // bool is_extended = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanRawFrame, _impl_.is_extended_), 4>(),
      {32, 4, 0,
-      PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.bus_)}},
-    // uint32 flags = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanRawFrame, _impl_.flags_), 5>(),
+      PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.is_extended_)}},
+    // uint32 bus_id = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanRawFrame, _impl_.bus_id_), 5>(),
      {40, 5, 0,
+      PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.bus_id_)}},
+    // uint32 flags = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanRawFrame, _impl_.flags_), 6>(),
+     {48, 6, 0,
       PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.flags_)}},
-    // bytes data = 6;
+    // bytes data = 7;
     {::_pbi::TcParser::FastBS1,
-     {50, 0, 0,
+     {58, 0, 0,
       PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.data_)}},
-    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -3654,11 +3304,13 @@ CanRawFrame::_table_ = {
     {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.can_id_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // uint32 dlc = 3;
     {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.dlc_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 bus = 4;
-    {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.bus_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint32 flags = 5;
-    {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.flags_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // bytes data = 6;
+    // bool is_extended = 4;
+    {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.is_extended_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // uint32 bus_id = 5;
+    {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.bus_id_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 flags = 6;
+    {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.flags_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // bytes data = 7;
     {PROTOBUF_FIELD_OFFSET(CanRawFrame, _impl_.data_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kBytes | ::_fl::kRepAString)},
   }},
   // no aux_entries
@@ -3676,7 +3328,7 @@ PROTOBUF_NOINLINE void CanRawFrame::Clear() {
   if (CheckHasBit(cached_has_bits, 0x00000001U)) {
     _impl_.data_.ClearNonDefaultToEmpty();
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003eU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007eU)) {
     ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.flags_) -
         reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.flags_));
@@ -3731,29 +3383,38 @@ PROTOBUF_NOINLINE void CanRawFrame::Clear() {
     }
   }
 
-  // uint32 bus = 4;
+  // bool is_extended = 4;
   if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-    if (this_._internal_bus() != 0) {
+    if (this_._internal_is_extended() != 0) {
       target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          4, this_._internal_bus(), target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          4, this_._internal_is_extended(), target);
     }
   }
 
-  // uint32 flags = 5;
+  // uint32 bus_id = 5;
   if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (this_._internal_bus_id() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          5, this_._internal_bus_id(), target);
+    }
+  }
+
+  // uint32 flags = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (this_._internal_flags() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          5, this_._internal_flags(), target);
+          6, this_._internal_flags(), target);
     }
   }
 
-  // bytes data = 6;
+  // bytes data = 7;
   if (CheckHasBit(cached_has_bits, 0x00000001U)) {
     if (!this_._internal_data().empty()) {
       const ::std::string& _s = this_._internal_data();
-      target = stream->WriteBytesMaybeAliased(6, _s, target);
+      target = stream->WriteBytesMaybeAliased(7, _s, target);
     }
   }
 
@@ -3782,8 +3443,8 @@ PROTOBUF_NOINLINE void CanRawFrame::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
-    // bytes data = 6;
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    // bytes data = 7;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!this_._internal_data().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::BytesSize(
@@ -3810,15 +3471,21 @@ PROTOBUF_NOINLINE void CanRawFrame::Clear() {
             this_._internal_dlc());
       }
     }
-    // uint32 bus = 4;
+    // bool is_extended = 4;
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (this_._internal_bus() != 0) {
-        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-            this_._internal_bus());
+      if (this_._internal_is_extended() != 0) {
+        total_size += 2;
       }
     }
-    // uint32 flags = 5;
+    // uint32 bus_id = 5;
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (this_._internal_bus_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_bus_id());
+      }
+    }
+    // uint32 flags = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (this_._internal_flags() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_flags());
@@ -3843,7 +3510,7 @@ void CanRawFrame::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!from._internal_data().empty()) {
         _this->_internal_set_data(from._internal_data());
@@ -3869,11 +3536,16 @@ void CanRawFrame::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (from._internal_bus() != 0) {
-        _this->_impl_.bus_ = from._impl_.bus_;
+      if (from._internal_is_extended() != 0) {
+        _this->_impl_.is_extended_ = from._impl_.is_extended_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (from._internal_bus_id() != 0) {
+        _this->_impl_.bus_id_ = from._impl_.bus_id_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (from._internal_flags() != 0) {
         _this->_impl_.flags_ = from._impl_.flags_;
       }
@@ -4011,16 +3683,16 @@ TrajectoryPoint::GetClassData() const {
   return TrajectoryPoint_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 0, 0, 2>
+const ::_pbi::TcParseTable<4, 11, 0, 0, 2>
 TrajectoryPoint::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_._has_bits_),
     0, // no _extensions_
-    10, 120,  // max_field_number, fast_idx_mask
+    14, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966272,  // skipmap
+    4294951024,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
+    11,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TrajectoryPoint_class_data_.base(),
@@ -4035,70 +3707,75 @@ TrajectoryPoint::_table_ = {
     {::_pbi::TcParser::FastF64S1,
      {9, 0, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.t_ns_)}},
-    // float loc_x_m = 2;
+    // float x_m = 2;
     {::_pbi::TcParser::FastF32S1,
      {21, 1, 0,
-      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_x_m_)}},
-    // float loc_y_m = 3;
+      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.x_m_)}},
+    // float y_m = 3;
     {::_pbi::TcParser::FastF32S1,
      {29, 2, 0,
-      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_y_m_)}},
-    // float loc_z_m = 4;
+      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.y_m_)}},
+    // float z_m = 4;
     {::_pbi::TcParser::FastF32S1,
      {37, 3, 0,
-      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_z_m_)}},
-    // float yaw_rad = 5;
+      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.z_m_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    // float yaw_rad = 8;
     {::_pbi::TcParser::FastF32S1,
-     {45, 4, 0,
+     {69, 4, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.yaw_rad_)}},
-    // float pitch_rad = 6;
+    // float pitch_rad = 9;
     {::_pbi::TcParser::FastF32S1,
-     {53, 5, 0,
+     {77, 5, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.pitch_rad_)}},
-    // float roll_rad = 7;
+    // float roll_rad = 10;
     {::_pbi::TcParser::FastF32S1,
-     {61, 6, 0,
+     {85, 6, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.roll_rad_)}},
-    // float velocity_mps = 8;
+    // float yaw_rate_rad_s = 11;
     {::_pbi::TcParser::FastF32S1,
-     {69, 7, 0,
-      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.velocity_mps_)}},
-    // float yaw_rate_rad_s = 9;
-    {::_pbi::TcParser::FastF32S1,
-     {77, 8, 0,
+     {93, 7, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.yaw_rate_rad_s_)}},
-    // uint32 flags = 10;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TrajectoryPoint, _impl_.flags_), 9>(),
-     {80, 9, 0,
+    // float path_s_m = 12;
+    {::_pbi::TcParser::FastF32S1,
+     {101, 8, 0,
+      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.path_s_m_)}},
+    // float vehicle_speed_mps = 13;
+    {::_pbi::TcParser::FastF32S1,
+     {109, 9, 0,
+      PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.vehicle_speed_mps_)}},
+    // uint32 flags = 14;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TrajectoryPoint, _impl_.flags_), 10>(),
+     {112, 10, 0,
       PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.flags_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // fixed64 t_ns = 1;
     {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.t_ns_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kFixed64)},
-    // float loc_x_m = 2;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_x_m_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float loc_y_m = 3;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_y_m_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float loc_z_m = 4;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.loc_z_m_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float yaw_rad = 5;
+    // float x_m = 2;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.x_m_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float y_m = 3;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.y_m_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float z_m = 4;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.z_m_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float yaw_rad = 8;
     {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.yaw_rad_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float pitch_rad = 6;
+    // float pitch_rad = 9;
     {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.pitch_rad_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float roll_rad = 7;
+    // float roll_rad = 10;
     {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.roll_rad_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float velocity_mps = 8;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.velocity_mps_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // float yaw_rate_rad_s = 9;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.yaw_rate_rad_s_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-    // uint32 flags = 10;
-    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.flags_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // float yaw_rate_rad_s = 11;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.yaw_rate_rad_s_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float path_s_m = 12;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.path_s_m_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // float vehicle_speed_mps = 13;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.vehicle_speed_mps_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // uint32 flags = 14;
+    {PROTOBUF_FIELD_OFFSET(TrajectoryPoint, _impl_.flags_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
@@ -4114,13 +3791,13 @@ PROTOBUF_NOINLINE void TrajectoryPoint::Clear() {
   cached_has_bits = _impl_._has_bits_[0];
   if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     ::memset(&_impl_.t_ns_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.velocity_mps_) -
-        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.velocity_mps_));
+        reinterpret_cast<char*>(&_impl_.yaw_rate_rad_s_) -
+        reinterpret_cast<char*>(&_impl_.t_ns_)) + sizeof(_impl_.yaw_rate_rad_s_));
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
-    ::memset(&_impl_.yaw_rate_rad_s_, 0, static_cast<::size_t>(
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    ::memset(&_impl_.path_s_m_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.flags_) -
-        reinterpret_cast<char*>(&_impl_.yaw_rate_rad_s_)) + sizeof(_impl_.flags_));
+        reinterpret_cast<char*>(&_impl_.path_s_m_)) + sizeof(_impl_.flags_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -4154,84 +3831,93 @@ PROTOBUF_NOINLINE void TrajectoryPoint::Clear() {
     }
   }
 
-  // float loc_x_m = 2;
+  // float x_m = 2;
   if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_loc_x_m()) != 0) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_x_m()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          2, this_._internal_loc_x_m(), target);
+          2, this_._internal_x_m(), target);
     }
   }
 
-  // float loc_y_m = 3;
+  // float y_m = 3;
   if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_loc_y_m()) != 0) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_y_m()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          3, this_._internal_loc_y_m(), target);
+          3, this_._internal_y_m(), target);
     }
   }
 
-  // float loc_z_m = 4;
+  // float z_m = 4;
   if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_loc_z_m()) != 0) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_z_m()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          4, this_._internal_loc_z_m(), target);
+          4, this_._internal_z_m(), target);
     }
   }
 
-  // float yaw_rad = 5;
+  // float yaw_rad = 8;
   if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_yaw_rad()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          5, this_._internal_yaw_rad(), target);
+          8, this_._internal_yaw_rad(), target);
     }
   }
 
-  // float pitch_rad = 6;
+  // float pitch_rad = 9;
   if (CheckHasBit(cached_has_bits, 0x00000020U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_pitch_rad()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          6, this_._internal_pitch_rad(), target);
+          9, this_._internal_pitch_rad(), target);
     }
   }
 
-  // float roll_rad = 7;
+  // float roll_rad = 10;
   if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_roll_rad()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          7, this_._internal_roll_rad(), target);
+          10, this_._internal_roll_rad(), target);
     }
   }
 
-  // float velocity_mps = 8;
+  // float yaw_rate_rad_s = 11;
   if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-    if (::absl::bit_cast<::uint32_t>(this_._internal_velocity_mps()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          8, this_._internal_velocity_mps(), target);
-    }
-  }
-
-  // float yaw_rate_rad_s = 9;
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
     if (::absl::bit_cast<::uint32_t>(this_._internal_yaw_rate_rad_s()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteFloatToArray(
-          9, this_._internal_yaw_rate_rad_s(), target);
+          11, this_._internal_yaw_rate_rad_s(), target);
     }
   }
 
-  // uint32 flags = 10;
+  // float path_s_m = 12;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_path_s_m()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          12, this_._internal_path_s_m(), target);
+    }
+  }
+
+  // float vehicle_speed_mps = 13;
   if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    if (::absl::bit_cast<::uint32_t>(this_._internal_vehicle_speed_mps()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteFloatToArray(
+          13, this_._internal_vehicle_speed_mps(), target);
+    }
+  }
+
+  // uint32 flags = 14;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
     if (this_._internal_flags() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-          10, this_._internal_flags(), target);
+          14, this_._internal_flags(), target);
     }
   }
 
@@ -4267,58 +3953,64 @@ PROTOBUF_NOINLINE void TrajectoryPoint::Clear() {
         total_size += 9;
       }
     }
-    // float loc_x_m = 2;
+    // float x_m = 2;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_loc_x_m()) != 0) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_x_m()) != 0) {
         total_size += 5;
       }
     }
-    // float loc_y_m = 3;
+    // float y_m = 3;
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_loc_y_m()) != 0) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_y_m()) != 0) {
         total_size += 5;
       }
     }
-    // float loc_z_m = 4;
+    // float z_m = 4;
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_loc_z_m()) != 0) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_z_m()) != 0) {
         total_size += 5;
       }
     }
-    // float yaw_rad = 5;
+    // float yaw_rad = 8;
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_yaw_rad()) != 0) {
         total_size += 5;
       }
     }
-    // float pitch_rad = 6;
+    // float pitch_rad = 9;
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_pitch_rad()) != 0) {
         total_size += 5;
       }
     }
-    // float roll_rad = 7;
+    // float roll_rad = 10;
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_roll_rad()) != 0) {
         total_size += 5;
       }
     }
-    // float velocity_mps = 8;
+    // float yaw_rate_rad_s = 11;
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-      if (::absl::bit_cast<::uint32_t>(this_._internal_velocity_mps()) != 0) {
-        total_size += 5;
-      }
-    }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
-    // float yaw_rate_rad_s = 9;
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (::absl::bit_cast<::uint32_t>(this_._internal_yaw_rate_rad_s()) != 0) {
         total_size += 5;
       }
     }
-    // uint32 flags = 10;
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    // float path_s_m = 12;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_path_s_m()) != 0) {
+        total_size += 5;
+      }
+    }
+    // float vehicle_speed_mps = 13;
     if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (::absl::bit_cast<::uint32_t>(this_._internal_vehicle_speed_mps()) != 0) {
+        total_size += 5;
+      }
+    }
+    // uint32 flags = 14;
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (this_._internal_flags() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_flags());
@@ -4350,18 +4042,18 @@ void TrajectoryPoint::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_loc_x_m()) != 0) {
-        _this->_impl_.loc_x_m_ = from._impl_.loc_x_m_;
+      if (::absl::bit_cast<::uint32_t>(from._internal_x_m()) != 0) {
+        _this->_impl_.x_m_ = from._impl_.x_m_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_loc_y_m()) != 0) {
-        _this->_impl_.loc_y_m_ = from._impl_.loc_y_m_;
+      if (::absl::bit_cast<::uint32_t>(from._internal_y_m()) != 0) {
+        _this->_impl_.y_m_ = from._impl_.y_m_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_loc_z_m()) != 0) {
-        _this->_impl_.loc_z_m_ = from._impl_.loc_z_m_;
+      if (::absl::bit_cast<::uint32_t>(from._internal_z_m()) != 0) {
+        _this->_impl_.z_m_ = from._impl_.z_m_;
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
@@ -4380,18 +4072,23 @@ void TrajectoryPoint::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000080U)) {
-      if (::absl::bit_cast<::uint32_t>(from._internal_velocity_mps()) != 0) {
-        _this->_impl_.velocity_mps_ = from._impl_.velocity_mps_;
-      }
-    }
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (::absl::bit_cast<::uint32_t>(from._internal_yaw_rate_rad_s()) != 0) {
         _this->_impl_.yaw_rate_rad_s_ = from._impl_.yaw_rate_rad_s_;
       }
     }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_path_s_m()) != 0) {
+        _this->_impl_.path_s_m_ = from._impl_.path_s_m_;
+      }
+    }
     if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      if (::absl::bit_cast<::uint32_t>(from._internal_vehicle_speed_mps()) != 0) {
+        _this->_impl_.vehicle_speed_mps_ = from._impl_.vehicle_speed_mps_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
       if (from._internal_flags() != 0) {
         _this->_impl_.flags_ = from._impl_.flags_;
       }

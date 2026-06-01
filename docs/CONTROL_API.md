@@ -92,6 +92,7 @@ Payload запроса: `UpdateConfigRequest`
 
 - `DeviceConfigUpdate` содержит optional-поля;
 - можно обновить только audio, только CAN или любой другой набор;
+- для CAN можно передать либо `signals`, либо DBC-текст в `dbc_text`;
 - `validate_only=true` выполняет проверку без сохранения;
 - `save_to_sd=true` сохраняет конфигурации на SD-карту.
 

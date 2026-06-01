@@ -245,6 +245,43 @@ struct ConfigStatusItemDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ConfigStatusItemDefaultTypeInternal _ConfigStatusItem_default_instance_;
 
+inline constexpr CanValueDescription::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        name_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        description_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        unit_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        value_id_{0u},
+        role_{static_cast< ::ego::v1::CanSignalRole >(0)},
+        can_id_{0u},
+        is_extended_{false} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR CanValueDescription::CanValueDescription(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(CanValueDescription_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct CanValueDescriptionDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR CanValueDescriptionDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~CanValueDescriptionDefaultTypeInternal() {}
+  union {
+    CanValueDescription _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CanValueDescriptionDefaultTypeInternal _CanValueDescription_default_instance_;
+
 inline constexpr DeviceIdentity::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -350,6 +387,23 @@ const ::uint32_t
         0,
         1,
         0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_._has_bits_),
+        10, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.value_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.description_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.unit_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.role_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.can_id_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanValueDescription, _impl_.is_extended_),
+        3,
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::ErrorInfo, _impl_._has_bits_),
         7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::ErrorInfo, _impl_.code_),
@@ -416,17 +470,19 @@ static const ::_pbi::MigrationSchema
         {7, sizeof(::ego::v1::TimeRangeNs)},
         {14, sizeof(::ego::v1::Pose3f)},
         {29, sizeof(::ego::v1::KeyValue)},
-        {36, sizeof(::ego::v1::ErrorInfo)},
-        {47, sizeof(::ego::v1::SoftwareInfo)},
-        {62, sizeof(::ego::v1::DeviceIdentity)},
-        {75, sizeof(::ego::v1::ConfigStatusItem)},
-        {90, sizeof(::ego::v1::ConfigInventory)},
+        {36, sizeof(::ego::v1::CanValueDescription)},
+        {53, sizeof(::ego::v1::ErrorInfo)},
+        {64, sizeof(::ego::v1::SoftwareInfo)},
+        {79, sizeof(::ego::v1::DeviceIdentity)},
+        {92, sizeof(::ego::v1::ConfigStatusItem)},
+        {107, sizeof(::ego::v1::ConfigInventory)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::ego::v1::_Uuid128_default_instance_._instance,
     &::ego::v1::_TimeRangeNs_default_instance_._instance,
     &::ego::v1::_Pose3f_default_instance_._instance,
     &::ego::v1::_KeyValue_default_instance_._instance,
+    &::ego::v1::_CanValueDescription_default_instance_._instance,
     &::ego::v1::_ErrorInfo_default_instance_._instance,
     &::ego::v1::_SoftwareInfo_default_instance_._instance,
     &::ego::v1::_DeviceIdentity_default_instance_._instance,
@@ -441,88 +497,93 @@ const char descriptor_table_protodef_ego_2fv1_2fego_5fcommon_2eproto[] ABSL_ATTR
     "e3f\022\013\n\003x_m\030\001 \001(\002\022\013\n\003y_m\030\002 \001(\002\022\013\n\003z_m\030\003 \001"
     "(\002\022\017\n\007yaw_rad\030\004 \001(\002\022\021\n\tpitch_rad\030\005 \001(\002\022\020"
     "\n\010roll_rad\030\006 \001(\002\"&\n\010KeyValue\022\013\n\003key\030\001 \001("
-    "\t\022\r\n\005value\030\002 \001(\t\"\230\001\n\tErrorInfo\022 \n\004code\030\001"
-    " \001(\0162\022.ego.v1.ResultCode\022\017\n\007message\030\002 \001("
-    "\t\022+\n\017missing_configs\030\003 \003(\0162\022.ego.v1.Conf"
-    "igType\022+\n\017invalid_configs\030\004 \003(\0162\022.ego.v1"
-    ".ConfigType\"\226\001\n\014SoftwareInfo\022\030\n\020firmware"
-    "_version\030\001 \001(\t\022\020\n\010build_id\030\002 \001(\t\022\022\n\ngit_"
-    "commit\030\003 \001(\t\022\026\n\016build_time_utc\030\004 \001(\t\022\024\n\014"
-    "base_project\030\005 \001(\t\022\030\n\020protocol_version\030\006"
-    " \001(\t\"\232\001\n\016DeviceIdentity\022\021\n\tdevice_id\030\001 \001"
-    "(\t\022\'\n\013device_role\030\002 \001(\0162\022.ego.v1.DeviceR"
-    "ole\022\r\n\005board\030\003 \001(\t\022\025\n\rserial_number\030\004 \001("
-    "\t\022&\n\010software\030\005 \001(\0132\024.ego.v1.SoftwareInf"
-    "o\"\242\001\n\020ConfigStatusItem\022 \n\004type\030\001 \001(\0162\022.e"
-    "go.v1.ConfigType\022\"\n\005state\030\002 \001(\0162\023.ego.v1"
-    ".ConfigState\022\017\n\007version\030\003 \001(\006\022\023\n\013saved_a"
-    "t_ns\030\004 \001(\006\022\r\n\005crc32\030\005 \001(\007\022\023\n\013description"
-    "\030\006 \001(\t\":\n\017ConfigInventory\022\'\n\005items\030\001 \003(\013"
-    "2\030.ego.v1.ConfigStatusItem*\256\004\n\020FramePayl"
-    "oadType\022\"\n\036FRAME_PAYLOAD_TYPE_UNSPECIFIE"
-    "D\020\000\022&\n\"FRAME_PAYLOAD_TYPE_SESSION_STARTE"
-    "D\020\001\022&\n\"FRAME_PAYLOAD_TYPE_CONFIG_SNAPSHO"
-    "T\020\002\022\"\n\036FRAME_PAYLOAD_TYPE_AUDIO_BLOCK\020d\022"
-    "!\n\035FRAME_PAYLOAD_TYPE_IMU_WINDOW\020e\022(\n$FR"
-    "AME_PAYLOAD_TYPE_CAN_DECODED_VALUE\020f\022$\n "
-    "FRAME_PAYLOAD_TYPE_CAN_RAW_FRAME\020g\022\'\n#FR"
-    "AME_PAYLOAD_TYPE_TRAJECTORY_POINT\020h\022\036\n\032F"
-    "RAME_PAYLOAD_TYPE_GPS_FIX\020i\022#\n\036FRAME_PAY"
-    "LOAD_TYPE_TIME_STATUS\020\310\001\022%\n FRAME_PAYLOA"
-    "D_TYPE_SYSTEM_STATUS\020\311\001\022-\n(FRAME_PAYLOAD"
-    "_TYPE_IMU_CALIBRATION_EVENT\020\312\001\022$\n\037FRAME_"
-    "PAYLOAD_TYPE_MARKER_EVENT\020\313\001\022%\n FRAME_PA"
-    "YLOAD_TYPE_SESSION_ENDED\020\204\007*\307\001\n\nConfigTy"
-    "pe\022\033\n\027CONFIG_TYPE_UNSPECIFIED\020\000\022\025\n\021CONFI"
-    "G_TYPE_AUDIO\020\001\022\023\n\017CONFIG_TYPE_IMU\020\002\022\023\n\017C"
-    "ONFIG_TYPE_CAN\020\003\022\023\n\017CONFIG_TYPE_GPS\020\004\022\027\n"
-    "\023CONFIG_TYPE_VEHICLE\020\005\022\024\n\020CONFIG_TYPE_TI"
-    "ME\020\006\022\027\n\023CONFIG_TYPE_NETWORK\020\007*\226\001\n\013Config"
-    "State\022\034\n\030CONFIG_STATE_UNSPECIFIED\020\000\022\030\n\024C"
-    "ONFIG_STATE_DEFAULT\020\001\022\033\n\027CONFIG_STATE_US"
-    "ER_SAVED\020\002\022\030\n\024CONFIG_STATE_MISSING\020\003\022\030\n\024"
-    "CONFIG_STATE_INVALID\020\004*\346\001\n\nResultCode\022\033\n"
-    "\027RESULT_CODE_UNSPECIFIED\020\000\022\022\n\016RESULT_COD"
-    "E_OK\020\001\022\030\n\024RESULT_CODE_REJECTED\020\002\022 \n\034RESU"
-    "LT_CODE_INVALID_ARGUMENT\020\003\022\031\n\025RESULT_COD"
-    "E_NOT_READY\020\004\022\035\n\031RESULT_CODE_STORAGE_ERR"
-    "OR\020\005\022\024\n\020RESULT_CODE_BUSY\020\006\022\033\n\027RESULT_COD"
-    "E_UNSUPPORTED\020\007*m\n\nDeviceRole\022\033\n\027DEVICE_"
-    "ROLE_UNSPECIFIED\020\000\022\023\n\017DEVICE_ROLE_EGO\020\001\022"
-    "\026\n\022DEVICE_ROLE_SOURCE\020\002\022\025\n\021DEVICE_ROLE_B"
-    "ENCH\020\003*\232\001\n\014SampleFormat\022\035\n\031SAMPLE_FORMAT"
-    "_UNSPECIFIED\020\000\022\027\n\023SAMPLE_FORMAT_INT16\020\001\022"
-    "\036\n\032SAMPLE_FORMAT_INT24_IN_I32\020\002\022\027\n\023SAMPL"
-    "E_FORMAT_INT32\020\003\022\031\n\025SAMPLE_FORMAT_FLOAT3"
-    "2\020\004*b\n\013AudioLayout\022\034\n\030AUDIO_LAYOUT_UNSPE"
-    "CIFIED\020\000\022\034\n\030AUDIO_LAYOUT_INTERLEAVED\020\001\022\027"
-    "\n\023AUDIO_LAYOUT_PLANAR\020\002*`\n\tByteOrder\022\032\n\026"
-    "BYTE_ORDER_UNSPECIFIED\020\000\022\034\n\030BYTE_ORDER_L"
-    "ITTLE_ENDIAN\020\001\022\031\n\025BYTE_ORDER_BIG_ENDIAN\020"
-    "\002*\251\001\n\rCanSignalRole\022\037\n\033CAN_SIGNAL_ROLE_U"
-    "NSPECIFIED\020\000\022\027\n\023CAN_SIGNAL_ROLE_ANY\020\001\022\036\n"
-    "\032CAN_SIGNAL_ROLE_BASE_SPEED\020\002\022\035\n\031CAN_SIG"
-    "NAL_ROLE_GEAR_MODE\020\003\022\037\n\033CAN_SIGNAL_ROLE_"
-    "STEER_ANGLE\020\004*\235\001\n\nGpsFixType\022\034\n\030GPS_FIX_"
-    "TYPE_UNSPECIFIED\020\000\022\020\n\014GPS_FIX_NONE\020\001\022\016\n\n"
-    "GPS_FIX_2D\020\002\022\016\n\nGPS_FIX_3D\020\003\022\021\n\rGPS_FIX_"
-    "DGNSS\020\004\022\025\n\021GPS_FIX_RTK_FLOAT\020\005\022\025\n\021GPS_FI"
-    "X_RTK_FIXED\020\006*\207\001\n\nTimeSource\022\033\n\027TIME_SOU"
-    "RCE_UNSPECIFIED\020\000\022\030\n\024TIME_SOURCE_INTERNA"
-    "L\020\001\022\023\n\017TIME_SOURCE_GPS\020\002\022\023\n\017TIME_SOURCE_"
-    "PTP\020\003\022\030\n\024TIME_SOURCE_EXTERNAL\020\004b\006proto3"
+    "\t\022\r\n\005value\030\002 \001(\t\"\242\001\n\023CanValueDescription"
+    "\022\020\n\010value_id\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\023\n\013desc"
+    "ription\030\003 \001(\t\022\014\n\004unit\030\004 \001(\t\022#\n\004role\030\005 \001("
+    "\0162\025.ego.v1.CanSignalRole\022\016\n\006can_id\030\006 \001(\r"
+    "\022\023\n\013is_extended\030\007 \001(\010\"\230\001\n\tErrorInfo\022 \n\004c"
+    "ode\030\001 \001(\0162\022.ego.v1.ResultCode\022\017\n\007message"
+    "\030\002 \001(\t\022+\n\017missing_configs\030\003 \003(\0162\022.ego.v1"
+    ".ConfigType\022+\n\017invalid_configs\030\004 \003(\0162\022.e"
+    "go.v1.ConfigType\"\226\001\n\014SoftwareInfo\022\030\n\020fir"
+    "mware_version\030\001 \001(\t\022\020\n\010build_id\030\002 \001(\t\022\022\n"
+    "\ngit_commit\030\003 \001(\t\022\026\n\016build_time_utc\030\004 \001("
+    "\t\022\024\n\014base_project\030\005 \001(\t\022\030\n\020protocol_vers"
+    "ion\030\006 \001(\t\"\232\001\n\016DeviceIdentity\022\021\n\tdevice_i"
+    "d\030\001 \001(\t\022\'\n\013device_role\030\002 \001(\0162\022.ego.v1.De"
+    "viceRole\022\r\n\005board\030\003 \001(\t\022\025\n\rserial_number"
+    "\030\004 \001(\t\022&\n\010software\030\005 \001(\0132\024.ego.v1.Softwa"
+    "reInfo\"\242\001\n\020ConfigStatusItem\022 \n\004type\030\001 \001("
+    "\0162\022.ego.v1.ConfigType\022\"\n\005state\030\002 \001(\0162\023.e"
+    "go.v1.ConfigState\022\017\n\007version\030\003 \001(\006\022\023\n\013sa"
+    "ved_at_ns\030\004 \001(\006\022\r\n\005crc32\030\005 \001(\007\022\023\n\013descri"
+    "ption\030\006 \001(\t\":\n\017ConfigInventory\022\'\n\005items\030"
+    "\001 \003(\0132\030.ego.v1.ConfigStatusItem*\256\004\n\020Fram"
+    "ePayloadType\022\"\n\036FRAME_PAYLOAD_TYPE_UNSPE"
+    "CIFIED\020\000\022&\n\"FRAME_PAYLOAD_TYPE_SESSION_S"
+    "TARTED\020\001\022&\n\"FRAME_PAYLOAD_TYPE_CONFIG_SN"
+    "APSHOT\020\002\022\"\n\036FRAME_PAYLOAD_TYPE_AUDIO_BLO"
+    "CK\020d\022!\n\035FRAME_PAYLOAD_TYPE_IMU_WINDOW\020e\022"
+    "(\n$FRAME_PAYLOAD_TYPE_CAN_DECODED_VALUE\020"
+    "f\022$\n FRAME_PAYLOAD_TYPE_CAN_RAW_FRAME\020g\022"
+    "\'\n#FRAME_PAYLOAD_TYPE_TRAJECTORY_POINT\020h"
+    "\022\036\n\032FRAME_PAYLOAD_TYPE_GPS_FIX\020i\022#\n\036FRAM"
+    "E_PAYLOAD_TYPE_TIME_STATUS\020\310\001\022%\n FRAME_P"
+    "AYLOAD_TYPE_SYSTEM_STATUS\020\311\001\022-\n(FRAME_PA"
+    "YLOAD_TYPE_IMU_CALIBRATION_EVENT\020\312\001\022$\n\037F"
+    "RAME_PAYLOAD_TYPE_MARKER_EVENT\020\313\001\022%\n FRA"
+    "ME_PAYLOAD_TYPE_SESSION_ENDED\020\204\007*\307\001\n\nCon"
+    "figType\022\033\n\027CONFIG_TYPE_UNSPECIFIED\020\000\022\025\n\021"
+    "CONFIG_TYPE_AUDIO\020\001\022\023\n\017CONFIG_TYPE_IMU\020\002"
+    "\022\023\n\017CONFIG_TYPE_CAN\020\003\022\023\n\017CONFIG_TYPE_GPS"
+    "\020\004\022\027\n\023CONFIG_TYPE_VEHICLE\020\005\022\024\n\020CONFIG_TY"
+    "PE_TIME\020\006\022\027\n\023CONFIG_TYPE_NETWORK\020\007*\226\001\n\013C"
+    "onfigState\022\034\n\030CONFIG_STATE_UNSPECIFIED\020\000"
+    "\022\030\n\024CONFIG_STATE_DEFAULT\020\001\022\033\n\027CONFIG_STA"
+    "TE_USER_SAVED\020\002\022\030\n\024CONFIG_STATE_MISSING\020"
+    "\003\022\030\n\024CONFIG_STATE_INVALID\020\004*\346\001\n\nResultCo"
+    "de\022\033\n\027RESULT_CODE_UNSPECIFIED\020\000\022\022\n\016RESUL"
+    "T_CODE_OK\020\001\022\030\n\024RESULT_CODE_REJECTED\020\002\022 \n"
+    "\034RESULT_CODE_INVALID_ARGUMENT\020\003\022\031\n\025RESUL"
+    "T_CODE_NOT_READY\020\004\022\035\n\031RESULT_CODE_STORAG"
+    "E_ERROR\020\005\022\024\n\020RESULT_CODE_BUSY\020\006\022\033\n\027RESUL"
+    "T_CODE_UNSUPPORTED\020\007*m\n\nDeviceRole\022\033\n\027DE"
+    "VICE_ROLE_UNSPECIFIED\020\000\022\023\n\017DEVICE_ROLE_E"
+    "GO\020\001\022\026\n\022DEVICE_ROLE_SOURCE\020\002\022\025\n\021DEVICE_R"
+    "OLE_BENCH\020\003*\232\001\n\014SampleFormat\022\035\n\031SAMPLE_F"
+    "ORMAT_UNSPECIFIED\020\000\022\027\n\023SAMPLE_FORMAT_INT"
+    "16\020\001\022\036\n\032SAMPLE_FORMAT_INT24_IN_I32\020\002\022\027\n\023"
+    "SAMPLE_FORMAT_INT32\020\003\022\031\n\025SAMPLE_FORMAT_F"
+    "LOAT32\020\004*b\n\013AudioLayout\022\034\n\030AUDIO_LAYOUT_"
+    "UNSPECIFIED\020\000\022\034\n\030AUDIO_LAYOUT_INTERLEAVE"
+    "D\020\001\022\027\n\023AUDIO_LAYOUT_PLANAR\020\002*`\n\tByteOrde"
+    "r\022\032\n\026BYTE_ORDER_UNSPECIFIED\020\000\022\034\n\030BYTE_OR"
+    "DER_LITTLE_ENDIAN\020\001\022\031\n\025BYTE_ORDER_BIG_EN"
+    "DIAN\020\002*\251\001\n\rCanSignalRole\022\037\n\033CAN_SIGNAL_R"
+    "OLE_UNSPECIFIED\020\000\022\027\n\023CAN_SIGNAL_ROLE_ANY"
+    "\020\001\022\036\n\032CAN_SIGNAL_ROLE_BASE_SPEED\020\002\022\035\n\031CA"
+    "N_SIGNAL_ROLE_GEAR_MODE\020\003\022\037\n\033CAN_SIGNAL_"
+    "ROLE_STEER_ANGLE\020\004*\235\001\n\nGpsFixType\022\034\n\030GPS"
+    "_FIX_TYPE_UNSPECIFIED\020\000\022\020\n\014GPS_FIX_NONE\020"
+    "\001\022\016\n\nGPS_FIX_2D\020\002\022\016\n\nGPS_FIX_3D\020\003\022\021\n\rGPS"
+    "_FIX_DGNSS\020\004\022\025\n\021GPS_FIX_RTK_FLOAT\020\005\022\025\n\021G"
+    "PS_FIX_RTK_FIXED\020\006*\207\001\n\nTimeSource\022\033\n\027TIM"
+    "E_SOURCE_UNSPECIFIED\020\000\022\030\n\024TIME_SOURCE_IN"
+    "TERNAL\020\001\022\023\n\017TIME_SOURCE_GPS\020\002\022\023\n\017TIME_SO"
+    "URCE_PTP\020\003\022\030\n\024TIME_SOURCE_EXTERNAL\020\004b\006pr"
+    "oto3"
 };
 static ::absl::once_flag descriptor_table_ego_2fv1_2fego_5fcommon_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego_5fcommon_2eproto = {
     false,
     false,
-    3039,
+    3204,
     descriptor_table_protodef_ego_2fv1_2fego_5fcommon_2eproto,
     "ego/v1/ego_common.proto",
     &descriptor_table_ego_2fv1_2fego_5fcommon_2eproto_once,
     nullptr,
     0,
-    9,
+    10,
     schemas,
     file_default_instances,
     TableStruct_ego_2fv1_2fego_5fcommon_2eproto::offsets,
@@ -1894,6 +1955,498 @@ void KeyValue::InternalSwap(KeyValue* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) 
 }
 
 ::google::protobuf::Metadata KeyValue::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class CanValueDescription::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<CanValueDescription>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_._has_bits_);
+};
+
+CanValueDescription::CanValueDescription(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, CanValueDescription_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:ego.v1.CanValueDescription)
+}
+PROTOBUF_NDEBUG_INLINE CanValueDescription::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::ego::v1::CanValueDescription& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        name_(arena, from.name_),
+        description_(arena, from.description_),
+        unit_(arena, from.unit_) {}
+
+CanValueDescription::CanValueDescription(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const CanValueDescription& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, CanValueDescription_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  CanValueDescription* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, value_id_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, value_id_),
+           offsetof(Impl_, is_extended_) -
+               offsetof(Impl_, value_id_) +
+               sizeof(Impl_::is_extended_));
+
+  // @@protoc_insertion_point(copy_constructor:ego.v1.CanValueDescription)
+}
+PROTOBUF_NDEBUG_INLINE CanValueDescription::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        name_(arena),
+        description_(arena),
+        unit_(arena) {}
+
+inline void CanValueDescription::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, value_id_),
+           0,
+           offsetof(Impl_, is_extended_) -
+               offsetof(Impl_, value_id_) +
+               sizeof(Impl_::is_extended_));
+}
+CanValueDescription::~CanValueDescription() {
+  // @@protoc_insertion_point(destructor:ego.v1.CanValueDescription)
+  SharedDtor(*this);
+}
+inline void CanValueDescription::SharedDtor(MessageLite& self) {
+  CanValueDescription& this_ = static_cast<CanValueDescription&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.name_.Destroy();
+  this_._impl_.description_.Destroy();
+  this_._impl_.unit_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL CanValueDescription::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) CanValueDescription(arena);
+}
+constexpr auto CanValueDescription::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(CanValueDescription),
+                                            alignof(CanValueDescription));
+}
+constexpr auto CanValueDescription::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_CanValueDescription_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &CanValueDescription::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<CanValueDescription>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &CanValueDescription::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<CanValueDescription>(), &CanValueDescription::ByteSizeLong,
+              &CanValueDescription::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_._cached_size_),
+          false,
+      },
+      &CanValueDescription::kDescriptorMethods,
+      &descriptor_table_ego_2fv1_2fego_5fcommon_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull CanValueDescription_class_data_ =
+        CanValueDescription::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+CanValueDescription::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&CanValueDescription_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(CanValueDescription_class_data_.tc_table);
+  return CanValueDescription_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 7, 0, 54, 2>
+CanValueDescription::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_._has_bits_),
+    0, // no _extensions_
+    7, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967168,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    7,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    CanValueDescription_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::ego::v1::CanValueDescription>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 value_id = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanValueDescription, _impl_.value_id_), 3>(),
+     {8, 3, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.value_id_)}},
+    // string name = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 0, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.name_)}},
+    // string description = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 1, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.description_)}},
+    // string unit = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 2, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.unit_)}},
+    // .ego.v1.CanSignalRole role = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanValueDescription, _impl_.role_), 4>(),
+     {40, 4, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.role_)}},
+    // uint32 can_id = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanValueDescription, _impl_.can_id_), 5>(),
+     {48, 5, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.can_id_)}},
+    // bool is_extended = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanValueDescription, _impl_.is_extended_), 6>(),
+     {56, 6, 0,
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.is_extended_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint32 value_id = 1;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.value_id_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string name = 2;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.name_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string description = 3;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.description_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string unit = 4;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.unit_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // .ego.v1.CanSignalRole role = 5;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.role_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint32 can_id = 6;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.can_id_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // bool is_extended = 7;
+    {PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.is_extended_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+    "\32\0\4\13\4\0\0\0"
+    "ego.v1.CanValueDescription"
+    "name"
+    "description"
+    "unit"
+  }},
+};
+PROTOBUF_NOINLINE void CanValueDescription::Clear() {
+// @@protoc_insertion_point(message_clear_start:ego.v1.CanValueDescription)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.name_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.description_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.unit_.ClearNonDefaultToEmpty();
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000078U)) {
+    ::memset(&_impl_.value_id_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.is_extended_) -
+        reinterpret_cast<char*>(&_impl_.value_id_)) + sizeof(_impl_.is_extended_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL CanValueDescription::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const CanValueDescription& this_ = static_cast<const CanValueDescription&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL CanValueDescription::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const CanValueDescription& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:ego.v1.CanValueDescription)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // uint32 value_id = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (this_._internal_value_id() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          1, this_._internal_value_id(), target);
+    }
+  }
+
+  // string name = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_name().empty()) {
+      const ::std::string& _s = this_._internal_name();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.CanValueDescription.name");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // string description = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_description().empty()) {
+      const ::std::string& _s = this_._internal_description();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.CanValueDescription.description");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
+    }
+  }
+
+  // string unit = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_unit().empty()) {
+      const ::std::string& _s = this_._internal_unit();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.CanValueDescription.unit");
+      target = stream->WriteStringMaybeAliased(4, _s, target);
+    }
+  }
+
+  // .ego.v1.CanSignalRole role = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (this_._internal_role() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          5, this_._internal_role(), target);
+    }
+  }
+
+  // uint32 can_id = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (this_._internal_can_id() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+          6, this_._internal_can_id(), target);
+    }
+  }
+
+  // bool is_extended = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    if (this_._internal_is_extended() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          7, this_._internal_is_extended(), target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ego.v1.CanValueDescription)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t CanValueDescription::ByteSizeLong(const MessageLite& base) {
+  const CanValueDescription& this_ = static_cast<const CanValueDescription&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t CanValueDescription::ByteSizeLong() const {
+  const CanValueDescription& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:ego.v1.CanValueDescription)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    // string name = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_name().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_name());
+      }
+    }
+    // string description = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!this_._internal_description().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_description());
+      }
+    }
+    // string unit = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_unit().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_unit());
+      }
+    }
+    // uint32 value_id = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (this_._internal_value_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_value_id());
+      }
+    }
+    // .ego.v1.CanSignalRole role = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (this_._internal_role() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_role());
+      }
+    }
+    // uint32 can_id = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (this_._internal_can_id() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+            this_._internal_can_id());
+      }
+    }
+    // bool is_extended = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (this_._internal_is_extended() != 0) {
+        total_size += 2;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void CanValueDescription::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<CanValueDescription*>(&to_msg);
+  auto& from = static_cast<const CanValueDescription&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:ego.v1.CanValueDescription)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_name().empty()) {
+        _this->_internal_set_name(from._internal_name());
+      } else {
+        if (_this->_impl_.name_.IsDefault()) {
+          _this->_internal_set_name("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!from._internal_description().empty()) {
+        _this->_internal_set_description(from._internal_description());
+      } else {
+        if (_this->_impl_.description_.IsDefault()) {
+          _this->_internal_set_description("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_unit().empty()) {
+        _this->_internal_set_unit(from._internal_unit());
+      } else {
+        if (_this->_impl_.unit_.IsDefault()) {
+          _this->_internal_set_unit("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      if (from._internal_value_id() != 0) {
+        _this->_impl_.value_id_ = from._impl_.value_id_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      if (from._internal_role() != 0) {
+        _this->_impl_.role_ = from._impl_.role_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (from._internal_can_id() != 0) {
+        _this->_impl_.can_id_ = from._impl_.can_id_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      if (from._internal_is_extended() != 0) {
+        _this->_impl_.is_extended_ = from._impl_.is_extended_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void CanValueDescription::CopyFrom(const CanValueDescription& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:ego.v1.CanValueDescription)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void CanValueDescription::InternalSwap(CanValueDescription* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, &other->_impl_.name_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.description_, &other->_impl_.description_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.unit_, &other->_impl_.unit_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.is_extended_)
+      + sizeof(CanValueDescription::_impl_.is_extended_)
+      - PROTOBUF_FIELD_OFFSET(CanValueDescription, _impl_.value_id_)>(
+          reinterpret_cast<char*>(&_impl_.value_id_),
+          reinterpret_cast<char*>(&other->_impl_.value_id_));
+}
+
+::google::protobuf::Metadata CanValueDescription::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================

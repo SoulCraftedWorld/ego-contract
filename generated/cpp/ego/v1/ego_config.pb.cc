@@ -248,6 +248,9 @@ inline constexpr CanConfig::Impl_::Impl_(
         bus_name_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
+        dbc_text_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
         bitrate_{0u},
         enabled_{false},
         save_raw_frames_{false} {}
@@ -495,17 +498,19 @@ const ::uint32_t
         11,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_._has_bits_),
-        8, // hasbit index offset
+        9, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.enabled_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.bus_name_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.bitrate_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.signals_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.save_raw_frames_),
-        3,
-        1,
-        2,
-        0,
+        PROTOBUF_FIELD_OFFSET(::ego::v1::CanConfig, _impl_.dbc_text_),
         4,
+        1,
+        3,
+        0,
+        5,
+        2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::GpsConfig, _impl_._has_bits_),
         9, // hasbit index offset
@@ -603,12 +608,12 @@ static const ::_pbi::MigrationSchema
         {34, sizeof(::ego::v1::ImuConfig)},
         {57, sizeof(::ego::v1::CanSignalConfig)},
         {84, sizeof(::ego::v1::CanConfig)},
-        {97, sizeof(::ego::v1::GpsConfig)},
-        {112, sizeof(::ego::v1::VehicleGeometryConfig)},
-        {129, sizeof(::ego::v1::TimeConfig)},
-        {138, sizeof(::ego::v1::NetworkConfig)},
-        {149, sizeof(::ego::v1::DeviceConfigUpdate)},
-        {166, sizeof(::ego::v1::DeviceConfigSnapshot)},
+        {99, sizeof(::ego::v1::GpsConfig)},
+        {114, sizeof(::ego::v1::VehicleGeometryConfig)},
+        {131, sizeof(::ego::v1::TimeConfig)},
+        {140, sizeof(::ego::v1::NetworkConfig)},
+        {151, sizeof(::ego::v1::DeviceConfigUpdate)},
+        {168, sizeof(::ego::v1::DeviceConfigSnapshot)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::ego::v1::_AudioChannelConfig_default_instance_._instance,
@@ -649,42 +654,43 @@ const char descriptor_table_protodef_ego_2fv1_2fego_5fconfig_2eproto[] ABSL_ATTR
     "(\0162\021.ego.v1.ByteOrder\022\023\n\013is_unsigned\030\010 \001"
     "(\010\022\r\n\005scale\030\t \001(\002\022\016\n\006offset\030\n \001(\002\022\014\n\004uni"
     "t\030\013 \001(\t\022#\n\004role\030\014 \001(\0162\025.ego.v1.CanSignal"
-    "Role\"\202\001\n\tCanConfig\022\017\n\007enabled\030\001 \001(\010\022\020\n\010b"
+    "Role\"\246\001\n\tCanConfig\022\017\n\007enabled\030\001 \001(\010\022\020\n\010b"
     "us_name\030\002 \001(\t\022\017\n\007bitrate\030\003 \001(\r\022(\n\007signal"
     "s\030\004 \003(\0132\027.ego.v1.CanSignalConfig\022\027\n\017save"
-    "_raw_frames\030\005 \001(\010\"\201\001\n\tGpsConfig\022\017\n\007enabl"
-    "ed\030\001 \001(\010\022\016\n\006source\030\002 \001(\t\022\020\n\010protocol\030\003 \001"
-    "(\t\022\030\n\020expected_rate_hz\030\004 \001(\r\022\025\n\rrtk_supp"
-    "orted\030\005 \001(\010\022\020\n\010endpoint\030\006 \001(\t\"\363\001\n\025Vehicl"
-    "eGeometryConfig\022\022\n\nvehicle_id\030\001 \001(\t\022\023\n\013w"
-    "heelbase_m\030\002 \001(\002\022\025\n\rtrack_front_m\030\003 \001(\002\022"
-    "\024\n\014track_rear_m\030\004 \001(\002\022+\n\023vehicle_origin_"
-    "pose\030\n \001(\0132\016.ego.v1.Pose3f\022-\n\025mic_array_"
-    "origin_pose\030\013 \001(\0132\016.ego.v1.Pose3f\022(\n\020gps"
-    "_antenna_pose\030\014 \001(\0132\016.ego.v1.Pose3f\"M\n\nT"
-    "imeConfig\022\021\n\ttime_base\030\001 \001(\t\022\022\n\nutc_sour"
-    "ce\030\002 \001(\t\022\030\n\020emit_time_status\030\003 \001(\010\"q\n\rNe"
-    "tworkConfig\022\034\n\024control_bind_address\030\001 \001("
-    "\t\022\024\n\014control_port\030\002 \001(\r\022\031\n\021data_bind_add"
-    "ress\030\003 \001(\t\022\021\n\tdata_port\030\004 \001(\r\"\370\002\n\022Device"
-    "ConfigUpdate\022\'\n\005audio\030\001 \001(\0132\023.ego.v1.Aud"
-    "ioConfigH\000\210\001\001\022#\n\003imu\030\002 \001(\0132\021.ego.v1.ImuC"
-    "onfigH\001\210\001\001\022#\n\003can\030\003 \001(\0132\021.ego.v1.CanConf"
-    "igH\002\210\001\001\022#\n\003gps\030\004 \001(\0132\021.ego.v1.GpsConfigH"
-    "\003\210\001\001\0223\n\007vehicle\030\005 \001(\0132\035.ego.v1.VehicleGe"
-    "ometryConfigH\004\210\001\001\022%\n\004time\030\006 \001(\0132\022.ego.v1"
-    ".TimeConfigH\005\210\001\001\022+\n\007network\030\007 \001(\0132\025.ego."
-    "v1.NetworkConfigH\006\210\001\001B\010\n\006_audioB\006\n\004_imuB"
-    "\006\n\004_canB\006\n\004_gpsB\n\n\010_vehicleB\007\n\005_timeB\n\n\010"
-    "_network\"\300\002\n\024DeviceConfigSnapshot\022*\n\tinv"
-    "entory\030\001 \001(\0132\027.ego.v1.ConfigInventory\022\"\n"
-    "\005audio\030\002 \001(\0132\023.ego.v1.AudioConfig\022\036\n\003imu"
-    "\030\003 \001(\0132\021.ego.v1.ImuConfig\022\036\n\003can\030\004 \001(\0132\021"
-    ".ego.v1.CanConfig\022\036\n\003gps\030\005 \001(\0132\021.ego.v1."
-    "GpsConfig\022.\n\007vehicle\030\006 \001(\0132\035.ego.v1.Vehi"
-    "cleGeometryConfig\022 \n\004time\030\007 \001(\0132\022.ego.v1"
-    ".TimeConfig\022&\n\007network\030\010 \001(\0132\025.ego.v1.Ne"
-    "tworkConfigb\006proto3"
+    "_raw_frames\030\005 \001(\010\022\025\n\010dbc_text\030\006 \001(\tH\000\210\001\001"
+    "B\013\n\t_dbc_text\"\201\001\n\tGpsConfig\022\017\n\007enabled\030\001"
+    " \001(\010\022\016\n\006source\030\002 \001(\t\022\020\n\010protocol\030\003 \001(\t\022\030"
+    "\n\020expected_rate_hz\030\004 \001(\r\022\025\n\rrtk_supporte"
+    "d\030\005 \001(\010\022\020\n\010endpoint\030\006 \001(\t\"\363\001\n\025VehicleGeo"
+    "metryConfig\022\022\n\nvehicle_id\030\001 \001(\t\022\023\n\013wheel"
+    "base_m\030\002 \001(\002\022\025\n\rtrack_front_m\030\003 \001(\002\022\024\n\014t"
+    "rack_rear_m\030\004 \001(\002\022+\n\023vehicle_origin_pose"
+    "\030\n \001(\0132\016.ego.v1.Pose3f\022-\n\025mic_array_orig"
+    "in_pose\030\013 \001(\0132\016.ego.v1.Pose3f\022(\n\020gps_ant"
+    "enna_pose\030\014 \001(\0132\016.ego.v1.Pose3f\"M\n\nTimeC"
+    "onfig\022\021\n\ttime_base\030\001 \001(\t\022\022\n\nutc_source\030\002"
+    " \001(\t\022\030\n\020emit_time_status\030\003 \001(\010\"q\n\rNetwor"
+    "kConfig\022\034\n\024control_bind_address\030\001 \001(\t\022\024\n"
+    "\014control_port\030\002 \001(\r\022\031\n\021data_bind_address"
+    "\030\003 \001(\t\022\021\n\tdata_port\030\004 \001(\r\"\370\002\n\022DeviceConf"
+    "igUpdate\022\'\n\005audio\030\001 \001(\0132\023.ego.v1.AudioCo"
+    "nfigH\000\210\001\001\022#\n\003imu\030\002 \001(\0132\021.ego.v1.ImuConfi"
+    "gH\001\210\001\001\022#\n\003can\030\003 \001(\0132\021.ego.v1.CanConfigH\002"
+    "\210\001\001\022#\n\003gps\030\004 \001(\0132\021.ego.v1.GpsConfigH\003\210\001\001"
+    "\0223\n\007vehicle\030\005 \001(\0132\035.ego.v1.VehicleGeomet"
+    "ryConfigH\004\210\001\001\022%\n\004time\030\006 \001(\0132\022.ego.v1.Tim"
+    "eConfigH\005\210\001\001\022+\n\007network\030\007 \001(\0132\025.ego.v1.N"
+    "etworkConfigH\006\210\001\001B\010\n\006_audioB\006\n\004_imuB\006\n\004_"
+    "canB\006\n\004_gpsB\n\n\010_vehicleB\007\n\005_timeB\n\n\010_net"
+    "work\"\300\002\n\024DeviceConfigSnapshot\022*\n\tinvento"
+    "ry\030\001 \001(\0132\027.ego.v1.ConfigInventory\022\"\n\005aud"
+    "io\030\002 \001(\0132\023.ego.v1.AudioConfig\022\036\n\003imu\030\003 \001"
+    "(\0132\021.ego.v1.ImuConfig\022\036\n\003can\030\004 \001(\0132\021.ego"
+    ".v1.CanConfig\022\036\n\003gps\030\005 \001(\0132\021.ego.v1.GpsC"
+    "onfig\022.\n\007vehicle\030\006 \001(\0132\035.ego.v1.VehicleG"
+    "eometryConfig\022 \n\004time\030\007 \001(\0132\022.ego.v1.Tim"
+    "eConfig\022&\n\007network\030\010 \001(\0132\025.ego.v1.Networ"
+    "kConfigb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_ego_2fv1_2fego_5fconfig_2eproto_deps[1] = {
@@ -694,7 +700,7 @@ static ::absl::once_flag descriptor_table_ego_2fv1_2fego_5fconfig_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego_5fconfig_2eproto = {
     false,
     false,
-    2379,
+    2415,
     descriptor_table_protodef_ego_2fv1_2fego_5fconfig_2eproto,
     "ego/v1/ego_config.proto",
     &descriptor_table_ego_2fv1_2fego_5fconfig_2eproto_once,
@@ -2942,7 +2948,8 @@ PROTOBUF_NDEBUG_INLINE CanConfig::Impl_::Impl_(
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         signals_{visibility, arena, from.signals_},
-        bus_name_(arena, from.bus_name_) {}
+        bus_name_(arena, from.bus_name_),
+        dbc_text_(arena, from.dbc_text_) {}
 
 CanConfig::CanConfig(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -2972,7 +2979,8 @@ PROTOBUF_NDEBUG_INLINE CanConfig::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
         signals_{visibility, arena},
-        bus_name_(arena) {}
+        bus_name_(arena),
+        dbc_text_(arena) {}
 
 inline void CanConfig::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -2995,6 +3003,7 @@ inline void CanConfig::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.bus_name_.Destroy();
+  this_._impl_.dbc_text_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -3053,16 +3062,16 @@ CanConfig::GetClassData() const {
   return CanConfig_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 1, 33, 2>
+const ::_pbi::TcParseTable<3, 6, 1, 41, 2>
 CanConfig::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(CanConfig, _impl_._has_bits_),
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    6, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967232,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    6,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     CanConfig_class_data_.base(),
@@ -3074,48 +3083,54 @@ CanConfig::_table_ = {
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
     // bool enabled = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanConfig, _impl_.enabled_), 3>(),
-     {8, 3, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanConfig, _impl_.enabled_), 4>(),
+     {8, 4, 0,
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.enabled_)}},
     // string bus_name = 2;
     {::_pbi::TcParser::FastUS1,
      {18, 1, 0,
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.bus_name_)}},
     // uint32 bitrate = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanConfig, _impl_.bitrate_), 2>(),
-     {24, 2, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CanConfig, _impl_.bitrate_), 3>(),
+     {24, 3, 0,
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.bitrate_)}},
     // repeated .ego.v1.CanSignalConfig signals = 4;
     {::_pbi::TcParser::FastMtR1,
      {34, 0, 0,
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.signals_)}},
     // bool save_raw_frames = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanConfig, _impl_.save_raw_frames_), 4>(),
-     {40, 4, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CanConfig, _impl_.save_raw_frames_), 5>(),
+     {40, 5, 0,
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.save_raw_frames_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // optional string dbc_text = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 2, 0,
+      PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.dbc_text_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // bool enabled = 1;
-    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.enabled_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.enabled_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // string bus_name = 2;
     {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.bus_name_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // uint32 bitrate = 3;
-    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.bitrate_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.bitrate_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // repeated .ego.v1.CanSignalConfig signals = 4;
     {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.signals_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
     // bool save_raw_frames = 5;
-    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.save_raw_frames_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.save_raw_frames_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // optional string dbc_text = 6;
+    {PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.dbc_text_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::ego::v1::CanSignalConfig>()},
   }},
   {{
-    "\20\0\10\0\0\0\0\0"
+    "\20\0\10\0\0\0\10\0"
     "ego.v1.CanConfig"
     "bus_name"
+    "dbc_text"
   }},
 };
 PROTOBUF_NOINLINE void CanConfig::Clear() {
@@ -3126,15 +3141,18 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       _impl_.signals_.Clear();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       _impl_.bus_name_.ClearNonDefaultToEmpty();
     }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.dbc_text_.ClearNonDefaultToEmpty();
+    }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001cU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000038U)) {
     ::memset(&_impl_.bitrate_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.save_raw_frames_) -
         reinterpret_cast<char*>(&_impl_.bitrate_)) + sizeof(_impl_.save_raw_frames_));
@@ -3163,7 +3181,7 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // bool enabled = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     if (this_._internal_enabled() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
@@ -3182,7 +3200,7 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
   }
 
   // uint32 bitrate = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     if (this_._internal_bitrate() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
@@ -3204,12 +3222,20 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
   }
 
   // bool save_raw_frames = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
     if (this_._internal_save_raw_frames() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
           5, this_._internal_save_raw_frames(), target);
     }
+  }
+
+  // optional string dbc_text = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    const ::std::string& _s = this_._internal_dbc_text();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "ego.v1.CanConfig.dbc_text");
+    target = stream->WriteStringMaybeAliased(6, _s, target);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -3237,7 +3263,7 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
     // repeated .ego.v1.CanSignalConfig signals = 4;
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       total_size += 1UL * this_._internal_signals_size();
@@ -3252,21 +3278,26 @@ PROTOBUF_NOINLINE void CanConfig::Clear() {
                                         this_._internal_bus_name());
       }
     }
-    // uint32 bitrate = 3;
+    // optional string dbc_text = 6;
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_dbc_text());
+    }
+    // uint32 bitrate = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (this_._internal_bitrate() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
             this_._internal_bitrate());
       }
     }
     // bool enabled = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (this_._internal_enabled() != 0) {
         total_size += 2;
       }
     }
     // bool save_raw_frames = 5;
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (this_._internal_save_raw_frames() != 0) {
         total_size += 2;
       }
@@ -3291,7 +3322,7 @@ void CanConfig::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       _this->_internal_mutable_signals()->InternalMergeFromWithArena(
           ::google::protobuf::MessageLite::internal_visibility(), arena,
@@ -3307,16 +3338,19 @@ void CanConfig::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_internal_set_dbc_text(from._internal_dbc_text());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       if (from._internal_bitrate() != 0) {
         _this->_impl_.bitrate_ = from._impl_.bitrate_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       if (from._internal_enabled() != 0) {
         _this->_impl_.enabled_ = from._impl_.enabled_;
       }
     }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       if (from._internal_save_raw_frames() != 0) {
         _this->_impl_.save_raw_frames_ = from._impl_.save_raw_frames_;
       }
@@ -3343,6 +3377,7 @@ void CanConfig::InternalSwap(CanConfig* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.signals_.InternalSwap(&other->_impl_.signals_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.bus_name_, &other->_impl_.bus_name_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.dbc_text_, &other->_impl_.dbc_text_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(CanConfig, _impl_.save_raw_frames_)
       + sizeof(CanConfig::_impl_.save_raw_frames_)

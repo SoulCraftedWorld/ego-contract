@@ -1840,6 +1840,7 @@ class SessionMetadata final : public ::google::protobuf::Message
     kVehicleIdFieldNumber = 8,
     kSourceIdFieldNumber = 9,
     kTagsFieldNumber = 20,
+    kCanValueDescriptionsFieldNumber = 21,
   };
   // string session_id = 1;
   void clear_session_id() ;
@@ -1993,12 +1994,29 @@ class SessionMetadata final : public ::google::protobuf::Message
   const ::ego::v1::KeyValue& tags(int index) const;
   ::ego::v1::KeyValue* PROTOBUF_NONNULL add_tags();
   const ::google::protobuf::RepeatedPtrField<::ego::v1::KeyValue>& tags() const;
+  // repeated .ego.v1.CanValueDescription can_value_descriptions = 21;
+  int can_value_descriptions_size() const;
+  private:
+  int _internal_can_value_descriptions_size() const;
+
+  public:
+  void clear_can_value_descriptions() ;
+  ::ego::v1::CanValueDescription* PROTOBUF_NONNULL mutable_can_value_descriptions(int index);
+  ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>* PROTOBUF_NONNULL mutable_can_value_descriptions();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>& _internal_can_value_descriptions() const;
+  ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>* PROTOBUF_NONNULL _internal_mutable_can_value_descriptions();
+  public:
+  const ::ego::v1::CanValueDescription& can_value_descriptions(int index) const;
+  ::ego::v1::CanValueDescription* PROTOBUF_NONNULL add_can_value_descriptions();
+  const ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>& can_value_descriptions() const;
   // @@protoc_insertion_point(class_scope:ego.v1.SessionMetadata)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 10,
-                                   1, 135,
+  static const ::google::protobuf::internal::TcParseTable<4, 11,
+                                   2, 135,
                                    2>
       _table_;
 
@@ -2029,6 +2047,7 @@ class SessionMetadata final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr vehicle_id_;
     ::google::protobuf::internal::ArenaStringPtr source_id_;
     ::google::protobuf::RepeatedPtrField< ::ego::v1::KeyValue > tags_;
+    ::google::protobuf::RepeatedPtrField< ::ego::v1::CanValueDescription > can_value_descriptions_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -5534,6 +5553,56 @@ inline ::google::protobuf::RepeatedPtrField<::ego::v1::KeyValue>* PROTOBUF_NONNU
 SessionMetadata::_internal_mutable_tags() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.tags_;
+}
+
+// repeated .ego.v1.CanValueDescription can_value_descriptions = 21;
+inline int SessionMetadata::_internal_can_value_descriptions_size() const {
+  return _internal_can_value_descriptions().size();
+}
+inline int SessionMetadata::can_value_descriptions_size() const {
+  return _internal_can_value_descriptions_size();
+}
+inline ::ego::v1::CanValueDescription* PROTOBUF_NONNULL SessionMetadata::mutable_can_value_descriptions(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:ego.v1.SessionMetadata.can_value_descriptions)
+  return _internal_mutable_can_value_descriptions()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>* PROTOBUF_NONNULL SessionMetadata::mutable_can_value_descriptions()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000400U);
+  // @@protoc_insertion_point(field_mutable_list:ego.v1.SessionMetadata.can_value_descriptions)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_can_value_descriptions();
+}
+inline const ::ego::v1::CanValueDescription& SessionMetadata::can_value_descriptions(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.SessionMetadata.can_value_descriptions)
+  return _internal_can_value_descriptions().Get(index);
+}
+inline ::ego::v1::CanValueDescription* PROTOBUF_NONNULL SessionMetadata::add_can_value_descriptions()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::ego::v1::CanValueDescription* _add =
+      _internal_mutable_can_value_descriptions()->InternalAddWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), GetArena());
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000400U);
+  // @@protoc_insertion_point(field_add:ego.v1.SessionMetadata.can_value_descriptions)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>& SessionMetadata::can_value_descriptions() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:ego.v1.SessionMetadata.can_value_descriptions)
+  return _internal_can_value_descriptions();
+}
+inline const ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>&
+SessionMetadata::_internal_can_value_descriptions() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.can_value_descriptions_;
+}
+inline ::google::protobuf::RepeatedPtrField<::ego::v1::CanValueDescription>* PROTOBUF_NONNULL
+SessionMetadata::_internal_mutable_can_value_descriptions() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.can_value_descriptions_;
 }
 
 // -------------------------------------------------------------------

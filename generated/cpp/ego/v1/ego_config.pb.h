@@ -1920,6 +1920,7 @@ class CanConfig final : public ::google::protobuf::Message
   enum : int {
     kSignalsFieldNumber = 4,
     kBusNameFieldNumber = 2,
+    kDbcTextFieldNumber = 6,
     kBitrateFieldNumber = 3,
     kEnabledFieldNumber = 1,
     kSaveRawFramesFieldNumber = 5,
@@ -1956,6 +1957,22 @@ class CanConfig final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_bus_name();
 
   public:
+  // optional string dbc_text = 6;
+  bool has_dbc_text() const;
+  void clear_dbc_text() ;
+  const ::std::string& dbc_text() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_dbc_text(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_dbc_text();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_dbc_text();
+  void set_allocated_dbc_text(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_dbc_text() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_dbc_text(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_dbc_text();
+
+  public:
   // uint32 bitrate = 3;
   void clear_bitrate() ;
   ::uint32_t bitrate() const;
@@ -1990,8 +2007,8 @@ class CanConfig final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5,
-                                   1, 33,
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
+                                   1, 41,
                                    2>
       _table_;
 
@@ -2014,6 +2031,7 @@ class CanConfig final : public ::google::protobuf::Message
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::RepeatedPtrField< ::ego::v1::CanSignalConfig > signals_;
     ::google::protobuf::internal::ArenaStringPtr bus_name_;
+    ::google::protobuf::internal::ArenaStringPtr dbc_text_;
     ::uint32_t bitrate_;
     bool enabled_;
     bool save_raw_frames_;
@@ -4606,7 +4624,7 @@ inline void CanConfig::clear_enabled() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.enabled_ = false;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000010U);
 }
 inline bool CanConfig::enabled() const {
   // @@protoc_insertion_point(field_get:ego.v1.CanConfig.enabled)
@@ -4614,7 +4632,7 @@ inline bool CanConfig::enabled() const {
 }
 inline void CanConfig::set_enabled(bool value) {
   _internal_set_enabled(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:ego.v1.CanConfig.enabled)
 }
 inline bool CanConfig::_internal_enabled() const {
@@ -4696,7 +4714,7 @@ inline void CanConfig::clear_bitrate() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.bitrate_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000008U);
 }
 inline ::uint32_t CanConfig::bitrate() const {
   // @@protoc_insertion_point(field_get:ego.v1.CanConfig.bitrate)
@@ -4704,7 +4722,7 @@ inline ::uint32_t CanConfig::bitrate() const {
 }
 inline void CanConfig::set_bitrate(::uint32_t value) {
   _internal_set_bitrate(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:ego.v1.CanConfig.bitrate)
 }
 inline ::uint32_t CanConfig::_internal_bitrate() const {
@@ -4777,7 +4795,7 @@ inline void CanConfig::clear_save_raw_frames() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.save_raw_frames_ = false;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+                  0x00000020U);
 }
 inline bool CanConfig::save_raw_frames() const {
   // @@protoc_insertion_point(field_get:ego.v1.CanConfig.save_raw_frames)
@@ -4785,7 +4803,7 @@ inline bool CanConfig::save_raw_frames() const {
 }
 inline void CanConfig::set_save_raw_frames(bool value) {
   _internal_set_save_raw_frames(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:ego.v1.CanConfig.save_raw_frames)
 }
 inline bool CanConfig::_internal_save_raw_frames() const {
@@ -4795,6 +4813,75 @@ inline bool CanConfig::_internal_save_raw_frames() const {
 inline void CanConfig::_internal_set_save_raw_frames(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.save_raw_frames_ = value;
+}
+
+// optional string dbc_text = 6;
+inline bool CanConfig::has_dbc_text() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void CanConfig::clear_dbc_text() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.dbc_text_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::std::string& CanConfig::dbc_text() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.CanConfig.dbc_text)
+  return _internal_dbc_text();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void CanConfig::set_dbc_text(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  _impl_.dbc_text_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:ego.v1.CanConfig.dbc_text)
+}
+inline ::std::string* PROTOBUF_NONNULL CanConfig::mutable_dbc_text()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::std::string* _s = _internal_mutable_dbc_text();
+  // @@protoc_insertion_point(field_mutable:ego.v1.CanConfig.dbc_text)
+  return _s;
+}
+inline const ::std::string& CanConfig::_internal_dbc_text() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.dbc_text_.Get();
+}
+inline void CanConfig::_internal_set_dbc_text(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.dbc_text_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL CanConfig::_internal_mutable_dbc_text() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.dbc_text_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE CanConfig::release_dbc_text() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ego.v1.CanConfig.dbc_text)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  auto* released = _impl_.dbc_text_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.dbc_text_.Set("", GetArena());
+  }
+  return released;
+}
+inline void CanConfig::set_allocated_dbc_text(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  _impl_.dbc_text_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.dbc_text_.IsDefault()) {
+    _impl_.dbc_text_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.CanConfig.dbc_text)
 }
 
 // -------------------------------------------------------------------

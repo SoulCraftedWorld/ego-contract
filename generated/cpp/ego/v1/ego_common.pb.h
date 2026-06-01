@@ -77,6 +77,10 @@ enum SampleFormat : int;
 extern const uint32_t SampleFormat_internal_data_[];
 enum TimeSource : int;
 extern const uint32_t TimeSource_internal_data_[];
+class CanValueDescription;
+struct CanValueDescriptionDefaultTypeInternal;
+extern CanValueDescriptionDefaultTypeInternal _CanValueDescription_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull CanValueDescription_class_data_;
 class ConfigInventory;
 struct ConfigInventoryDefaultTypeInternal;
 extern ConfigInventoryDefaultTypeInternal _ConfigInventory_default_instance_;
@@ -1056,7 +1060,7 @@ class SoftwareInfo final : public ::google::protobuf::Message
     return *reinterpret_cast<const SoftwareInfo*>(
         &_SoftwareInfo_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 5;
+  static constexpr int kIndexInFileMessages = 6;
   friend void swap(SoftwareInfo& a, SoftwareInfo& b) { a.Swap(&b); }
   inline void Swap(SoftwareInfo* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1798,7 +1802,7 @@ class ErrorInfo final : public ::google::protobuf::Message
     return *reinterpret_cast<const ErrorInfo*>(
         &_ErrorInfo_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 4;
+  static constexpr int kIndexInFileMessages = 5;
   friend void swap(ErrorInfo& a, ErrorInfo& b) { a.Swap(&b); }
   inline void Swap(ErrorInfo* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2049,7 +2053,7 @@ class ConfigStatusItem final : public ::google::protobuf::Message
     return *reinterpret_cast<const ConfigStatusItem*>(
         &_ConfigStatusItem_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 7;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(ConfigStatusItem& a, ConfigStatusItem& b) { a.Swap(&b); }
   inline void Swap(ConfigStatusItem* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2249,6 +2253,283 @@ class ConfigStatusItem final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull ConfigStatusItem_class_data_;
 // -------------------------------------------------------------------
 
+class CanValueDescription final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:ego.v1.CanValueDescription) */ {
+ public:
+  inline CanValueDescription() : CanValueDescription(nullptr) {}
+  ~CanValueDescription() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(CanValueDescription* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(CanValueDescription));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR CanValueDescription(::google::protobuf::internal::ConstantInitialized);
+
+  inline CanValueDescription(const CanValueDescription& from) : CanValueDescription(nullptr, from) {}
+  inline CanValueDescription(CanValueDescription&& from) noexcept
+      : CanValueDescription(nullptr, ::std::move(from)) {}
+  inline CanValueDescription& operator=(const CanValueDescription& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CanValueDescription& operator=(CanValueDescription&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CanValueDescription& default_instance() {
+    return *reinterpret_cast<const CanValueDescription*>(
+        &_CanValueDescription_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 4;
+  friend void swap(CanValueDescription& a, CanValueDescription& b) { a.Swap(&b); }
+  inline void Swap(CanValueDescription* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CanValueDescription* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CanValueDescription* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<CanValueDescription>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const CanValueDescription& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const CanValueDescription& from) { CanValueDescription::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(CanValueDescription* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "ego.v1.CanValueDescription"; }
+
+  explicit CanValueDescription(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  CanValueDescription(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const CanValueDescription& from);
+  CanValueDescription(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, CanValueDescription&& from) noexcept
+      : CanValueDescription(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kNameFieldNumber = 2,
+    kDescriptionFieldNumber = 3,
+    kUnitFieldNumber = 4,
+    kValueIdFieldNumber = 1,
+    kRoleFieldNumber = 5,
+    kCanIdFieldNumber = 6,
+    kIsExtendedFieldNumber = 7,
+  };
+  // string name = 2;
+  void clear_name() ;
+  const ::std::string& name() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_name(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_name();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_name();
+  void set_allocated_name(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_name() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_name(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_name();
+
+  public:
+  // string description = 3;
+  void clear_description() ;
+  const ::std::string& description() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_description(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_description();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_description();
+  void set_allocated_description(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_description() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_description(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_description();
+
+  public:
+  // string unit = 4;
+  void clear_unit() ;
+  const ::std::string& unit() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_unit(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_unit();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_unit();
+  void set_allocated_unit(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_unit() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_unit(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_unit();
+
+  public:
+  // uint32 value_id = 1;
+  void clear_value_id() ;
+  ::uint32_t value_id() const;
+  void set_value_id(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_value_id() const;
+  void _internal_set_value_id(::uint32_t value);
+
+  public:
+  // .ego.v1.CanSignalRole role = 5;
+  void clear_role() ;
+  ::ego::v1::CanSignalRole role() const;
+  void set_role(::ego::v1::CanSignalRole value);
+
+  private:
+  ::ego::v1::CanSignalRole _internal_role() const;
+  void _internal_set_role(::ego::v1::CanSignalRole value);
+
+  public:
+  // uint32 can_id = 6;
+  void clear_can_id() ;
+  ::uint32_t can_id() const;
+  void set_can_id(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_can_id() const;
+  void _internal_set_can_id(::uint32_t value);
+
+  public:
+  // bool is_extended = 7;
+  void clear_is_extended() ;
+  bool is_extended() const;
+  void set_is_extended(bool value);
+
+  private:
+  bool _internal_is_extended() const;
+  void _internal_set_is_extended(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:ego.v1.CanValueDescription)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   0, 54,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const CanValueDescription& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr name_;
+    ::google::protobuf::internal::ArenaStringPtr description_;
+    ::google::protobuf::internal::ArenaStringPtr unit_;
+    ::uint32_t value_id_;
+    int role_;
+    ::uint32_t can_id_;
+    bool is_extended_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ego_2fv1_2fego_5fcommon_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull CanValueDescription_class_data_;
+// -------------------------------------------------------------------
+
 class DeviceIdentity final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:ego.v1.DeviceIdentity) */ {
  public:
@@ -2304,7 +2585,7 @@ class DeviceIdentity final : public ::google::protobuf::Message
     return *reinterpret_cast<const DeviceIdentity*>(
         &_DeviceIdentity_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 6;
+  static constexpr int kIndexInFileMessages = 7;
   friend void swap(DeviceIdentity& a, DeviceIdentity& b) { a.Swap(&b); }
   inline void Swap(DeviceIdentity* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2562,7 +2843,7 @@ class ConfigInventory final : public ::google::protobuf::Message
     return *reinterpret_cast<const ConfigInventory*>(
         &_ConfigInventory_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(ConfigInventory& a, ConfigInventory& b) { a.Swap(&b); }
   inline void Swap(ConfigInventory* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3109,6 +3390,305 @@ inline void KeyValue::set_allocated_value(::std::string* PROTOBUF_NULLABLE value
     _impl_.value_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:ego.v1.KeyValue.value)
+}
+
+// -------------------------------------------------------------------
+
+// CanValueDescription
+
+// uint32 value_id = 1;
+inline void CanValueDescription::clear_value_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.value_id_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline ::uint32_t CanValueDescription::value_id() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.value_id)
+  return _internal_value_id();
+}
+inline void CanValueDescription::set_value_id(::uint32_t value) {
+  _internal_set_value_id(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.value_id)
+}
+inline ::uint32_t CanValueDescription::_internal_value_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.value_id_;
+}
+inline void CanValueDescription::_internal_set_value_id(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.value_id_ = value;
+}
+
+// string name = 2;
+inline void CanValueDescription::clear_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& CanValueDescription::name() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.name)
+  return _internal_name();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void CanValueDescription::set_name(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.name)
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::mutable_name()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:ego.v1.CanValueDescription.name)
+  return _s;
+}
+inline const ::std::string& CanValueDescription::_internal_name() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.name_.Get();
+}
+inline void CanValueDescription::_internal_set_name(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.name_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::_internal_mutable_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.name_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE CanValueDescription::release_name() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ego.v1.CanValueDescription.name)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.name_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.name_.Set("", GetArena());
+  }
+  return released;
+}
+inline void CanValueDescription::set_allocated_name(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.name_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.CanValueDescription.name)
+}
+
+// string description = 3;
+inline void CanValueDescription::clear_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& CanValueDescription::description() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.description)
+  return _internal_description();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void CanValueDescription::set_description(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.description_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.description)
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::mutable_description()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_description();
+  // @@protoc_insertion_point(field_mutable:ego.v1.CanValueDescription.description)
+  return _s;
+}
+inline const ::std::string& CanValueDescription::_internal_description() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.description_.Get();
+}
+inline void CanValueDescription::_internal_set_description(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.description_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::_internal_mutable_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.description_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE CanValueDescription::release_description() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ego.v1.CanValueDescription.description)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.description_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.description_.Set("", GetArena());
+  }
+  return released;
+}
+inline void CanValueDescription::set_allocated_description(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.description_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.description_.IsDefault()) {
+    _impl_.description_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.CanValueDescription.description)
+}
+
+// string unit = 4;
+inline void CanValueDescription::clear_unit() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.unit_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::std::string& CanValueDescription::unit() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.unit)
+  return _internal_unit();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void CanValueDescription::set_unit(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  _impl_.unit_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.unit)
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::mutable_unit()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::std::string* _s = _internal_mutable_unit();
+  // @@protoc_insertion_point(field_mutable:ego.v1.CanValueDescription.unit)
+  return _s;
+}
+inline const ::std::string& CanValueDescription::_internal_unit() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.unit_.Get();
+}
+inline void CanValueDescription::_internal_set_unit(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.unit_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL CanValueDescription::_internal_mutable_unit() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.unit_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE CanValueDescription::release_unit() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:ego.v1.CanValueDescription.unit)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  auto* released = _impl_.unit_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.unit_.Set("", GetArena());
+  }
+  return released;
+}
+inline void CanValueDescription::set_allocated_unit(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  _impl_.unit_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.unit_.IsDefault()) {
+    _impl_.unit_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:ego.v1.CanValueDescription.unit)
+}
+
+// .ego.v1.CanSignalRole role = 5;
+inline void CanValueDescription::clear_role() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.role_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline ::ego::v1::CanSignalRole CanValueDescription::role() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.role)
+  return _internal_role();
+}
+inline void CanValueDescription::set_role(::ego::v1::CanSignalRole value) {
+  _internal_set_role(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.role)
+}
+inline ::ego::v1::CanSignalRole CanValueDescription::_internal_role() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::ego::v1::CanSignalRole>(_impl_.role_);
+}
+inline void CanValueDescription::_internal_set_role(::ego::v1::CanSignalRole value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.role_ = value;
+}
+
+// uint32 can_id = 6;
+inline void CanValueDescription::clear_can_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.can_id_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000020U);
+}
+inline ::uint32_t CanValueDescription::can_id() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.can_id)
+  return _internal_can_id();
+}
+inline void CanValueDescription::set_can_id(::uint32_t value) {
+  _internal_set_can_id(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.can_id)
+}
+inline ::uint32_t CanValueDescription::_internal_can_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.can_id_;
+}
+inline void CanValueDescription::_internal_set_can_id(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.can_id_ = value;
+}
+
+// bool is_extended = 7;
+inline void CanValueDescription::clear_is_extended() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_extended_ = false;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline bool CanValueDescription::is_extended() const {
+  // @@protoc_insertion_point(field_get:ego.v1.CanValueDescription.is_extended)
+  return _internal_is_extended();
+}
+inline void CanValueDescription::set_is_extended(bool value) {
+  _internal_set_is_extended(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:ego.v1.CanValueDescription.is_extended)
+}
+inline bool CanValueDescription::_internal_is_extended() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.is_extended_;
+}
+inline void CanValueDescription::_internal_set_is_extended(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.is_extended_ = value;
 }
 
 // -------------------------------------------------------------------

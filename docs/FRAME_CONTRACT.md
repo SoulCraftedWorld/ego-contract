@@ -100,5 +100,8 @@ protobuf-метаданные сессии. Метка времени марке
 Текущая ARM firmware также отправляет `CONFIG_SNAPSHOT` как бинарный ключевой фрейм:
 `ConfigSnapshotBinaryHeader + text_size байт` эффективной конфигурации в формате
 `key=value`. Целевой формат остаётся protobuf `DeviceConfigSnapshot`.
+В полном protobuf snapshot CAN-декодер может быть задан списком `signals` или
+строкой `dbc_text`; каталог `value_id` передаётся в
+`SessionMetadata.can_value_descriptions`.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.

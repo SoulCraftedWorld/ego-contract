@@ -18,6 +18,7 @@ message SessionMetadata {
   string vehicle_id = 8;
   string source_id = 9;
   repeated KeyValue tags = 20;
+  repeated CanValueDescription can_value_descriptions = 21;
 }
 
 message HelloRequest {

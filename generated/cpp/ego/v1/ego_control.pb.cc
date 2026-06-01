@@ -262,7 +262,8 @@ inline constexpr SessionMetadata::Impl_::Impl_(
         source_id_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        tags_{} {}
+        tags_{},
+        can_value_descriptions_{} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR SessionMetadata::SessionMetadata(::_pbi::ConstantInitialized)
@@ -588,7 +589,7 @@ const ::uint32_t
         protodesc_cold) = {
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_._has_bits_),
-        13, // hasbit index offset
+        14, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.session_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.test_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.test_description_),
@@ -599,6 +600,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.vehicle_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.source_id_),
         PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.tags_),
+        PROTOBUF_FIELD_OFFSET(::ego::v1::SessionMetadata, _impl_.can_value_descriptions_),
         0,
         1,
         2,
@@ -609,6 +611,7 @@ const ::uint32_t
         7,
         8,
         9,
+        10,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::ego::v1::HelloRequest, _impl_._has_bits_),
         6, // hasbit index offset
@@ -812,24 +815,24 @@ const ::uint32_t
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::ego::v1::SessionMetadata)},
-        {23, sizeof(::ego::v1::HelloRequest)},
-        {32, sizeof(::ego::v1::HelloResponse)},
-        {43, sizeof(::ego::v1::GetStatusRequest)},
-        {44, sizeof(::ego::v1::DeviceStatus)},
-        {73, sizeof(::ego::v1::GetConfigInventoryRequest)},
-        {74, sizeof(::ego::v1::GetConfigSnapshotRequest)},
-        {79, sizeof(::ego::v1::UpdateConfigRequest)},
-        {88, sizeof(::ego::v1::UpdateConfigResponse)},
-        {97, sizeof(::ego::v1::SaveConfigRequest)},
-        {102, sizeof(::ego::v1::RestoreDefaultConfigRequest)},
-        {109, sizeof(::ego::v1::StartSessionRequest)},
-        {120, sizeof(::ego::v1::StartSessionResponse)},
-        {133, sizeof(::ego::v1::StopSessionRequest)},
-        {140, sizeof(::ego::v1::StopSessionResponse)},
-        {149, sizeof(::ego::v1::MarkerRequest)},
-        {160, sizeof(::ego::v1::MarkerResponse)},
-        {167, sizeof(::ego::v1::ControlRequest)},
-        {194, sizeof(::ego::v1::ControlResponse)},
+        {25, sizeof(::ego::v1::HelloRequest)},
+        {34, sizeof(::ego::v1::HelloResponse)},
+        {45, sizeof(::ego::v1::GetStatusRequest)},
+        {46, sizeof(::ego::v1::DeviceStatus)},
+        {75, sizeof(::ego::v1::GetConfigInventoryRequest)},
+        {76, sizeof(::ego::v1::GetConfigSnapshotRequest)},
+        {81, sizeof(::ego::v1::UpdateConfigRequest)},
+        {90, sizeof(::ego::v1::UpdateConfigResponse)},
+        {99, sizeof(::ego::v1::SaveConfigRequest)},
+        {104, sizeof(::ego::v1::RestoreDefaultConfigRequest)},
+        {111, sizeof(::ego::v1::StartSessionRequest)},
+        {122, sizeof(::ego::v1::StartSessionResponse)},
+        {135, sizeof(::ego::v1::StopSessionRequest)},
+        {142, sizeof(::ego::v1::StopSessionResponse)},
+        {151, sizeof(::ego::v1::MarkerRequest)},
+        {162, sizeof(::ego::v1::MarkerResponse)},
+        {169, sizeof(::ego::v1::ControlRequest)},
+        {196, sizeof(::ego::v1::ControlResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::ego::v1::_SessionMetadata_default_instance_._instance,
@@ -856,88 +859,90 @@ const char descriptor_table_protodef_ego_2fv1_2fego_5fcontrol_2eproto[] ABSL_ATT
     protodesc_cold) = {
     "\n\030ego/v1/ego_control.proto\022\006ego.v1\032\027ego/"
     "v1/ego_common.proto\032\027ego/v1/ego_config.p"
-    "roto\"\353\001\n\017SessionMetadata\022\022\n\nsession_id\030\001"
+    "roto\"\250\002\n\017SessionMetadata\022\022\n\nsession_id\030\001"
     " \001(\t\022\017\n\007test_id\030\002 \001(\t\022\030\n\020test_descriptio"
     "n\030\003 \001(\t\022\023\n\013scenario_id\030\004 \001(\t\022\025\n\rscenario"
     "_name\030\005 \001(\t\022\025\n\roperator_name\030\006 \001(\t\022\017\n\007pr"
     "oject\030\007 \001(\t\022\022\n\nvehicle_id\030\010 \001(\t\022\021\n\tsourc"
     "e_id\030\t \001(\t\022\036\n\004tags\030\024 \003(\0132\020.ego.v1.KeyVal"
-    "ue\"U\n\014HelloRequest\022\023\n\013client_name\030\001 \001(\t\022"
-    "\026\n\016client_version\030\002 \001(\t\022\030\n\020protocol_vers"
-    "ion\030\003 \001(\r\"\260\001\n\rHelloResponse\022\"\n\006result\030\001 "
-    "\001(\0162\022.ego.v1.ResultCode\022 \n\005error\030\002 \001(\0132\021"
-    ".ego.v1.ErrorInfo\022&\n\006device\030\003 \001(\0132\026.ego."
-    "v1.DeviceIdentity\0221\n\020config_inventory\030\004 "
-    "\001(\0132\027.ego.v1.ConfigInventory\"\022\n\020GetStatu"
-    "sRequest\"\277\002\n\014DeviceStatus\022\014\n\004t_ns\030\001 \001(\006\022"
-    "\026\n\016session_active\030\002 \001(\010\022\032\n\022data_stream_a"
-    "ctive\030\003 \001(\010\022\031\n\021active_session_id\030\004 \001(\t\022\021"
-    "\n\ttx_frames\030\n \001(\004\022\020\n\010tx_bytes\030\013 \001(\004\022\024\n\014a"
-    "udio_status\030\024 \001(\r\022\022\n\ncan_status\030\025 \001(\r\022\022\n"
-    "\nimu_status\030\026 \001(\r\022\022\n\ngps_status\030\027 \001(\r\022\026\n"
-    "\016network_status\030\030 \001(\r\0221\n\020config_inventor"
-    "y\030\036 \001(\0132\027.ego.v1.ConfigInventory\022\020\n\010warn"
-    "ings\030( \003(\t\"\033\n\031GetConfigInventoryRequest\""
-    "=\n\030GetConfigSnapshotRequest\022!\n\005types\030\001 \003"
-    "(\0162\022.ego.v1.ConfigType\"l\n\023UpdateConfigRe"
-    "quest\022*\n\006update\030\001 \001(\0132\032.ego.v1.DeviceCon"
-    "figUpdate\022\025\n\rvalidate_only\030\002 \001(\010\022\022\n\nsave"
-    "_to_sd\030\003 \001(\010\"\217\001\n\024UpdateConfigResponse\022\"\n"
-    "\006result\030\001 \001(\0162\022.ego.v1.ResultCode\022 \n\005err"
-    "or\030\002 \001(\0132\021.ego.v1.ErrorInfo\0221\n\020config_in"
-    "ventory\030\003 \001(\0132\027.ego.v1.ConfigInventory\"6"
-    "\n\021SaveConfigRequest\022!\n\005types\030\001 \003(\0162\022.ego"
-    ".v1.ConfigType\"T\n\033RestoreDefaultConfigRe"
-    "quest\022!\n\005types\030\001 \003(\0162\022.ego.v1.ConfigType"
-    "\022\022\n\nsave_to_sd\030\002 \001(\010\"\254\001\n\023StartSessionReq"
-    "uest\022(\n\007session\030\001 \001(\0132\027.ego.v1.SessionMe"
-    "tadata\022\031\n\021start_data_stream\030\002 \001(\010\022+\n#emi"
-    "t_config_snapshot_to_data_stream\030\003 \001(\010\022#"
-    "\n\033require_valid_saved_configs\030\004 \001(\010\"\333\001\n\024"
-    "StartSessionResponse\022\"\n\006result\030\001 \001(\0162\022.e"
-    "go.v1.ResultCode\022 \n\005error\030\002 \001(\0132\021.ego.v1"
-    ".ErrorInfo\022\022\n\nsession_id\030\003 \001(\t\0221\n\020config"
-    "_inventory\030\004 \001(\0132\027.ego.v1.ConfigInventor"
-    "y\0226\n\020effective_config\030\005 \001(\0132\034.ego.v1.Dev"
-    "iceConfigSnapshot\"8\n\022StopSessionRequest\022"
-    "\022\n\nsession_id\030\001 \001(\t\022\016\n\006reason\030\002 \001(\t\"o\n\023S"
-    "topSessionResponse\022\"\n\006result\030\001 \001(\0162\022.ego"
+    "ue\022;\n\026can_value_descriptions\030\025 \003(\0132\033.ego"
+    ".v1.CanValueDescription\"U\n\014HelloRequest\022"
+    "\023\n\013client_name\030\001 \001(\t\022\026\n\016client_version\030\002"
+    " \001(\t\022\030\n\020protocol_version\030\003 \001(\r\"\260\001\n\rHello"
+    "Response\022\"\n\006result\030\001 \001(\0162\022.ego.v1.Result"
+    "Code\022 \n\005error\030\002 \001(\0132\021.ego.v1.ErrorInfo\022&"
+    "\n\006device\030\003 \001(\0132\026.ego.v1.DeviceIdentity\0221"
+    "\n\020config_inventory\030\004 \001(\0132\027.ego.v1.Config"
+    "Inventory\"\022\n\020GetStatusRequest\"\277\002\n\014Device"
+    "Status\022\014\n\004t_ns\030\001 \001(\006\022\026\n\016session_active\030\002"
+    " \001(\010\022\032\n\022data_stream_active\030\003 \001(\010\022\031\n\021acti"
+    "ve_session_id\030\004 \001(\t\022\021\n\ttx_frames\030\n \001(\004\022\020"
+    "\n\010tx_bytes\030\013 \001(\004\022\024\n\014audio_status\030\024 \001(\r\022\022"
+    "\n\ncan_status\030\025 \001(\r\022\022\n\nimu_status\030\026 \001(\r\022\022"
+    "\n\ngps_status\030\027 \001(\r\022\026\n\016network_status\030\030 \001"
+    "(\r\0221\n\020config_inventory\030\036 \001(\0132\027.ego.v1.Co"
+    "nfigInventory\022\020\n\010warnings\030( \003(\t\"\033\n\031GetCo"
+    "nfigInventoryRequest\"=\n\030GetConfigSnapsho"
+    "tRequest\022!\n\005types\030\001 \003(\0162\022.ego.v1.ConfigT"
+    "ype\"l\n\023UpdateConfigRequest\022*\n\006update\030\001 \001"
+    "(\0132\032.ego.v1.DeviceConfigUpdate\022\025\n\rvalida"
+    "te_only\030\002 \001(\010\022\022\n\nsave_to_sd\030\003 \001(\010\"\217\001\n\024Up"
+    "dateConfigResponse\022\"\n\006result\030\001 \001(\0162\022.ego"
     ".v1.ResultCode\022 \n\005error\030\002 \001(\0132\021.ego.v1.E"
-    "rrorInfo\022\022\n\nsession_id\030\003 \001(\t\"k\n\rMarkerRe"
-    "quest\022\022\n\nsession_id\030\001 \001(\t\022\021\n\tmarker_id\030\002"
-    " \001(\t\022\023\n\013description\030\003 \001(\t\022\036\n\004tags\030\004 \003(\0132"
-    "\020.ego.v1.KeyValue\"V\n\016MarkerResponse\022\"\n\006r"
-    "esult\030\001 \001(\0162\022.ego.v1.ResultCode\022 \n\005error"
-    "\030\002 \001(\0132\021.ego.v1.ErrorInfo\"\314\004\n\016ControlReq"
-    "uest\022\022\n\nrequest_id\030\001 \001(\006\022%\n\005hello\030\n \001(\0132"
-    "\024.ego.v1.HelloRequestH\000\022.\n\nget_status\030\013 "
-    "\001(\0132\030.ego.v1.GetStatusRequestH\000\022A\n\024get_c"
-    "onfig_inventory\030\014 \001(\0132!.ego.v1.GetConfig"
-    "InventoryRequestH\000\022\?\n\023get_config_snapsho"
-    "t\030\r \001(\0132 .ego.v1.GetConfigSnapshotReques"
-    "tH\000\0224\n\rupdate_config\030\016 \001(\0132\033.ego.v1.Upda"
-    "teConfigRequestH\000\0220\n\013save_config\030\017 \001(\0132\031"
-    ".ego.v1.SaveConfigRequestH\000\022E\n\026restore_d"
-    "efault_config\030\020 \001(\0132#.ego.v1.RestoreDefa"
-    "ultConfigRequestH\000\0224\n\rstart_session\030\021 \001("
-    "\0132\033.ego.v1.StartSessionRequestH\000\0222\n\014stop"
-    "_session\030\022 \001(\0132\032.ego.v1.StopSessionReque"
-    "stH\000\022\'\n\006marker\030\023 \001(\0132\025.ego.v1.MarkerRequ"
-    "estH\000B\t\n\007request\"\261\004\n\017ControlResponse\022\022\n\n"
-    "request_id\030\001 \001(\006\022&\n\005hello\030\n \001(\0132\025.ego.v1"
-    ".HelloResponseH\000\022&\n\006status\030\013 \001(\0132\024.ego.v"
-    "1.DeviceStatusH\000\0223\n\020config_inventory\030\014 \001"
-    "(\0132\027.ego.v1.ConfigInventoryH\000\0227\n\017config_"
-    "snapshot\030\r \001(\0132\034.ego.v1.DeviceConfigSnap"
-    "shotH\000\0225\n\rupdate_config\030\016 \001(\0132\034.ego.v1.U"
-    "pdateConfigResponseH\000\0223\n\013save_config\030\017 \001"
-    "(\0132\034.ego.v1.UpdateConfigResponseH\000\022>\n\026re"
-    "store_default_config\030\020 \001(\0132\034.ego.v1.Upda"
-    "teConfigResponseH\000\0225\n\rstart_session\030\021 \001("
-    "\0132\034.ego.v1.StartSessionResponseH\000\0223\n\014sto"
-    "p_session\030\022 \001(\0132\033.ego.v1.StopSessionResp"
-    "onseH\000\022(\n\006marker\030\023 \001(\0132\026.ego.v1.MarkerRe"
-    "sponseH\000B\n\n\010responseb\006proto3"
+    "rrorInfo\0221\n\020config_inventory\030\003 \001(\0132\027.ego"
+    ".v1.ConfigInventory\"6\n\021SaveConfigRequest"
+    "\022!\n\005types\030\001 \003(\0162\022.ego.v1.ConfigType\"T\n\033R"
+    "estoreDefaultConfigRequest\022!\n\005types\030\001 \003("
+    "\0162\022.ego.v1.ConfigType\022\022\n\nsave_to_sd\030\002 \001("
+    "\010\"\254\001\n\023StartSessionRequest\022(\n\007session\030\001 \001"
+    "(\0132\027.ego.v1.SessionMetadata\022\031\n\021start_dat"
+    "a_stream\030\002 \001(\010\022+\n#emit_config_snapshot_t"
+    "o_data_stream\030\003 \001(\010\022#\n\033require_valid_sav"
+    "ed_configs\030\004 \001(\010\"\333\001\n\024StartSessionRespons"
+    "e\022\"\n\006result\030\001 \001(\0162\022.ego.v1.ResultCode\022 \n"
+    "\005error\030\002 \001(\0132\021.ego.v1.ErrorInfo\022\022\n\nsessi"
+    "on_id\030\003 \001(\t\0221\n\020config_inventory\030\004 \001(\0132\027."
+    "ego.v1.ConfigInventory\0226\n\020effective_conf"
+    "ig\030\005 \001(\0132\034.ego.v1.DeviceConfigSnapshot\"8"
+    "\n\022StopSessionRequest\022\022\n\nsession_id\030\001 \001(\t"
+    "\022\016\n\006reason\030\002 \001(\t\"o\n\023StopSessionResponse\022"
+    "\"\n\006result\030\001 \001(\0162\022.ego.v1.ResultCode\022 \n\005e"
+    "rror\030\002 \001(\0132\021.ego.v1.ErrorInfo\022\022\n\nsession"
+    "_id\030\003 \001(\t\"k\n\rMarkerRequest\022\022\n\nsession_id"
+    "\030\001 \001(\t\022\021\n\tmarker_id\030\002 \001(\t\022\023\n\013description"
+    "\030\003 \001(\t\022\036\n\004tags\030\004 \003(\0132\020.ego.v1.KeyValue\"V"
+    "\n\016MarkerResponse\022\"\n\006result\030\001 \001(\0162\022.ego.v"
+    "1.ResultCode\022 \n\005error\030\002 \001(\0132\021.ego.v1.Err"
+    "orInfo\"\314\004\n\016ControlRequest\022\022\n\nrequest_id\030"
+    "\001 \001(\006\022%\n\005hello\030\n \001(\0132\024.ego.v1.HelloReque"
+    "stH\000\022.\n\nget_status\030\013 \001(\0132\030.ego.v1.GetSta"
+    "tusRequestH\000\022A\n\024get_config_inventory\030\014 \001"
+    "(\0132!.ego.v1.GetConfigInventoryRequestH\000\022"
+    "\?\n\023get_config_snapshot\030\r \001(\0132 .ego.v1.Ge"
+    "tConfigSnapshotRequestH\000\0224\n\rupdate_confi"
+    "g\030\016 \001(\0132\033.ego.v1.UpdateConfigRequestH\000\0220"
+    "\n\013save_config\030\017 \001(\0132\031.ego.v1.SaveConfigR"
+    "equestH\000\022E\n\026restore_default_config\030\020 \001(\013"
+    "2#.ego.v1.RestoreDefaultConfigRequestH\000\022"
+    "4\n\rstart_session\030\021 \001(\0132\033.ego.v1.StartSes"
+    "sionRequestH\000\0222\n\014stop_session\030\022 \001(\0132\032.eg"
+    "o.v1.StopSessionRequestH\000\022\'\n\006marker\030\023 \001("
+    "\0132\025.ego.v1.MarkerRequestH\000B\t\n\007request\"\261\004"
+    "\n\017ControlResponse\022\022\n\nrequest_id\030\001 \001(\006\022&\n"
+    "\005hello\030\n \001(\0132\025.ego.v1.HelloResponseH\000\022&\n"
+    "\006status\030\013 \001(\0132\024.ego.v1.DeviceStatusH\000\0223\n"
+    "\020config_inventory\030\014 \001(\0132\027.ego.v1.ConfigI"
+    "nventoryH\000\0227\n\017config_snapshot\030\r \001(\0132\034.eg"
+    "o.v1.DeviceConfigSnapshotH\000\0225\n\rupdate_co"
+    "nfig\030\016 \001(\0132\034.ego.v1.UpdateConfigResponse"
+    "H\000\0223\n\013save_config\030\017 \001(\0132\034.ego.v1.UpdateC"
+    "onfigResponseH\000\022>\n\026restore_default_confi"
+    "g\030\020 \001(\0132\034.ego.v1.UpdateConfigResponseH\000\022"
+    "5\n\rstart_session\030\021 \001(\0132\034.ego.v1.StartSes"
+    "sionResponseH\000\0223\n\014stop_session\030\022 \001(\0132\033.e"
+    "go.v1.StopSessionResponseH\000\022(\n\006marker\030\023 "
+    "\001(\0132\026.ego.v1.MarkerResponseH\000B\n\n\010respons"
+    "eb\006proto3"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_ego_2fv1_2fego_5fcontrol_2eproto_deps[2] = {
@@ -948,7 +953,7 @@ static ::absl::once_flag descriptor_table_ego_2fv1_2fego_5fcontrol_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_ego_2fv1_2fego_5fcontrol_2eproto = {
     false,
     false,
-    3348,
+    3409,
     descriptor_table_protodef_ego_2fv1_2fego_5fcontrol_2eproto,
     "ego/v1/ego_control.proto",
     &descriptor_table_ego_2fv1_2fego_5fcontrol_2eproto_once,
@@ -979,6 +984,12 @@ void SessionMetadata::clear_tags() {
   ClearHasBitForRepeated(_impl_._has_bits_[0],
                   0x00000200U);
 }
+void SessionMetadata::clear_can_value_descriptions() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.can_value_descriptions_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000400U);
+}
 SessionMetadata::SessionMetadata(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, SessionMetadata_class_data_.base()) {
@@ -1003,7 +1014,8 @@ PROTOBUF_NDEBUG_INLINE SessionMetadata::Impl_::Impl_(
         project_(arena, from.project_),
         vehicle_id_(arena, from.vehicle_id_),
         source_id_(arena, from.source_id_),
-        tags_{visibility, arena, from.tags_} {}
+        tags_{visibility, arena, from.tags_},
+        can_value_descriptions_{visibility, arena, from.can_value_descriptions_} {}
 
 SessionMetadata::SessionMetadata(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -1034,7 +1046,8 @@ PROTOBUF_NDEBUG_INLINE SessionMetadata::Impl_::Impl_(
         project_(arena),
         vehicle_id_(arena),
         source_id_(arena),
-        tags_{visibility, arena} {}
+        tags_{visibility, arena},
+        can_value_descriptions_{visibility, arena} {}
 
 inline void SessionMetadata::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -1071,6 +1084,10 @@ constexpr auto SessionMetadata::InternalNewImpl_() {
   constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
       PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_.tags_) +
           decltype(SessionMetadata::_impl_.tags_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+      PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_.can_value_descriptions_) +
+          decltype(SessionMetadata::_impl_.can_value_descriptions_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
   });
@@ -1117,17 +1134,17 @@ SessionMetadata::GetClassData() const {
   return SessionMetadata_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 1, 135, 2>
+const ::_pbi::TcParseTable<4, 11, 2, 135, 2>
 SessionMetadata::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_._has_bits_),
     0, // no _extensions_
-    20, 120,  // max_field_number, fast_idx_mask
+    21, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294442496,  // skipmap
+    4293393920,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
-    1,  // num_aux_entries
+    11,  // num_field_entries
+    2,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     SessionMetadata_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -1202,9 +1219,12 @@ SessionMetadata::_table_ = {
     {PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_.source_id_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // repeated .ego.v1.KeyValue tags = 20;
     {PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_.tags_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // repeated .ego.v1.CanValueDescription can_value_descriptions = 21;
+    {PROTOBUF_FIELD_OFFSET(SessionMetadata, _impl_.can_value_descriptions_), _Internal::kHasBitsOffset + 10, 1, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::ego::v1::KeyValue>()},
+      {::_pbi::TcParser::GetTable<::ego::v1::CanValueDescription>()},
   }},
   {{
     "\26\12\7\20\13\15\15\7\12\11\0\0\0\0\0\0"
@@ -1254,12 +1274,15 @@ PROTOBUF_NOINLINE void SessionMetadata::Clear() {
       _impl_.vehicle_id_.ClearNonDefaultToEmpty();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       _impl_.source_id_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000200U)) {
       _impl_.tags_.Clear();
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000400U)) {
+      _impl_.can_value_descriptions_.Clear();
     }
   }
   _impl_._has_bits_.Clear();
@@ -1388,6 +1411,19 @@ PROTOBUF_NOINLINE void SessionMetadata::Clear() {
     }
   }
 
+  // repeated .ego.v1.CanValueDescription can_value_descriptions = 21;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000400U)) {
+    for (unsigned i = 0, n = static_cast<unsigned>(
+                             this_._internal_can_value_descriptions_size());
+         i < n; i++) {
+      const auto& repfield = this_._internal_can_value_descriptions().Get(i);
+      target =
+          ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+              21, repfield, repfield.GetCachedSize(),
+              target, stream);
+    }
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -1471,7 +1507,7 @@ PROTOBUF_NOINLINE void SessionMetadata::Clear() {
       }
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
     // string source_id = 9;
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (!this_._internal_source_id().empty()) {
@@ -1483,6 +1519,13 @@ PROTOBUF_NOINLINE void SessionMetadata::Clear() {
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000200U)) {
       total_size += 2UL * this_._internal_tags_size();
       for (const auto& msg : this_._internal_tags()) {
+        total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
+      }
+    }
+    // repeated .ego.v1.CanValueDescription can_value_descriptions = 21;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000400U)) {
+      total_size += 2UL * this_._internal_can_value_descriptions_size();
+      for (const auto& msg : this_._internal_can_value_descriptions()) {
         total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
       }
     }
@@ -1580,7 +1623,7 @@ void SessionMetadata::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000300U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
     if (CheckHasBit(cached_has_bits, 0x00000100U)) {
       if (!from._internal_source_id().empty()) {
         _this->_internal_set_source_id(from._internal_source_id());
@@ -1594,6 +1637,11 @@ void SessionMetadata::MergeImpl(::google::protobuf::MessageLite& to_msg,
       _this->_internal_mutable_tags()->InternalMergeFromWithArena(
           ::google::protobuf::MessageLite::internal_visibility(), arena,
           from._internal_tags());
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000400U)) {
+      _this->_internal_mutable_can_value_descriptions()->InternalMergeFromWithArena(
+          ::google::protobuf::MessageLite::internal_visibility(), arena,
+          from._internal_can_value_descriptions());
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -1625,6 +1673,7 @@ void SessionMetadata::InternalSwap(SessionMetadata* PROTOBUF_RESTRICT PROTOBUF_N
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.vehicle_id_, &other->_impl_.vehicle_id_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.source_id_, &other->_impl_.source_id_, arena);
   _impl_.tags_.InternalSwap(&other->_impl_.tags_);
+  _impl_.can_value_descriptions_.InternalSwap(&other->_impl_.can_value_descriptions_);
 }
 
 ::google::protobuf::Metadata SessionMetadata::GetMetadata() const {
