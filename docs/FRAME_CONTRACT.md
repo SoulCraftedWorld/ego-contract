@@ -15,7 +15,7 @@
 
 ADSP-SC589 работает как TCP-сервер. Мини-ПК подключается как TCP-клиент.
 
-## Data TCP frame
+## Фрейм Data TCP
 
 Каждый фрейм в Data TCP имеет фиксированный бинарный заголовок и payload.
 
@@ -65,39 +65,40 @@ typedef struct {
 
 | frame_type | Payload |
 |---:|---|
-| 1 | `SessionStarted` protobuf, or zero-payload session marker in minimal firmware mode |
-| 2 | `ConfigSnapshotFrame` protobuf, or binary text-kv snapshot in minimal firmware mode |
-| 100 | `AudioBlockBinaryHeader + raw PCM` in production |
-| 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` in production |
-| 102 | `CanDecodedValuePacket` binary in production |
-| 103 | `CanRawFramePacket` binary in production |
-| 104 | `TrajectoryPointPacket` binary in production |
-| 105 | `GpsFixPacket` binary in production |
-| 200 | `TimeStatusPacket` binary in production |
-| 201 | `SystemStatusPacket` binary in production |
+| 1 | `SessionStarted` protobuf или маркер сессии без payload в минимальном режиме firmware |
+| 2 | `ConfigSnapshotFrame` protobuf или бинарный снимок text-kv в минимальном режиме firmware |
+| 100 | `AudioBlockBinaryHeader + raw PCM` в production-режиме |
+| 101 | `ImuWindowBinaryHeader + ImuSampleBinary[]` в production-режиме |
+| 102 | `CanDecodedValuePacket` в бинарном формате production-режима |
+| 103 | `CanRawFramePacket` в бинарном формате production-режима |
+| 104 | `TrajectoryPointPacket` в бинарном формате production-режима |
+| 105 | `GpsFixPacket` в бинарном формате production-режима |
+| 200 | `TimeStatusPacket` в бинарном формате production-режима |
+| 201 | `SystemStatusPacket` в бинарном формате production-режима |
 | 202 | `ImuCalibrationEvent` protobuf |
 | 203 | `MarkerEvent` protobuf |
-| 900 | `SessionEnded` protobuf, or zero-payload final marker in minimal firmware mode |
+| 900 | `SessionEnded` protobuf или финальный маркер без payload в минимальном режиме firmware |
 
-## Payload encoding
+## Кодирование payload
 
-Для metadata/config/status/event payload используется protobuf.
+Для payload метаданных, конфигурации, статуса и событий используется protobuf.
 
 Для высокочастотного аудио допустимы два режима:
 
 | Режим | Описание |
 |---|---|
 | Prototype | `AudioBlock` protobuf с `pcm_data` |
-| Production | компактный бинарный audio block header + raw PCM payload |
+| Production | компактный бинарный заголовок аудиоблока + raw PCM payload |
 
-Current production data frames use `FrameFlags::PAYLOAD_BINARY`.
-Variable metadata/config/session/event frames remain protobuf unless explicitly moved to a fixed binary packet.
-Current ARM firmware emits zero-payload `SESSION_STARTED` and `SESSION_ENDED`
-markers around the binary data stream until full protobuf session metadata is
-enabled on target. The marker timestamp and session id are carried by
+Текущие фреймы данных production-режима используют `FrameFlags::PAYLOAD_BINARY`.
+Переменные фреймы метаданных, конфигурации, сессии и событий остаются protobuf,
+если они явно не перенесены в фиксированный бинарный пакет.
+Текущая ARM firmware отправляет `SESSION_STARTED` и `SESSION_ENDED` как маркеры
+без payload вокруг бинарного потока данных, пока на плате не включены полные
+protobuf-метаданные сессии. Метка времени маркера и session id находятся в
 `EgoFrameHeader`.
-Current ARM firmware also emits `CONFIG_SNAPSHOT` as a binary keyframe:
-`ConfigSnapshotBinaryHeader + text_size bytes` of `key=value` effective config
-text. The target format remains protobuf `DeviceConfigSnapshot`.
+Текущая ARM firmware также отправляет `CONFIG_SNAPSHOT` как бинарный ключевой фрейм:
+`ConfigSnapshotBinaryHeader + text_size байт` эффективной конфигурации в формате
+`key=value`. Целевой формат остаётся protobuf `DeviceConfigSnapshot`.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.

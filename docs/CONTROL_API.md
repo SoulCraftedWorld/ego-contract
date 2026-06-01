@@ -1,24 +1,24 @@
-# Control TCP API
+# API Control TCP
 
-Control TCP использует protobuf request/response с length-prefixed framing.
+Control TCP использует protobuf-запросы и protobuf-ответы с фреймингом по префиксу длины.
 
-## Framing
+## Фрейминг
 
 Запрос:
 
 ```text
 uint32_le message_size
-ControlRequest protobuf bytes
+байты protobuf `ControlRequest`
 ```
 
 Ответ:
 
 ```text
 uint32_le message_size
-ControlResponse protobuf bytes
+байты protobuf `ControlResponse`
 ```
 
-## Основной workflow
+## Основной процесс
 
 ```text
 client -> HELLO
@@ -42,51 +42,51 @@ device -> UpdateConfigResponse
 client -> UPDATE_CONFIG(vehicle)
 device -> UpdateConfigResponse
 
-client -> START_SESSION(session metadata)
+client -> START_SESSION(метаданные сессии)
 device -> StartSessionResponse OK или REJECTED
 
 device -> DATA: SessionStarted
 device -> DATA: ConfigSnapshotFrame
-device -> DATA: realtime frames
+device -> DATA: фреймы реального времени
 ```
 
 ## CONTROL /hello
 
 Проверка соединения и версии протокола.
 
-Request payload: `HelloRequest`
+Payload запроса: `HelloRequest`
 
-Response payload: `HelloResponse`
+Payload ответа: `HelloResponse`
 
 ## CONTROL /status
 
 Запрос текущего состояния платы.
 
-Request payload: `GetStatusRequest`
+Payload запроса: `GetStatusRequest`
 
-Response payload: `DeviceStatus`
+Payload ответа: `DeviceStatus`
 
 ## CONTROL /config/inventory
 
 Запрос перечня сохранённых конфигураций и их состояния.
 
-Request payload: `GetConfigInventoryRequest`
+Payload запроса: `GetConfigInventoryRequest`
 
-Response payload: `ConfigInventory`
+Payload ответа: `ConfigInventory`
 
 ## CONTROL /config/get
 
-Запрос текущего effective snapshot.
+Запрос текущего эффективного снимка конфигурации.
 
-Request payload: `GetConfigSnapshotRequest`
+Payload запроса: `GetConfigSnapshotRequest`
 
-Response payload: `DeviceConfigSnapshot`
+Payload ответа: `DeviceConfigSnapshot`
 
 ## CONTROL /config/update
 
 Обновление одной или нескольких конфигураций.
 
-Request payload: `UpdateConfigRequest`
+Payload запроса: `UpdateConfigRequest`
 
 Особенности:
 
@@ -99,25 +99,25 @@ Request payload: `UpdateConfigRequest`
 
 Сохранение текущих конфигураций на SD-карту.
 
-Request payload: `SaveConfigRequest`
+Payload запроса: `SaveConfigRequest`
 
 ## CONTROL /config/defaults
 
 Восстановление конфигураций по умолчанию.
 
-Request payload: `RestoreDefaultConfigRequest`
+Payload запроса: `RestoreDefaultConfigRequest`
 
 ## CONTROL /session/start
 
 Запуск сессии.
 
-Request payload: `StartSessionRequest`
+Payload запроса: `StartSessionRequest`
 
 Важно:
 
-- команда содержит только session/test metadata;
-- audio/IMU/CAN/GPS/vehicle configs должны уже быть на плате;
-- при `require_valid_saved_configs=true` старт отклоняется, если required-конфигурации отсутствуют или невалидны.
+- команда содержит только метаданные сессии и испытания;
+- конфигурации audio/IMU/CAN/GPS/vehicle должны уже быть на плате;
+- при `require_valid_saved_configs=true` старт отклоняется, если обязательные конфигурации отсутствуют или невалидны.
 
 Пример отказа:
 
@@ -137,18 +137,18 @@ Request payload: `StartSessionRequest`
 
 Остановка сессии.
 
-Request payload: `StopSessionRequest`
+Payload запроса: `StopSessionRequest`
 
 ## CONTROL /marker
 
 Добавление пользовательской метки события в текущую сессию.
 
-Request payload: `MarkerRequest`
+Payload запроса: `MarkerRequest`
 
-## Current minimal firmware mode
+## Текущий минимальный режим firmware
 
-The current firmware exposes a line-oriented debug/control interface before the
-full protobuf control API is enabled.
+Пока полный protobuf API Control TCP не включён на плате, firmware предоставляет
+строчный отладочный интерфейс управления.
 
 ```text
 start [bin_path] [index_path]
@@ -163,20 +163,21 @@ config_reload
 config_save
 ```
 
-If `bin_path` is omitted, firmware creates a new log in `sd:ego/logs/`:
-`ego_YYYYMMDD_HHMMSS.bin` when RTC/GPS time is valid, otherwise
-`ego_mono_<timestamp>.bin`. If `bin_path` is custom and `index_path` is omitted,
-the firmware derives the index path by replacing the binary file extension with
-`.index`.
+Если `bin_path` не задан, firmware создаёт новый лог в `sd:ego/logs/`:
+`ego_YYYYMMDD_HHMMSS.bin`, когда RTC/GPS-время валидно, иначе
+`ego_mono_<timestamp>.bin`. Если `bin_path` задан, а `index_path` отсутствует,
+путь к индексу строится заменой расширения бинарного файла на `.index`.
 
-`logs` lists completed `.bin` and `.index` files in `sd:ego/logs/`.
-`log_get` streams one selected file from `sd:ego/logs/`: the response starts
-with `OK log name=<name> size=<bytes>`, then exactly `size` raw bytes, then an
-`END log` line. The client must read by byte count, not by newline scanning.
-`log_delete` accepts only `ego_*.bin`, deletes the matching `.index`, and is
-rejected while a session is active.
+`logs` выводит завершённые `.bin` и `.index` файлы из `sd:ego/logs/`.
+`log_get` передаёт выбранный файл из `sd:ego/logs/`: ответ начинается строкой
+`OK log name=<name> size=<bytes>`, затем идёт ровно `size` байт файла, затем
+строка `END log`. Клиент должен читать файл по количеству байт, а не искать
+перевод строки.
+`log_delete` принимает только `ego_*.bin`, удаляет соответствующий `.index` и
+отклоняется во время активной сессии.
 
-`config_get` returns the active text-kv effective config. `config_set` updates
-one key and saves `sd:ego/config/effective.cfg`; changes are rejected while a
-session is active. `config_reload` reloads the SD config or falls back to
-firmware defaults. `config_save` writes the current effective config to SD.
+`config_get` возвращает активную эффективную конфигурацию в формате text-kv.
+`config_set` обновляет один ключ и сохраняет `sd:ego/config/effective.cfg`;
+изменения отклоняются во время активной сессии. `config_reload` перечитывает
+SD-конфигурацию или возвращается к значениям firmware по умолчанию.
+`config_save` записывает текущую эффективную конфигурацию на SD.

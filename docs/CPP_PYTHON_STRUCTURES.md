@@ -28,7 +28,7 @@
 - `ConfigSnapshotFrame`
 - `MarkerEvent`
 - `SessionEnded`
-- control request/response
+- запросы и ответы управления
 - конфигурации устройства
 
 ## Размеры структур
@@ -50,17 +50,17 @@
 
 ## Правило использования
 
-- Control/config/session metadata: protobuf.
-- Data TCP outer frame: всегда `EgoFrameHeader`.
-- Audio production: `AudioBlockBinaryHeader + raw PCM`.
-- IMU production: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
-- Малые частые telemetry packets могут передаваться либо protobuf, либо binary packet из этих файлов.
+- Метаданные управления, конфигурации и сессии: protobuf.
+- Внешний фрейм Data TCP: всегда `EgoFrameHeader`.
+- Audio в production-режиме: `AudioBlockBinaryHeader + raw PCM`.
+- IMU в production-режиме: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
+- Малые частые telemetry-пакеты могут передаваться либо protobuf, либо бинарным пакетом из этих файлов.
 - `ego.bin` записывает фреймы как есть: `EgoFrameHeader + payload`.
-Current binary wire-format notes:
+Текущие примечания по бинарному wire-format:
 
-- `CONFIG_SNAPSHOT` in current minimal firmware mode:
-  `ConfigSnapshotBinaryHeader + text_size bytes` of `key=value` config text.
+- `CONFIG_SNAPSHOT` в текущем минимальном режиме firmware:
+  `ConfigSnapshotBinaryHeader + text_size байт` конфигурации в формате `key=value`.
 - `IMU_WINDOW`: `ImuWindowBinaryHeader + sample_count * ImuSampleBinary`.
-- `CAN_DECODED_VALUE`: one 28-byte `CanDecodedValuePacket`.
-- `CAN_RAW_FRAME`: one 28-byte `CanRawFramePacket`.
-- `TRAJECTORY_POINT`: one 44-byte `TrajectoryPointPacket`.
+- `CAN_DECODED_VALUE`: один 28-байтный `CanDecodedValuePacket`.
+- `CAN_RAW_FRAME`: один 28-байтный `CanRawFramePacket`.
+- `TRAJECTORY_POINT`: один 44-байтный `TrajectoryPointPacket`.

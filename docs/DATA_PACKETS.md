@@ -4,17 +4,18 @@
 
 Data TCP передаёт последовательность `EgoFrameHeader + payload`.
 
-`frame_type` в заголовке определяет, какой protobuf-сообщение или binary payload находится внутри.
+`frame_type` в заголовке определяет, какое protobuf-сообщение или какой бинарный payload находится внутри.
 
 Все временные метки передаются в наносекундах относительно общей временной базы платы.
 
 ## SessionStarted
 
-Current minimal ARM firmware mode emits this as a zero-payload marker. The
-session id, sequence number, and timestamp are in `EgoFrameHeader`. Full
-protobuf metadata remains the target format for richer session description.
+В текущем минимальном режиме ARM firmware отправляет этот фрейм как маркер без
+payload. `session_id`, `seq` и временная метка находятся в
+`EgoFrameHeader`. Целевой формат для расширенных метаданных сессии остаётся
+protobuf.
 
-Первый служебный frame после успешного старта сессии.
+Первый служебный фрейм после успешного старта сессии.
 
 Содержит:
 
@@ -22,7 +23,7 @@ protobuf metadata remains the target format for richer session description.
 - `SessionMetadata`;
 - `ConfigInventory`.
 
-Назначение: зафиксировать факт начала сессии и связать data stream с метаданными испытания.
+Назначение: зафиксировать факт начала сессии и связать поток данных с метаданными испытания.
 
 ## ConfigSnapshotFrame
 
@@ -41,17 +42,17 @@ protobuf metadata remains the target format for richer session description.
 
 Назначение: сделать `ego.bin` самодостаточным для offline-конвертации в MDF4.
 
-Current minimal firmware mode: until protobuf encoding is enabled on the target,
-`CONFIG_SNAPSHOT` is emitted as a binary keyframe with
-`FrameFlags::PAYLOAD_BINARY | FrameFlags::PAYLOAD_KEYFRAME`. Payload layout:
+Текущий минимальный режим firmware: пока protobuf-кодирование не включено на
+плате, `CONFIG_SNAPSHOT` отправляется как бинарный ключевой фрейм с флагами
+`FrameFlags::PAYLOAD_BINARY | FrameFlags::PAYLOAD_KEYFRAME`. Формат payload:
 
 ```text
 ConfigSnapshotBinaryHeader
-ASCII/UTF-8 key=value text, text_size bytes
+ASCII/UTF-8 текст key=value, text_size байт
 ```
 
-The text blob is the effective `sd:ego/config/effective.cfg` content or firmware
-defaults if the SD config file is missing.
+Текстовый блок содержит эффективную конфигурацию из `sd:ego/config/effective.cfg`
+или значения firmware по умолчанию, если SD-файл конфигурации отсутствует.
 
 ## AudioBlock
 
@@ -69,16 +70,16 @@ defaults if the SD config file is missing.
 - `layout`;
 - `pcm_data` для prototype-режима.
 
-Правило времени: `t0_ns` — время первого audio frame блока. Время любого сэмпла восстанавливается по `sample_rate_hz` и индексу frame внутри блока.
+Правило времени: `t0_ns` — время первого audio-фрейма блока. Время любого сэмпла восстанавливается по `sample_rate_hz` и индексу фрейма внутри блока.
 
 Для production-режима допускается не использовать protobuf `pcm_data`, а передавать raw PCM как payload с тем же внешним `EgoFrameHeader`.
 
 ## ImuWindow
 
-Production binary payload:
+Бинарный payload в production-режиме:
 
-- `ImuWindowBinaryHeader` (40 bytes): `imu_window_id`, `t0_ns`, `t1_ns`, `odr_hz`, `sample_count`, `sample_size`, `flags`, `reserved0`.
-- Followed by `sample_count` records of `ImuSampleBinary` (40 bytes each): `t_ns`, `accel_mps2[3]`, `gyro_rad_s[3]`, `temperature_c`, `flags`.
+- `ImuWindowBinaryHeader` (40 байт): `imu_window_id`, `t0_ns`, `t1_ns`, `odr_hz`, `sample_count`, `sample_size`, `flags`, `reserved0`.
+- Далее идут `sample_count` записей `ImuSampleBinary` по 40 байт каждая: `t_ns`, `accel_mps2[3]`, `gyro_rad_s[3]`, `temperature_c`, `flags`.
 
 Содержит окно timestamped IMU-сэмплов от LSM6DS3, привязанное к аудио-блоку.
 
@@ -96,7 +97,7 @@ Production binary payload:
 
 ## CanDecodedValue
 
-Production binary payload: one 28-byte `CanDecodedValuePacket` with `t_ns`, `signal_id`, `can_id`, `value`, `quality`, `flags`.
+Бинарный payload в production-режиме: один 28-байтный `CanDecodedValuePacket` с полями `t_ns`, `signal_id`, `can_id`, `value`, `quality`, `flags`.
 
 Декодированное значение CAN-сигнала.
 
@@ -113,7 +114,7 @@ Production binary payload: one 28-byte `CanDecodedValuePacket` with `t_ns`, `sig
 
 ## CanRawFrame
 
-Production binary payload: one 28-byte `CanRawFramePacket` with `t_ns`, `can_id`, `dlc`, `bus`, `flags`, `data[8]`, `reserved0`.
+Бинарный payload в production-режиме: один 28-байтный `CanRawFramePacket` с полями `t_ns`, `can_id`, `dlc`, `bus`, `flags`, `data[8]`, `reserved0`.
 
 Сырой CAN-фрейм.
 
@@ -131,7 +132,7 @@ Production binary payload: one 28-byte `CanRawFramePacket` with `t_ns`, `can_id`
 
 ## TrajectoryPoint
 
-Production binary payload: one 44-byte `TrajectoryPointPacket` with `t_ns`, `loc_x_m`, `loc_y_m`, `loc_z_m`, `yaw_rad`, `pitch_rad`, `roll_rad`, `velocity_mps`, `yaw_rate_rad_s`, `flags`.
+Бинарный payload в production-режиме: один 44-байтный `TrajectoryPointPacket` с полями `t_ns`, `loc_x_m`, `loc_y_m`, `loc_z_m`, `yaw_rad`, `pitch_rad`, `roll_rad`, `velocity_mps`, `yaw_rate_rad_s`, `flags`.
 
 Точка локальной траектории.
 
@@ -225,11 +226,11 @@ Production binary payload: one 44-byte `TrajectoryPointPacket` with `t_ns`, `loc
 
 ## SessionEnded
 
-Current minimal ARM firmware mode emits this as a zero-payload final marker.
-The final marker is queued after final time/system status frames and before the
-record file is closed.
+В текущем минимальном режиме ARM firmware отправляет этот фрейм как финальный
+маркер без payload. Финальный маркер ставится в очередь после последних
+`TIME_STATUS`/`SYSTEM_STATUS` фреймов и до закрытия файла записи.
 
-Финальный frame сессии.
+Финальный фрейм сессии.
 
 Поля:
 

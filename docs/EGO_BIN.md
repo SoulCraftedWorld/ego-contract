@@ -1,6 +1,6 @@
 # Формат `ego.bin`
 
-`ego.bin` — append-only файл, который формируется на мини-ПК из Data TCP фреймов.
+`ego.bin` — append-only файл, который формируется на мини-ПК из фреймов Data TCP.
 
 ## Запись
 
@@ -8,9 +8,9 @@
 
 ```text
 EgoFrameHeader
-payload bytes
+байты payload
 EgoFrameHeader
-payload bytes
+байты payload
 ...
 ```
 
@@ -23,7 +23,7 @@ SessionStarted
 ConfigSnapshotFrame
 ```
 
-Далее идут realtime frames:
+Далее идут фреймы реального времени:
 
 ```text
 AudioBlock
@@ -78,29 +78,29 @@ MDF4 должен получить отдельные группы канало�
 - calibration events;
 - markers.
 
-## Current firmware SD recording note
+## Текущая запись на SD в firmware
 
-- The ARM firmware writes the same `EgoFrameHeader + payload` stream to SD
-  while it streams frames to TCP.
-- Default log files are created under `sd:ego/logs/` as
-  `ego_YYYYMMDD_HHMMSS.bin` when RTC/GPS time is valid. Before time is valid,
-  the fallback name is `ego_mono_<timestamp>.bin`.
-- It also writes a sidecar CSV `.index` next to the `.bin` file with:
+- ARM firmware пишет на SD тот же поток `EgoFrameHeader + payload`, который
+  отправляется по TCP.
+- По умолчанию логи создаются в `sd:ego/logs/` с именем
+  `ego_YYYYMMDD_HHMMSS.bin`, если RTC/GPS-время валидно. Пока время не
+  валидно, используется резервное имя `ego_mono_<timestamp>.bin`.
+- Рядом с `.bin` также пишется CSV-файл `.index` с полями:
   `seq,frame_type,t0_ns,t1_ns,file_offset,payload_size,payload_crc32,header_crc32,flags`.
-- For a custom binary path, the index path is derived by replacing the extension
-  with `.index`, unless an explicit index path is passed to the current minimal
-  Control TCP `start` command.
-- Firmware creates `sd:ego/logs/` for recordings and `sd:ego/config/` for module
-  settings. Automatic cleanup deletes only old `ego_*.bin` logs from
-  `sd:ego/logs/` and their matching `.index` files.
-- Before recording and then periodically during recording, firmware checks that
-  SD free space is at least 1 GiB. If it is lower, it tries to remove the oldest
-  completed log file.
-- Current minimal Control TCP supports log maintenance:
-  `logs`, `log_get <name>`, and `log_delete <ego_*.bin>`. Binary download starts
-  with a text header that contains the byte size, then sends exactly that many
-  file bytes.
-- Current minimal firmware emits `CONFIG_SNAPSHOT` immediately after
-  `SESSION_STARTED`. It is a binary keyframe containing
-  `ConfigSnapshotBinaryHeader` plus the active `key=value` text config, making
-  the SD log self-describing before the full protobuf config encoder is enabled.
+- Если задан пользовательский путь бинарного файла, путь к индексу строится
+  заменой расширения на `.index`, если явный путь индекса не передан в текущую
+  минимальную Control TCP команду `start`.
+- Firmware создаёт `sd:ego/logs/` для записей и `sd:ego/config/` для настроек
+  модулей. Автоматическая очистка удаляет только старые `ego_*.bin` из
+  `sd:ego/logs/` и соответствующие `.index` файлы.
+- Перед записью и затем периодически во время записи firmware проверяет, что на
+  SD свободно не менее 1 GiB. Если места меньше, firmware пытается удалить
+  самый старый завершённый лог.
+- Текущий минимальный Control TCP поддерживает обслуживание логов:
+  `logs`, `log_get <name>` и `log_delete <ego_*.bin>`. Бинарная выгрузка
+  начинается с текстового заголовка с размером в байтах, затем отправляется
+  ровно это количество байт файла.
+- Текущая минимальная firmware отправляет `CONFIG_SNAPSHOT` сразу после
+  `SESSION_STARTED`. Это бинарный ключевой фрейм с `ConfigSnapshotBinaryHeader` и
+  активной текстовой конфигурацией `key=value`, поэтому SD-лог остаётся
+  самодостаточным до включения полного protobuf-кодера конфигураций.
