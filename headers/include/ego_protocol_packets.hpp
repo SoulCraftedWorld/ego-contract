@@ -16,6 +16,11 @@ static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_SD_LOADED = 1u << 0;
 static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_DIRTY = 1u << 1;
 static constexpr uint32_t EGO_SESSION_EVENT_MAGIC = 0x31534553u; // 'SES1' little-endian
 static constexpr uint16_t EGO_SESSION_EVENT_FORMAT_VERSION = 1u;
+static constexpr uint32_t EGO_CAN_STATUS_RUNNING = 1u << 0;
+static constexpr uint32_t EGO_CAN_STATUS_DISABLED = 1u << 1;
+static constexpr uint32_t EGO_CAN_STATUS_FILTER_FAILED = 1u << 2;
+static constexpr uint32_t EGO_CAN_STATUS_BUS_OFF = 1u << 3;
+static constexpr uint32_t EGO_CAN_STATUS_DRIVER_LOST = 1u << 4;
 
 // Data TCP payload type. Values match proto/ego/v1/ego_common.proto.
 enum class FramePayloadType : uint32_t {
