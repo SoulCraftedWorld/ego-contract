@@ -65,7 +65,7 @@ typedef struct {
 
 | frame_type | Payload |
 |---:|---|
-| 1 | `SessionStarted` protobuf или маркер сессии без payload в минимальном режиме firmware |
+| 1 | `SessionStarted` protobuf или `SessionEventBinaryHeader + metadata_text` в минимальном режиме firmware |
 | 2 | `ConfigSnapshotFrame` protobuf или бинарный снимок text-kv в минимальном режиме firmware |
 | 100 | `AudioBlockBinaryHeader + raw PCM` в production-режиме |
 | 101 | `ImuWindowPacket` в бинарном формате production-режима |
@@ -77,7 +77,7 @@ typedef struct {
 | 201 | `SystemStatusPacket` в бинарном формате production-режима |
 | 202 | `ImuCalibrationEvent` protobuf |
 | 203 | `MarkerEvent` protobuf |
-| 900 | `SessionEnded` protobuf или финальный маркер без payload в минимальном режиме firmware |
+| 900 | `SessionEnded` protobuf или `SessionEventBinaryHeader + metadata_text` в минимальном режиме firmware |
 
 ## Кодирование payload
 
@@ -93,10 +93,10 @@ typedef struct {
 Текущие фреймы данных production-режима используют `FrameFlags::PAYLOAD_BINARY`.
 Переменные фреймы метаданных, конфигурации, сессии и событий остаются protobuf,
 если они явно не перенесены в фиксированный бинарный пакет.
-Текущая ARM firmware отправляет `SESSION_STARTED` и `SESSION_ENDED` как маркеры
-без payload вокруг бинарного потока данных, пока на плате не включены полные
-protobuf-метаданные сессии. Метка времени маркера и session id находятся в
-`EgoFrameHeader`.
+Текущая ARM firmware отправляет `SESSION_STARTED` и `SESSION_ENDED` как
+бинарные ключевые фреймы `SessionEventBinaryHeader + metadata_text`, пока на
+плате не включены полные protobuf-метаданные сессии. Метка времени и session id
+также дублируются в `EgoFrameHeader`.
 Текущая ARM firmware также отправляет `CONFIG_SNAPSHOT` как бинарный ключевой фрейм:
 `ConfigSnapshotBinaryHeader + text_size байт` эффективной конфигурации в формате
 `key=value`. Целевой формат остаётся protobuf `DeviceConfigSnapshot`.
@@ -105,3 +105,8 @@ protobuf-метаданные сессии. Метка времени марке
 `SessionMetadata.can_value_descriptions`.
 
 В обоих режимах внешний `EgoFrameHeader` остаётся одинаковым.
+
+Data TCP сервер firmware хранит ограниченное replay-окно последних фреймов в
+RAM. Новый клиент после переподключения получает это окно перед текущим
+потоком. Окно не является бесконечным журналом; полный поток сохраняется на SD
+в `ego_*.bin`, если запись на SD включена и доступна.

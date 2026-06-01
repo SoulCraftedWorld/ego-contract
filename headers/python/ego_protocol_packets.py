@@ -14,6 +14,8 @@ EGO_CONFIG_SNAPSHOT_FORMAT_VERSION = 1
 EGO_CONFIG_SNAPSHOT_FORMAT_TEXT_KV = 1
 EGO_CONFIG_SNAPSHOT_FLAG_SD_LOADED = 1 << 0
 EGO_CONFIG_SNAPSHOT_FLAG_DIRTY = 1 << 1
+EGO_SESSION_EVENT_MAGIC = 0x31534553  # 'SES1' little-endian
+EGO_SESSION_EVENT_FORMAT_VERSION = 1
 
 
 class FramePayloadType(IntEnum):
@@ -429,6 +431,43 @@ class ConfigSnapshotBinaryHeader:
             raise ValueError(f"bad config snapshot magic: 0x{self.magic:08x}")
         if self.header_size != self.SIZE:
             raise ValueError(f"bad config snapshot header size: {self.header_size}")
+
+
+@dataclass(slots=True)
+class SessionEventBinaryHeader:
+    magic: int
+    format_version: int
+    header_size: int
+    event_type: int
+    flags: int
+    session_id_hi: int
+    session_id_lo: int
+    t_ns: int
+    metadata_text_size: int
+    metadata_text_crc32: int
+    config_generation: int
+    reserved0: int = 0
+
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<IHHIIQQQIIII")
+    SIZE: ClassVar[int] = STRUCT.size
+
+    def to_bytes(self) -> bytes:
+        return self.STRUCT.pack(
+            self.magic, self.format_version, self.header_size,
+            self.event_type, self.flags, self.session_id_hi,
+            self.session_id_lo, self.t_ns, self.metadata_text_size,
+            self.metadata_text_crc32, self.config_generation, self.reserved0,
+        )
+
+    @classmethod
+    def unpack(cls, data: bytes) -> "SessionEventBinaryHeader":
+        return cls(*cls.STRUCT.unpack(data[:cls.SIZE]))
+
+    def validate_basic(self) -> None:
+        if self.magic != EGO_SESSION_EVENT_MAGIC:
+            raise ValueError(f"bad session event magic: 0x{self.magic:08x}")
+        if self.header_size != self.SIZE:
+            raise ValueError(f"bad session event header size: {self.header_size}")
 
 
 @dataclass(slots=True)

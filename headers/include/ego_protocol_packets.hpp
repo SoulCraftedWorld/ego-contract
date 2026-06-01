@@ -14,6 +14,8 @@ static constexpr uint16_t EGO_CONFIG_SNAPSHOT_FORMAT_VERSION = 1u;
 static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FORMAT_TEXT_KV = 1u;
 static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_SD_LOADED = 1u << 0;
 static constexpr uint32_t EGO_CONFIG_SNAPSHOT_FLAG_DIRTY = 1u << 1;
+static constexpr uint32_t EGO_SESSION_EVENT_MAGIC = 0x31534553u; // 'SES1' little-endian
+static constexpr uint16_t EGO_SESSION_EVENT_FORMAT_VERSION = 1u;
 
 // Data TCP payload type. Values match proto/ego/v1/ego_common.proto.
 enum class FramePayloadType : uint32_t {
@@ -265,6 +267,25 @@ struct ConfigSnapshotBinaryHeader {
     uint32_t reserved0;
 };
 
+// Current minimal firmware SESSION_STARTED/SESSION_ENDED binary payload.
+// The metadata text bytes start immediately after SessionEventBinaryHeader and
+// are UTF-8/ASCII key=value lines. Full protobuf SessionMetadata remains the
+// target format for the protobuf control/data mode.
+struct SessionEventBinaryHeader {
+    uint32_t magic;
+    uint16_t format_version;
+    uint16_t header_size;
+    uint32_t event_type;
+    uint32_t flags;
+    uint64_t session_id_hi;
+    uint64_t session_id_lo;
+    uint64_t t_ns;
+    uint32_t metadata_text_size;
+    uint32_t metadata_text_crc32;
+    uint32_t config_generation;
+    uint32_t reserved0;
+};
+
 struct ImuCalibrationEventPacket {
     uint64_t t_ns;
 
@@ -294,6 +315,7 @@ static_assert(sizeof(GpsFixPacket) == 56, "GpsFixPacket size must be 56 bytes");
 static_assert(sizeof(TimeStatusPacket) == 40, "TimeStatusPacket size must be 40 bytes");
 static_assert(sizeof(SystemStatusPacket) == 56, "SystemStatusPacket size must be 56 bytes");
 static_assert(sizeof(ConfigSnapshotBinaryHeader) == 52, "ConfigSnapshotBinaryHeader size must be 52 bytes");
+static_assert(sizeof(SessionEventBinaryHeader) == 56, "SessionEventBinaryHeader size must be 56 bytes");
 static_assert(sizeof(ImuCalibrationEventPacket) == 44, "ImuCalibrationEventPacket size must be 44 bytes");
 
 inline EgoFrameHeader make_frame_header(

@@ -10,10 +10,11 @@ Data TCP передаёт последовательность `EgoFrameHeader +
 
 ## SessionStarted
 
-В текущем минимальном режиме ARM firmware отправляет этот фрейм как маркер без
-payload. `session_id`, `seq` и временная метка находятся в
-`EgoFrameHeader`. Целевой формат для расширенных метаданных сессии остаётся
-protobuf.
+В текущем минимальном режиме ARM firmware отправляет бинарный payload:
+`SessionEventBinaryHeader + metadata_text`. Текстовый блок содержит UTF-8/ASCII
+строки `key=value` с `session_id`, путями записи, состоянием TCP/SD и версией
+конфигурации. Целевой формат для расширенных метаданных сессии остаётся
+protobuf `SessionMetadata`.
 
 Первый служебный фрейм после успешного старта сессии.
 
@@ -24,6 +25,12 @@ protobuf.
 - `ConfigInventory`.
 
 Назначение: зафиксировать факт начала сессии и связать поток данных с метаданными испытания.
+
+## SessionEnded
+
+В текущем минимальном режиме ARM firmware отправляет тот же бинарный формат
+`SessionEventBinaryHeader + metadata_text`, но с `event=end` и причиной
+остановки.
 
 ## ConfigSnapshotFrame
 
@@ -173,6 +180,12 @@ ASCII/UTF-8 текст key=value, text_size байт
 
 Статус временной базы.
 
+В текущем ARM firmware `monotonic_ns` всегда содержит монотонное время платы.
+После валидного NMEA `RMC` с UTC датой/временем ARM оценивает
+`utc_offset_ns = gps_utc_ns - monotonic_ns` и выставляет источник времени
+`GPS_UTC`/`GPS_LOCKED`. До первого валидного RMC используется
+`BOARD_MONOTONIC`/`FREE_RUNNING`.
+
 Поля:
 
 - `t_ns`;
@@ -230,8 +243,9 @@ ASCII/UTF-8 текст key=value, text_size байт
 ## SessionEnded
 
 В текущем минимальном режиме ARM firmware отправляет этот фрейм как финальный
-маркер без payload. Финальный маркер ставится в очередь после последних
-`TIME_STATUS`/`SYSTEM_STATUS` фреймов и до закрытия файла записи.
+бинарный payload `SessionEventBinaryHeader + metadata_text`. Финальный фрейм
+ставится в очередь после последних `TIME_STATUS`/`SYSTEM_STATUS` фреймов и до
+закрытия файла записи.
 
 Финальный фрейм сессии.
 
