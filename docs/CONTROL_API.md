@@ -153,13 +153,16 @@ Payload запроса: `MarkerRequest`
 
 ```text
 start [bin_path] [index_path]
+preview_start
 stop
+preview_stop
 status
 logs
 log_get <name>
 log_delete <ego_log_name.bin>
 config_get
 config_set <key> <value>
+config_set_nosave <key> <value>
 config_reload
 config_save
 ```
@@ -182,3 +185,9 @@ config_save
 изменения отклоняются во время активной сессии. `config_reload` перечитывает
 конфигурацию из SPI Flash или возвращается к значениям firmware по умолчанию.
 `config_save` записывает текущую эффективную конфигурацию в SPI Flash.
+
+`preview_start` запускает Data TCP без записи на SD и предназначен для
+отладочного прослушивания аудиоканалов. `preview_stop` завершает этот режим.
+
+`config_set_nosave` обновляет ключ только в памяти. Для пакетного обновления
+нужно передать несколько таких команд, затем один раз вызвать `config_save`.
