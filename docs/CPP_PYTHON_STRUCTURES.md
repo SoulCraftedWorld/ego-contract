@@ -41,7 +41,7 @@
 | `CanDecodedValuePacket` | 20 |
 | `CanRawFramePacket` | 24 |
 | `TrajectoryPointPacket` | 52 |
-| `GpsFixPacket` | 56 |
+| `GpsFixPacket` | 104 |
 | `TimeStatusPacket` | 40 |
 | `SystemStatusPacket` | 56 |
 | `ImuCalibrationEventPacket` | 44 |

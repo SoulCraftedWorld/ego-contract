@@ -72,7 +72,7 @@ typedef struct {
 | 102 | `CanDecodedValuePacket` в бинарном формате production-режима |
 | 103 | `CanRawFramePacket` в бинарном формате production-режима |
 | 104 | `TrajectoryPointPacket` в бинарном формате production-режима |
-| 105 | `GpsFixPacket` в бинарном формате production-режима |
+| 105 | `GpsFixPacket` в бинарном формате production-режима; v1.4 payload 104 байта, первые 56 байт совместимы с v1.3 |
 | 200 | `TimeStatusPacket` в бинарном формате production-режима |
 | 201 | `SystemStatusPacket` в бинарном формате production-режима |
 | 202 | `ImuCalibrationEvent` protobuf |

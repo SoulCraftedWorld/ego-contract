@@ -30,6 +30,21 @@ EGO_CAN_STATUS_DISABLED = 1 << 1
 EGO_CAN_STATUS_FILTER_FAILED = 1 << 2
 EGO_CAN_STATUS_BUS_OFF = 1 << 3
 EGO_CAN_STATUS_DRIVER_LOST = 1 << 4
+EGO_GPS_NMEA_FLAG_UTC_TIME_VALID = 1 << 0
+EGO_GPS_NMEA_FLAG_POSITION_VALID = 1 << 1
+EGO_GPS_NMEA_FLAG_ALTITUDE_VALID = 1 << 2
+EGO_GPS_NMEA_FLAG_HDOP_VALID = 1 << 3
+EGO_GPS_NMEA_FLAG_PDOP_VALID = 1 << 4
+EGO_GPS_NMEA_FLAG_VDOP_VALID = 1 << 5
+EGO_GPS_NMEA_FLAG_AGE_DIFF_VALID = 1 << 6
+EGO_GPS_NMEA_FLAG_BASE_STATION_VALID = 1 << 7
+EGO_GPS_NMEA_FLAG_SPEED_VALID = 1 << 8
+EGO_GPS_NMEA_FLAG_HEADING_VALID = 1 << 9
+EGO_GPS_NMEA_FLAG_GST_LAT_VALID = 1 << 10
+EGO_GPS_NMEA_FLAG_GST_LON_VALID = 1 << 11
+EGO_GPS_NMEA_FLAG_GST_ALT_VALID = 1 << 12
+EGO_GPS_NMEA_FLAG_GST_RMS_VALID = 1 << 13
+EGO_GPS_NMEA_FLAG_ZDA_TIME_USED = 1 << 14
 
 
 class FramePayloadType(IntEnum):
@@ -333,8 +348,19 @@ class GpsFixPacket:
     satellites: int
     reserved0: int
     flags: int
+    utc_time_ns: int = 0
+    hdop: float = 0.0
+    pdop: float = 0.0
+    vdop: float = 0.0
+    age_of_diff_s: float = 0.0
+    base_station_id: int = 0
+    gst_latitude_error_m: float = 0.0
+    gst_longitude_error_m: float = 0.0
+    gst_altitude_error_m: float = 0.0
+    gst_rms_error_m: float = 0.0
+    nmea_flags: int = 0
 
-    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QdddffffBBBBI")
+    STRUCT: ClassVar[struct.Struct] = struct.Struct("<QdddffffBBBBIQffffIffffI")
     SIZE: ClassVar[int] = STRUCT.size
 
     def to_bytes(self) -> bytes:
@@ -342,6 +368,11 @@ class GpsFixPacket:
             self.t_ns, self.lat_deg, self.lon_deg, self.alt_m, self.speed_mps,
             self.heading_rad, self.h_acc_m, self.v_acc_m, self.fix_type,
             self.rtk_status, self.satellites, self.reserved0, self.flags,
+            self.utc_time_ns, self.hdop, self.pdop, self.vdop,
+            self.age_of_diff_s, self.base_station_id,
+            self.gst_latitude_error_m, self.gst_longitude_error_m,
+            self.gst_altitude_error_m, self.gst_rms_error_m,
+            self.nmea_flags,
         )
 
     @classmethod

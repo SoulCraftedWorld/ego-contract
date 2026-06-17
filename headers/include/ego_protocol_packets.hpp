@@ -30,6 +30,21 @@ static constexpr uint32_t EGO_CAN_STATUS_DISABLED = 1u << 1;
 static constexpr uint32_t EGO_CAN_STATUS_FILTER_FAILED = 1u << 2;
 static constexpr uint32_t EGO_CAN_STATUS_BUS_OFF = 1u << 3;
 static constexpr uint32_t EGO_CAN_STATUS_DRIVER_LOST = 1u << 4;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_UTC_TIME_VALID = 1u << 0;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_POSITION_VALID = 1u << 1;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_ALTITUDE_VALID = 1u << 2;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_HDOP_VALID = 1u << 3;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_PDOP_VALID = 1u << 4;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_VDOP_VALID = 1u << 5;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_AGE_DIFF_VALID = 1u << 6;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_BASE_STATION_VALID = 1u << 7;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_SPEED_VALID = 1u << 8;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_HEADING_VALID = 1u << 9;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_GST_LAT_VALID = 1u << 10;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_GST_LON_VALID = 1u << 11;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_GST_ALT_VALID = 1u << 12;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_GST_RMS_VALID = 1u << 13;
+static constexpr uint32_t EGO_GPS_NMEA_FLAG_ZDA_TIME_USED = 1u << 14;
 
 // Data TCP payload type. Values match proto/ego/v1/ego_common.proto.
 enum class FramePayloadType : uint32_t {
@@ -229,6 +244,18 @@ struct GpsFixPacket {
     uint8_t reserved0;
 
     uint32_t flags;
+
+    uint64_t utc_time_ns;
+    float hdop;
+    float pdop;
+    float vdop;
+    float age_of_diff_s;
+    uint32_t base_station_id;
+    float gst_latitude_error_m;
+    float gst_longitude_error_m;
+    float gst_altitude_error_m;
+    float gst_rms_error_m;
+    uint32_t nmea_flags;
 };
 
 struct TimeStatusPacket {
@@ -325,7 +352,7 @@ static_assert(sizeof(ImuWindowPacket) == 76, "ImuWindowPacket size must be 76 by
 static_assert(sizeof(CanDecodedValuePacket) == 20, "CanDecodedValuePacket size must be 20 bytes");
 static_assert(sizeof(CanRawFramePacket) == 24, "CanRawFramePacket size must be 24 bytes");
 static_assert(sizeof(TrajectoryPointPacket) == 52, "TrajectoryPointPacket size must be 52 bytes");
-static_assert(sizeof(GpsFixPacket) == 56, "GpsFixPacket size must be 56 bytes");
+static_assert(sizeof(GpsFixPacket) == 104, "GpsFixPacket size must be 104 bytes");
 static_assert(sizeof(TimeStatusPacket) == 40, "TimeStatusPacket size must be 40 bytes");
 static_assert(sizeof(SystemStatusPacket) == 56, "SystemStatusPacket size must be 56 bytes");
 static_assert(sizeof(ConfigSnapshotBinaryHeader) == 52, "ConfigSnapshotBinaryHeader size must be 52 bytes");
